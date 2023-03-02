@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.board.mapper.BoardMapper">
+
+	<select id="findBoardList" resultType="egovMap">
+		select
+			row_number() over(order by board_id desc) as num, a.*
+		from (
+			select *			
+			from board
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and title like concat('%', #{searchText}, '%')
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"num".equals(orderColumn)'><!-- 번호 -->
+						num ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						num desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfBoardList" resultType="int">
+		select count(*) as tot_cnt
+		from board 
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and title like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	<select id="getBoardInfo" resultType="egovMap">
+		select 
+			board_id, title, writer, save_date, content
+		from board
+		where board_id = #{id}
+	</select>
+	
+	<insert id="insertSaveInfo">
+		insert into board
+		(
+			title,
+			writer,
+			save_date,
+			content
+		)
+		values
+		(
+			#{title},
+			#{writer},
+			date_format(now(), '%Y%m%d'),
+			#{content}
+		)
+	
+	</insert>
+	
+	<update id="updateSaveInfo">
+		update 
+			board
+		set 
+			title = #{title},
+			content = #{content},
+			writer = #{writer}
+		where 
+			board_id = #{board_id}
+	</update>
+	
+	<select id="getWriterInfo" resultType="String">
+		select writer
+		from board
+		where board_id = #{board_id}
+	</select>
+
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.media.mapper.MediaMapper">
+
+	<select id="findMediaList" resultType="EgovMap">
+		select
+			a.*
+		from (
+			select row_number() over(order by media_id desc) as num
+				, media_id
+				, media_name
+				, media_div
+				, director
+				, actor
+				, producer
+				, distributor
+				, author
+				, channel
+				, open_date
+				, period
+				, episode
+				, running_time
+				, rating_grade
+				, genre
+				, introduce
+				, movie_code
+				, `rank`
+				, audiAcc
+				, save_date
+			from media m
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and (
+				media_name like concat('%', #{searchText}, '%')
+				or director like concat('%', #{searchText}, '%')
+				or genre like concat('%', #{searchText}, '%')
+				)
+			</if>
+			and media_div = #{media_div}
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"num".equals(orderColumn)'><!-- 번호 -->
+						num ${orderType}
+					</when>
+					<when test='"media_id".equals(orderColumn)'><!-- 미디어ID -->
+						media_id ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						num desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfMediaList" resultType="int">
+		select count(*) as tot_cnt
+		from media
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and media_name like concat('%', #{searchText}, '%')
+		</if>
+		and media_div = #{media_div}
+	</select>
+	
+	<insert id="insertSaveInfo">
+		<selectKey keyProperty="media_id" resultType="int" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into media
+		(
+			media_name,
+			media_div,
+			director,
+			actor,
+			producer,
+			distributor,
+			author,
+			open_date,
+			running_time,
+			rating_grade,
+			introduce
+		)
+		values
+		(
+			#{movie_name},
+			#{media_div},
+			#{director},
+			#{actor},
+			#{producer},
+			#{distributor},
+			#{author},
+			replace(substr(#{open_date},1,10),'/',''),
+			#{running_time},
+			#{rating_grade},
+			#{introduce}
+		)
+	
+	</insert>
+	
+	<update id="updateSaveInfo">
+		update 
+			media
+		set 
+			media_name = #{movie_name},
+			director = #{director},
+			actor = #{actor},
+			producer = #{producer},
+			distributor = #{distributor},
+			author = #{author},
+			open_date = replace(substr(#{open_date},1,10),'/',''),
+			running_time = #{running_time},
+			rating_grade = #{rating_grade},
+			introduce = #{introduce}
+		where 
+			media_id = #{media_id}
+	</update>
+	
+	<select id="getMediaInfo" resultType="EgovMap">
+		select *			
+		from media
+		where 1=1
+		and media_id = #{id}
+	</select>
+	
+	
+</mapper>

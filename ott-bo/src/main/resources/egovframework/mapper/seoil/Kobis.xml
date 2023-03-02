@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.kobis.mapper.KobisMapper">
+
+	<select id="checkMediaData" resultType="int">
+		select count(*) 
+		from media
+		where movie_code = #{movieCd}
+	</select>
+
+	<insert id="insertDailyBoxOffice">
+		insert into media
+		(
+			media_name,
+			media_div,
+			director,
+			actor,
+			producer,
+			distributor,
+			open_date,
+			running_time,
+			rating_grade,
+			genre,
+			movie_code,
+			`rank`,
+			audiAcc,
+			save_date
+		)
+		values
+		(
+			#{movieNm},
+			1,
+			<choose>
+				<when test="directors != null and directors.size != 0">
+					<foreach collection="directors" item="director" separator=",'^'," open="concat(" close=")">#{director.peopleNm}</foreach>,
+				</when>
+				<otherwise>'',</otherwise>
+			</choose>
+			<choose>
+				<when test="actors != null and actors.size != 0">
+					<foreach collection="actors" item="actor" separator=",'^'," open="concat(" close=")">#{actor.peopleNm}</foreach>,
+				</when>
+				<otherwise>'',</otherwise>
+			</choose>
+			#{producer},
+			#{distributor},
+			replace(#{openDt},"-",""),
+			#{showTm},
+			<choose>
+				<when test="audits != null and audits.size != 0">
+					<foreach collection="audits" item="audit" separator=",'^'," open="concat(" close=")">#{audit.watchGradeNm}</foreach>,
+				</when>
+				<otherwise>'',</otherwise>
+			</choose>
+			<choose>
+				<when test="genres != null and genres.size != 0">
+					<foreach collection="genres" item="genre" separator=",'^'," open="concat(" close=")">#{genre.genreNm}</foreach>,
+				</when>
+				<otherwise>'',</otherwise>
+			</choose>
+			#{movieCd},
+			#{rank},
+			#{audiAcc},
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
+	
+	<update id="updateDailyBoxOffice">
+		update
+			media
+		set
+			`rank` = #{rank},
+			audiAcc = #{audiAcc},
+			save_date = date_format(now(), '%Y%m%d')
+		where movie_code = #{movieCd}
+	</update>
+
+
+</mapper>

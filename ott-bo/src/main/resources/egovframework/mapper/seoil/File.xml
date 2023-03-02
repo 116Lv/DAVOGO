@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="portal.media.mapper.FileMapper">
+
+	<insert id="insertFile">
+	insert into image
+	(
+		file_div,
+		media_id,
+		store_locate,
+		store_fname,
+		store_tname,
+		org_fname
+	)
+	values
+	(
+		#{mediaType},
+		#{mediaId},
+		#{fullPath},
+		#{fname},
+		#{tname},
+		#{orgFile}
+	)
+	</insert>
+	
+	<select id="getFileList" resultType="EgovMap">
+		select
+			file_id,
+			store_locate,
+			store_tname,
+			org_fname
+		from image
+		where 1=1
+		and media_id = #{id}
+		and file_div = #{file_div}
+	</select>
+	
+	<select id="getFile" resultType="EgovMap">
+		select 
+			concat(store_locate,'/',store_fname) as full_file_path
+			, concat(store_locate,'/',store_tname) as full_thumb_path
+		from image
+		where file_id = #{fileId}
+	</select>
+	
+	<delete id="deleteFileInfo">
+		delete from image
+		where 1=1
+		and file_id=#{fileId}
+	</delete>
+</mapper>

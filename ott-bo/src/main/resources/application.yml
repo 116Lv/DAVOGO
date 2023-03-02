@@ -1,0 +1,41 @@
+server:
+    port: 8080
+    tomcat:
+        uri-encoding: utf-8
+    servlet:
+        context-path: /
+        encoding:
+          charset: UTF-8
+          enabled: true
+          force: true
+
+logging:
+    level:
+        web: DEBUG
+    config: classpath:logback-${spring.profiles.active}.xml
+      
+
+spring: 
+    application:
+        name: game-bo
+    profiles:
+        active: local
+    message:
+        basename: egovframework/message/com/message-common
+    mvc:
+      view:
+        prefix: /WEB-INF/jsp/
+        suffix: .jsp
+
+
+mybatis:
+    mapper:
+        "base.package": seoil.**.mapper
+        locations: classpath:/egovframework/mapper/seoil/*.xml
+    config-location: classpath:/egovframework/mapper/config/sql-mapper-config.xml
+
+transaction:
+    read:
+        timeout: 20
+    write:
+        timeout: 20

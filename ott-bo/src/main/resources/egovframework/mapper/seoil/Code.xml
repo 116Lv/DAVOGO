@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.code.mapper.CodeMapper">
+
+	<select id="findCodeList" resultType="EgovMap">
+		select
+			row_number() over(order by code desc) as num, a.*
+		from (
+			select *			
+			from code
+			where 1=1
+			<!-- <if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and media_name like concat('%', #{searchText}, '%')
+			</if> -->
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"num".equals(orderColumn)'><!-- 번호 -->
+						code ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						code desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfCodeList" resultType="int">
+		select count(*) as tot_cnt
+		from code
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and media_name like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	<select id="getCodeInfo" resultType="EgovMap">
+		select *			
+		from code
+		where 1=1
+		and code = #{id}
+	</select>
+	
+	<insert id="insertSaveInfo">
+		insert into code
+		(
+			code_group,
+			code,
+			code_name
+		)
+		values
+		(
+			#{code_group},
+			#{code},
+			#{code_name}
+		)
+	</insert>
+	
+	<update id="updateSaveInfo">
+		update 
+			code
+		set 
+			code_group = #{code_group},
+			code = #{code},
+			code_name = #{code_name}
+		where 
+			code = #{code}
+	</update>
+	
+	
+</mapper>

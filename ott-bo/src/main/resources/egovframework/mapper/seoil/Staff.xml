@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 패키지.클래스명을 namespace로 지정 -->
+<mapper namespace="portal.staff.mapper.StaffMapper">
+
+	<!-- id는 method명과 일치해야 함. -->
+	<select id="findStaffList" resultType="EgovMap">
+		/* Staff.findStaffList */
+		select
+			row_number() over(order by staff_id desc) as num, a.*
+		from (
+			select *
+			from staff
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and staff_id like concat('%', #{searchText}, '%')
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"STAFFID".equals(orderColumn)'><!-- 고객ID -->
+						staff_id ${orderType}
+					</when>
+					<otherwise>
+						staff_id desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+
+	<select id="getCountOfStaffList" resultType="int">
+		select count(*) as tot_cnt
+		from staff
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and staff_id like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	<select id="getStaffInfo" resultType="portal.staff.vo.StaffVO">
+		/* Staff.getStaffInfo */
+		select
+			staff_id
+			, staff_name
+		from staff
+		where staff_id = #{staffId}
+		and password = #{password}
+	</select>
+	
+	<select id="getStafInfo" resultType="EgovMap">
+		select *
+		from staff
+		where 1=1
+		and staff_id = #{id}
+	</select>
+	
+	<insert id="insertSaveInfo">
+		insert into staff
+		(
+			staff_name,
+			id,
+			email,
+			phone_number,
+			address,
+			entering_date,
+			password
+		)
+		values
+		(
+			#{staff_name},
+			#{id},
+			#{email},
+			#{phone_number},
+			#{address},
+			replace(substr(#{entering_date},1,10),'/',''),
+			#{password}
+		)
+	
+	</insert>
+	
+	<update id="updateSaveInfo">
+		update 
+			staff
+		set 
+			staff_name = #{staff_name},
+			id = #{id},
+			email = #{email},
+			phone_number = #{phone_number},
+			address = #{address},
+			entering_date = replace(substr(#{entering_date},1,10),'/',''),
+			password = #{password}
+		where 
+			staff_id = #{staff_id}
+	</update>
+	
+	
+</mapper>

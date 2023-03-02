@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 패키지.클래스명을 namespace로 지정 -->
+<mapper namespace="portal.review.mapper.ReviewMapper">
+
+	<!-- id는 method명과 일치해야 함. -->
+	<select id="findReviewList" resultType="EgovMap">
+		/* Review.findReviewList */
+		select
+			a.*
+		from (
+			select *
+			from review
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and reviewID like concat('%', #{searchText}, '%')
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"REVIEWID".equals(orderColumn)'><!-- 고객ID -->
+						reviewID ${orderType}
+					</when>
+					<when test='"WRITEDATE".equals(orderColumn)'>
+						writeDate ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						reviewID desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+
+	<select id="getCountOfReviewList" resultType="int">
+		select count(*) as tot_cnt
+		from review
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and reviewID like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,29 @@
+spring:
+    config:
+        activate:
+            on-profile: local
+    datasource:
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/ott?serverTimezone=UTC
+        username: root
+        password: 1234
+
+jwt:
+    issuer: SEOIL
+    api-key: 1234567
+    secret-key: abcdefghijklmnopqrstuvwxyz
+    token-prefix: Bearer
+    header-name: Authorization
+    token-expiration-time: 1
+    refresh-token-expiration-time: 60
+    ignorePath: /images/**,/css/**,/fonts/**,/js/**,/api/**,/auth/**
+    
+file:
+  storePath: C:/OTT/img/
+  replaceSrc: C:/OTT/
+  replaceTrg: /
+  
+app:
+  kobis:
+    api-key: 623e218d4f42aed8cf65862c1e803746
+    item-per-page: 10

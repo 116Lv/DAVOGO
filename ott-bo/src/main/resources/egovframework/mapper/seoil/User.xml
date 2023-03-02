@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.user.mapper.UserMapper">
+
+	<!-- 직원 목록 -->
+	<select id="findUserList" resultType="EgovMap">
+		select
+			row_number() over(order by user_id desc) as num, a.*
+		from (
+			select *			
+			from user
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and user_id like concat('%', #{searchText}, '%')
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"num".equals(orderColumn)'><!-- 번호 -->
+						user_id ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						user_id desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfUserList" resultType="int">
+		select count(*) as tot_cnt
+		from user
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and user_id like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	
+		
+</mapper>

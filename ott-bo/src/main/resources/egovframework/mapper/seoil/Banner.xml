@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.banner.mapper.BannerMapper">
+
+	<select id="findBannerList" resultType="EgovMap">
+		select
+			row_number() over(order by banner_id desc) as num, a.*
+		from (
+			select *			
+			from mainbanner
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and title like concat('%', #{searchText}, '%')
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"NUM".equals(orderColumn)'><!-- 번호 -->
+						banner_id ${orderType}
+					</when>
+					<!-- 
+					<when test='"REG_DT".equals(orderColumn)'>
+						reg_dt ${orderType}
+					</when>
+					 -->
+					<otherwise>
+						banner_id desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfBannerList" resultType="int">
+		select count(*) as tot_cnt
+		from mainbanner
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and title like concat('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	<insert id="insertSaveInfo">
+		insert into mainbanner
+		(
+			banner_path,
+			banner_image,
+			banner_thumb,
+			title,
+			display_start,
+			display_end,
+			hide
+		)
+		values
+		(
+			#{banner_path},
+			#{banner_image},
+			#{banner_thumb},
+			#{title},
+			#{display_start},
+			#{display_end},
+			#{hide}
+		)
+	</insert>
+	
+	<update id="updateSaveInfo">
+		update 
+			mainbanner
+		set
+			banner_path = #{banner_path},
+			banner_image = #{banner_image},
+			banner_thumb = #{banner_thumb},
+			title = #{title},
+			display_start = replace(#{display_start},'/',''),
+			display_end = replace(#{display_end},'/',''),
+			hide = #{hide}
+		where
+			banner_id = #{banner_id}
+	</update>
+	
+	<select id="getBannerInfo" resultType="EgovMap">
+		select *
+		from mainbanner
+		where 1=1
+		and banner_id = #{id}
+	</select>
+	
+	<select id="getFileList" resultType="EgovMap">
+		select
+			banner_path,
+			banner_image,
+			banner_thumb
+		from mainbanner
+		where 1=1
+		and banner_id = #{id}
+	</select>
+	
+</mapper>
