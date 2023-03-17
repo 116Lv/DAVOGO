@@ -44,7 +44,7 @@
 									<button class="btn btn-sm btn-outline-secondary ms-1" type="button"
 									    data-bs-toggle="collapse" href="#searchCollapse"
 									    aria-expanded="false" aria-controls="searchCollapse" >
-									    <i class="dripicons-toggles" title="검색 toggle"></i>
+									    <i class="mdi mdi-cog-outline" title="검색 toggle"></i>
 									</button>
 					            </div>
 					        </div>
@@ -80,11 +80,6 @@
 									<div class="btn-list ml-1">
 					                    <button type="submit" class="btn btn-primary btn-sm" onclick="searchList(1);">검색</button>
 					                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="searchReset();">초기화</button>
-					                    <%--
-					                    <button type="button" class="btn btn-success btn-sm">
-					                    	<i class="dripicons-export"></i> 엑셀
-					                    </button>
-					                     --%>
 					                </div>
 								</div>
 							</div>

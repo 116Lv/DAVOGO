@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.egovframe.template</groupId>
 	<artifactId>simpleHomePage</artifactId> 
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<name>egovframework</name>
 	<url>example.egovframework.com</url>
@@ -20,7 +20,6 @@
 		<spring.maven.artifact.version>5.3.6.RELEASE</spring.maven.artifact.version>
 		<org.egovframe.rte.version>4.0.0</org.egovframe.rte.version>
 		<log4j2.version>2.17.1</log4j2.version>
-		<logback.version>1.2.9</logback.version>
 	</properties>
 
 	<repositories>
@@ -44,6 +43,11 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>local-repository</id>
+			<name>local repository</name>
+			<url>file://${project.basedir}/lib</url>
+		</repository>
 	</repositories>
 
 	<!-- spring Boot Parent 설정 -->
@@ -58,6 +62,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,7 +86,12 @@
 <!-- 			<groupId>org.springframework.boot</groupId> -->
 <!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
 <!-- 		</dependency> -->
-				
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+			
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -113,8 +132,8 @@
 		
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -220,12 +239,12 @@
 			<version>1.4</version>
 		</dependency>
 
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.3</version>
-			<scope>provided</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.servlet.jsp</groupId> -->
+<!-- 			<artifactId>javax.servlet.jsp-api</artifactId> -->
+<!-- 			<version>2.3.3</version> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -269,13 +288,20 @@
 		    <version>0.9.1</version>
 		</dependency>
 				
+		<dependency>
+			<groupId>kr.or.kobis</groupId>
+			<artifactId>kobis-opcl-rest</artifactId>
+			<version>v1.0</version>
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>${project.basedir}/lib/kobis-opcl-rest-v1.0.jar</systemPath> -->
+		</dependency>
 				
 	</dependencies>
 
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<directory>${basedir}/target</directory>
-		<finalName>sht_webapp</finalName>
+		<finalName>davogo</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -295,8 +321,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+						<source>11</source>
+						<target>11</target>
 						<encoding>UTF-8</encoding>
 						<maxmem>1024m</maxmem>
 					</configuration>
@@ -336,6 +362,7 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			
 			<!-- EMMA -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

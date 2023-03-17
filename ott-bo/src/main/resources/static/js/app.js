@@ -1,119 +1,131 @@
 /**
- * Theme: Hyper - Responsive Bootstrap 5 Admin Dashboard
- * Author: Coderthemes
- * Module/App: Layout Js
- */
+* Theme: Hyper - Responsive Bootstrap 5 Admin Dashboard
+* Author: Coderthemes
+* Module/App: Main Js
+*/
 
 
-/**
- * LeftSidebar
- * @param {*} $ 
- */
+(function ($) {
 
-
-!function ($) {
     'use strict';
 
-    var LeftSidebar = function () {
-        this.body = $('body'),
-        this.window = $(window),
-        this.menuContainer = $('#leftside-menu-container');
-    };
+    // Bootstrap Components
+    function initComponents() {
 
-    /**
-     * Reset the theme
-     */
-    LeftSidebar.prototype._reset = function() {
-        this.body.removeAttr('data-leftbar-theme');
-    },
-
-    /**
-     * Activates the condensed side bar
-     */
-    LeftSidebar.prototype.activateCondensedSidebar = function () {
-        this.body.attr('data-leftbar-compact-mode', 'condensed');
-    },
-
-    /**
-     * Deactivates the condensed side bar
-     */
-    LeftSidebar.prototype.deactivateCondensedSidebar = function() {
-        this.body.removeAttr('data-leftbar-compact-mode');
-    },
-  
-    /**
-     * Activates the scrollable sidenar
-     */
-    LeftSidebar.prototype.activateScrollableSidebar = function() {
-        this.body.attr('data-leftbar-compact-mode', 'scrollable');
-    },
-
-    /**
-     * Deactivates the scrollbar
-     */
-    LeftSidebar.prototype.deactivateScrollableSidebar = function() {
-        this.body.removeAttr('data-leftbar-compact-mode');
-    },
-
-    /**
-     * Activates the default theme
-     */
-    LeftSidebar.prototype.activateDefaultTheme = function () {
-        this._reset();
-    },
-    
-    /**
-     * Activates the light theme
-     */
-    LeftSidebar.prototype.activateLightTheme = function() {
-        this._reset();
-        this.body.attr('data-leftbar-theme', 'light');
-    },
-
-    /**
-     * Activates the dark theme
-     */
-    LeftSidebar.prototype.activateDarkTheme = function() {
-        this._reset();
-        this.body.attr('data-leftbar-theme', 'dark');
-    },
-
-    /**
-     * Initilizes the menu
-     */
-    LeftSidebar.prototype.initMenu = function() {
-        var self = this;
-
-        // resets everything
-        this._reset();
-
-        // click events
-        // Left menu collapse
-        $(document).on('click', '.button-menu-mobile', function(e) {
-            e.preventDefault();
-            self.body.toggleClass('sidebar-enable');
-
-            if (self.body.attr('data-layout') === 'full') {
-                self.body.toggleClass('hide-menu');
-            }
-            else {
-                if (self.body.attr('data-leftbar-compact-mode') === 'condensed') {
-                    self.deactivateCondensedSidebar();
-                } else {
-                    self.activateCondensedSidebar(); 
-                }
-            }
-
-			//TODO 
-			//$.cookie('leftMenu-collapse', 'show');
-            
+        // loader - Preloader
+        $(window).on('load', function () {
+            $('#status').fadeOut();
+            $('#preloader').delay(350).fadeOut('slow');
         });
 
-        // sidebar - main menu
-        if ($(".side-nav").length) { 
+        // Popovers
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+        // Tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        // offcanvas
+        const offcanvasElementList = document.querySelectorAll('.offcanvas')
+        const offcanvasList = [...offcanvasElementList].map(offcanvasEl => new bootstrap.Offcanvas(offcanvasEl))
+
+        //Toasts
+        var toastPlacement = document.getElementById("toastPlacement");
+        if (toastPlacement) {
+            document.getElementById("selectToastPlacement").addEventListener("change", function () {
+                if (!toastPlacement.dataset.originalClass) {
+                    toastPlacement.dataset.originalClass = toastPlacement.className;
+                }
+                toastPlacement.className = toastPlacement.dataset.originalClass + " " + this.value;
+            });
+        }
+
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl)
+        })
+
+        // Bootstrap Alert Live Example
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+        const alert = (message, type) => {
+            const wrapper = document.createElement('div')
+            wrapper.innerHTML = [
+                `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                `   <div>${message}</div>`,
+                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                '</div>'
+            ].join('')
+
+            alertPlaceholder.append(wrapper)
+        }
+
+        const alertTrigger = document.getElementById('liveAlertBtn')
+        if (alertTrigger) {
+            alertTrigger.addEventListener('click', () => {
+                alert('Nice, you triggered this alert message!', 'success')
+            })
+        }
+
+        // RTL Layout
+        if (document.getElementById('app-style').href.includes('rtl.min.css')) {
+            document.getElementsByTagName('html')[0].dir = "rtl";
+        }
+    }
+
+    // Portlet Widget (Card Reload, Collapse, and Delete)
+    function initPortletCard() {
+
+        var portletIdentifier = ".card"
+        var portletCloser = '.card a[data-bs-toggle="remove"]'
+        var portletRefresher = '.card a[data-bs-toggle="reload"]'
+        let self = this
+
+        // Panel closest
+        $(document).on("click", portletCloser, function (ev) {
+            ev.preventDefault();
+            var $portlet = $(this).closest(portletIdentifier);
+            var $portlet_parent = $portlet.parent();
+            $portlet.remove();
+            if ($portlet_parent.children().length == 0) {
+                $portlet_parent.remove();
+            }
+        });
+
+        // Panel Reload
+        $(document).on("click", portletRefresher, function (ev) {
+            ev.preventDefault();
+            var $portlet = $(this).closest(portletIdentifier);
+            // This is just a simulation, nothing is going to be reloaded
+            $portlet.append('<div class="card-disabled"><div class="card-portlets-loader"></div></div>');
+            var $pd = $portlet.find('.card-disabled');
+            setTimeout(function () {
+                $pd.fadeOut('fast', function () {
+                    $pd.remove();
+                });
+            }, 500 + 300 * (Math.random() * 5));
+        });
+    }
+
+    //  Multi Dropdown
+    function initMultiDropdown() {
+        $('.dropdown-menu a.dropdown-toggle').on('click', function () {
+            var dropdown = $(this).next('.dropdown-menu');
+            var otherDropdown = $(this).parent().parent().find('.dropdown-menu').not(dropdown);
+            otherDropdown.removeClass('show')
+            otherDropdown.parent().find('.dropdown-toggle').removeClass('show')
+            return false;
+        });
+    }
+
+    // Left Sidebar Menu (Vertical Menu)
+    function initLeftSidebar() {
+        var self = this;
+
+        if ($(".side-nav").length) {
             var navCollapse = $('.side-nav li .collapse');
             var navToggle = $(".side-nav li [data-bs-toggle='collapse']");
-            navToggle.on('click', function(e) {
+            navToggle.on('click', function (e) {
                 return false;
             });
 
@@ -133,101 +145,58 @@
                     $(this).parent().addClass("menuitem-active");
                     $(this).parent().parent().parent().addClass("show");
                     $(this).parent().parent().parent().parent().addClass("menuitem-active"); // add active to li of the current link
-                    
+
                     var firstLevelParent = $(this).parent().parent().parent().parent().parent().parent();
-                    if (firstLevelParent.attr('id') !== 'sidebar-menu')
-                        firstLevelParent.addClass("show");
-                    
+                    if (firstLevelParent.attr('id') !== 'sidebar-menu') firstLevelParent.addClass("show");
+
                     $(this).parent().parent().parent().parent().parent().parent().parent().addClass("menuitem-active");
-                    
+
                     var secondLevelParent = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent();
-                    if (secondLevelParent.attr('id') !== 'wrapper')
-                        secondLevelParent.addClass("show");
+                    if (secondLevelParent.attr('id') !== 'wrapper') secondLevelParent.addClass("show");
 
                     var upperLevelParent = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent();
-                    if (!upperLevelParent.is('body'))
-                        upperLevelParent.addClass("menuitem-active");
+                    if (!upperLevelParent.is('body')) upperLevelParent.addClass("menuitem-active");
                 }
             });
+
+
+            setTimeout(function () {
+                var activatedItem = document.querySelector('li.menuitem-active .active');
+                if (activatedItem != null) {
+                    var simplebarContent = document.querySelector('.leftside-menu .simplebar-content-wrapper');
+                    var offset = activatedItem.offsetTop - 300;
+                    if (simplebarContent && offset > 100) {
+                        scrollTo(simplebarContent, offset, 600);
+                    }
+                }
+            }, 200);
+
+            // scrollTo (Left Side Bar Active Menu)
+            function easeInOutQuad(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+            function scrollTo(element, to, duration) {
+                var start = element.scrollTop, change = to - start, currentTime = 0, increment = 20;
+                var animateScroll = function () {
+                    currentTime += increment;
+                    var val = easeInOutQuad(currentTime, start, change, duration);
+                    element.scrollTop = val;
+                    if (currentTime < duration) {
+                        setTimeout(animateScroll, increment);
+                    }
+                };
+                animateScroll();
+            }
         }
+    }
 
-
-               
-        //Horizontal Menu (For SM Screen)
-        var AllNavs = document.querySelectorAll('ul.navbar-nav .dropdown .dropdown-toggle');
-
-        var isInner = false;
-
-        AllNavs.forEach(function(element) {
-            element.addEventListener('click',function(event){
-                if(!element.parentElement.classList.contains('nav-item')){
-                    isInner = true;
-                    //element.parentElement.parentElement.classList.add('show');
-                    var parent = element.parentElement.parentElement.parentElement.querySelector('.nav-link');
-                    bootstrap.Dropdown.getInstance(parent).show();
-                    if(element.ariaExpanded){
-                        bootstrap.Dropdown.getInstance(element).hide();}
-                    else{
-                        bootstrap.Dropdown.getInstance(parent).show();
-                        }
-                    isInner = true;
-                 }
-            });
-            
-            element.addEventListener('hide.bs.dropdown', function(event){
-                if(isInner){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    isInner = false;
-                }
-            });
-            
-            
-            element.addEventListener('show.bs.dropdown', function(event){
-                if(!isInner && !element.parentElement.classList.contains('nav-item')){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    isInner = true;
-                }
-            });
-            
-         
-        });
-
-
- 
-
-    },
-
-    /**
-     * Initilizes the menu
-     */
-    LeftSidebar.prototype.init = function() {
-        this.initMenu();
-    },
-  
-    $.LeftSidebar = new LeftSidebar, $.LeftSidebar.Constructor = LeftSidebar
-}(window.jQuery),
-
-
-/**
- * Topbar
- * @param {*} $ 
- */
-function ($) {
-    'use strict';
-
-    var Topbar = function () {
-        this.$body = $('body'),
-        this.$window = $(window)
-    };
-
-    /**
-     * Initilizes the menu
-     */
-    Topbar.prototype.initMenu = function() {
-        if ($('.topnav-menu').length) {
-            $('.topnav-menu li a').each(function () {
+    // Topbar Menu (HOrizontal Menu)
+    function initTopbarMenu() {
+        if ($('.navbar-nav').length) {
+            $('.navbar-nav li a').each(function () {
                 var pageUrl = window.location.href.split(/[?#]/)[0];
                 if (this.href == pageUrl) {
                     $(this).addClass('active');
@@ -243,26 +212,25 @@ function ($) {
                 $('#navigation').slideToggle(400);
             });
         }
+    }
 
-
-    },
-    // init search
-    Topbar.prototype.initSearch = function() {
+    // Topbar Search Form
+    function initSearch() {
         // Serach Toggle
         var navDropdowns = $('.navbar-custom .dropdown:not(.app-search)');
 
         // hide on other click
         $(document).on('click', function (e) {
-            if(e.target.id =="top-search" || e.target.closest('#search-dropdown')){
+            if (e.target.id == "top-search" || e.target.closest('#search-dropdown')) {
                 $('#search-dropdown').addClass('d-block');
-            }else{
+            } else {
                 $('#search-dropdown').removeClass('d-block');
             }
             return true;
         });
 
         // Serach Toggle
-        $('#top-search').on('focus',function (e) {
+        $('#top-search').on('focus', function (e) {
             e.preventDefault();
             navDropdowns.children('.dropdown-menu.show').removeClass('show');
             $('#search-dropdown').addClass('d-block');
@@ -273,1061 +241,485 @@ function ($) {
         navDropdowns.on('show.bs.dropdown', function () {
             $('#search-dropdown').removeClass('d-block');
         });
-    },
+    }
 
-    /**
-     * Initilizes the menu
-     */
-    Topbar.prototype.init = function() {
-        this.initMenu();
+    // Topbar Fullscreen Button
+    function initfullScreenListener() {
+        var self = this;
+        var fullScreenBtn = document.querySelector('[data-toggle="fullscreen"]');
 
-        //this.initSearch();
-    },
-    $.Topbar = new Topbar, $.Topbar.Constructor = Topbar
-}(window.jQuery),
+        if (fullScreenBtn) {
+            fullScreenBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.body.classList.toggle('fullscreen-enable')
+                if (!document.fullscreenElement && /* alternative standard method */ !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) {
+                        document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                    }
+                } else {
+                    if (document.cancelFullScreen) {
+                        document.cancelFullScreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    }
+                }
+            });
+        }
+    }
 
-
-/**
- * RightBar
- * @param {*} $ 
- */
-function ($) {
-    'use strict';
-
-    var RightBar = function () {
-        this.body = $('body'),
-        this.window = $(window)
-    };
-
-    /** 
-     * Select the option based on saved config
-    */
-   RightBar.prototype._selectOptionsFromConfig = function() {
-        var config = $.App.getLayoutConfig();
-        if (config) {
-            // sideBarTheme
-
-            $('.end-bar input[type=checkbox]').prop('checked',false);
-
-            switch (config.sideBarTheme) {
-                case 'default':
-                    $('#default-check').prop('checked', true);
-                    break;
-                case 'light':
-                    $('#light-check').prop('checked', true);
-                    break;
-                case 'dark':
-                    $('#dark-check').prop('checked', true);
-                    break;
-            }
-
-            if (config.isBoxed) {
-                $('#boxed-check').prop('checked', true);
+    // Show/Hide Password
+    function initShowHidePassword() {
+        $("[data-password]").on('click', function () {
+            if ($(this).attr('data-password') == "false") {
+                $(this).siblings("input").attr("type", "text");
+                $(this).attr('data-password', 'true');
+                $(this).addClass("show-password");
             } else {
-                $('#fluid-check').prop('checked', true);
+                $(this).siblings("input").attr("type", "password");
+                $(this).attr('data-password', 'false');
+                $(this).removeClass("show-password");
             }
-            if (config.isCondensed) $('#condensed-check').prop('checked', true);
-            if (config.isScrollable) $('#scrollable-check').prop('checked', true);
-            if (!config.isScrollable && !config.isCondensed) $('#fixed-check').prop('checked', true);
-
-            // overall color scheme
-            if (!config.isDarkModeEnabled) {
-                $('#light-mode-check').prop('checked', true);
-                if (config.layout === 'vertical')
-                    $('input[type=checkbox][name=theme]').prop('disabled', false);
-            } 
-            if (config.isDarkModeEnabled) {
-                $('#dark-mode-check').prop('checked', true);
-                if (config.layout === 'vertical')
-                    $('input[type=checkbox][name=theme]').prop('disabled', false);
-            }
-        }
-    },
-  
-    /**
-     * Toggles the right sidebar
-     */
-    RightBar.prototype.toggleRightSideBar = function() {
-        var self = this;
-        self.body.toggleClass('end-bar-enabled');
-        self._selectOptionsFromConfig();
-    },
-
-    /**
-     * Initilizes the right side bar
-     */
-    RightBar.prototype.init = function() {
-        var self = this;
-
-        // right side-bar toggle
-        $(document).on('click', '.end-bar-toggle', function () {
-            self.toggleRightSideBar();
         });
-
-        $(document).on('click', 'body', function (e) {
-            if ($(e.target).closest('.end-bar-toggle, .end-bar').length > 0) {
-                return;
-            }
-
-            if (
-                $(e.target).closest('.leftside-menu, .side-nav').length > 0 ||
-                $(e.target).hasClass('button-menu-mobile') ||
-                $(e.target).closest('.button-menu-mobile').length > 0
-            ) {
-                return;
-            }
-            $('body').removeClass('end-bar-enabled');
-            $('body').removeClass('sidebar-enable');
-            return;
-        });
-
-        // width mode
-        $('input[type=checkbox][name=width]').change(function () {
-            switch ($(this).val()) {
-                case 'fluid':
-                    $.App.activateFluid();
-                    break;
-                case 'boxed':
-                    $.App.activateBoxed();
-                    break;
-            }
-            self._selectOptionsFromConfig();
-
-        });
-
-        // theme
-
-        $('input[type=checkbox][name=theme]').change(function () {
-            switch ($(this).val()) {
-                case 'default':
-                    $.App.activateDefaultSidebarTheme();
-                    break;
-                case 'light':
-                    $.App.activateLightSidebarTheme();
-                    break;
-                case 'dark':
-                    $.App.activateDarkSidebarTheme();
-                    break;
-            }
-
-            self._selectOptionsFromConfig();
-
-        });
-
-        // compact
-        $('input[type=checkbox][name=compact]').change(function () {
-            switch ($(this).val()) {
-                case 'fixed':
-                    $.App.deactivateCondensedSidebar();
-                    $.App.deactivateScrollableSidebar();
-                    break;
-                case 'scrollable':
-                    $.App.activateScrollableSidebar();
-                    break;
-                case 'condensed':
-                    $.App.activateCondensedSidebar();
-                    break;
-            }
-                        self._selectOptionsFromConfig();
-
-        });
-
-        // overall color scheme
-        $('input[type=checkbox][name=color-scheme-mode]').change(function () {
-            switch ($(this).val()) {
-                case 'light':
-                    $.App.deactivateDarkMode();
-                    // $.App.activateDefaultSidebarTheme();
-                    $('#default-check').prop('checked', true);
-                    $('input[type=checkbox][name=theme]').prop('disabled', false);
-                    break;
-                case 'dark':
-                    $.App.activateDarkMode();
-                    $('#dark-check').prop('checked', true);
-
-                    // $('input[type=radio][name=theme]').prop('disabled', true);
-                    break;
-            }
-
-            self._selectOptionsFromConfig();
-
-        });        
-
-        // reset
-        $('#resetBtn').on('click', function (e) {
-            e.preventDefault();
-            // reset to default
-            $.App.resetLayout(function() {
-                self._selectOptionsFromConfig();
-            });
-        });
-    },
-
-    $.RightBar = new RightBar, $.RightBar.Constructor = RightBar
-}(window.jQuery),
-
-
-/**
- * Layout and theme manager
- * @param {*} $ 
- */
-
-function ($) {
-    'use strict';
-
-    // Layout and theme manager
-    var SIDEBAR_THEME_DEFAULT = 'default';
-    var SIDEBAR_THEME_LIGHT = 'light';
-    var SIDEBAR_THEME_DARK = 'dark';
-
-    var DEFAULT_CONFIG = {
-        sideBarTheme: SIDEBAR_THEME_DEFAULT,
-        isBoxed: false,
-        isCondensed: false,
-        isScrollable: false,
-        isDarkModeEnabled: false
-    };
-
-    var LayoutThemeApp = function () {
-        this.body = $('body'),
-        this.window = $(window),
-        this._config = {};
-        this.defaultSelectedStyle = null;
-    };
-
-    /**
-    * Preserves the config
-    */
-    LayoutThemeApp.prototype._saveConfig = function(newConfig) {
-        $.extend(this._config, newConfig);
-        // sessionStorage.setItem('_HYPER_CONFIG_', JSON.stringify(this._config));
-    },
-
-    /**
-     * Get the stored config
-     */
-    LayoutThemeApp.prototype._getStoredConfig = function() {
-        var bodyConfig = this.body.data('layoutConfig');
-        var config = DEFAULT_CONFIG;
-        if (bodyConfig) {
-            config['sideBarTheme'] = bodyConfig['leftSideBarTheme'];
-            config['isBoxed'] = bodyConfig['layoutBoxed'];
-            config['isCondensed'] = bodyConfig['leftSidebarCondensed'];
-            config['isScrollable'] = bodyConfig['leftSidebarScrollable'];
-            config['isDarkModeEnabled'] = bodyConfig['darkMode'];
-        }
-        return config;
-    },
-
-    /**
-    * Apply the given config and sets the layout and theme
-    */
-    LayoutThemeApp.prototype._applyConfig = function() {
-        var self = this;
-
-        // getting the saved config if available
-        this._config = this._getStoredConfig();
-
-        // activate menus
-        $.LeftSidebar.init();
-
-        // sets the theme
-        switch (self._config.sideBarTheme) {
-            case SIDEBAR_THEME_DARK: {
-                self.activateDarkSidebarTheme();
-                break;
-            }
-            case SIDEBAR_THEME_LIGHT: {
-                self.activateLightSidebarTheme();
-                break;
-            }
-        }
-
-        // enable or disable the dark mode
-        if (self._config.isDarkModeEnabled)
-            self.activateDarkMode();
-        else
-            self.deactivateDarkMode();
-
-        // sets the boxed
-        if (self._config.isBoxed) self.activateBoxed();
-
-        // sets condensed view
-        if (self._config.isCondensed) self.activateCondensedSidebar();
-
-        // sets scrollable navbar
-        if (self._config.isScrollable) self.activateScrollableSidebar();
-    },
-
-    /**
-     * Initilizes the layout
-     */
-    LayoutThemeApp.prototype._adjustLayout = function() {
-        // in case of small size, add class enlarge to have minimal menu
-        if (this.window.width() >= 750 && this.window.width() <= 1028) {
-            this.activateCondensedSidebar(true);
-        } else {
-            var config = this._getStoredConfig();
-            if (!config.isCondensed && !config.isScrollable)
-                this.deactivateCondensedSidebar();
-        }
-    },
-
-    /**
-     * Activate fluid mode
-     */
-    LayoutThemeApp.prototype.activateFluid = function() {
-        this._saveConfig({ isBoxed: false });
-        this.body.attr('data-layout-mode', 'fluid');
-    },
-
-    /**
-     * Activate boxed mode
-     */
-    LayoutThemeApp.prototype.activateBoxed = function() {
-        this._saveConfig({ isBoxed: true });
-        this.body.attr('data-layout-mode', 'boxed');
-    },
-
-    /**
-     * Activates the condensed side bar
-     */
-    LayoutThemeApp.prototype.activateCondensedSidebar = function(ignoreToStore) {
-        if (!ignoreToStore) {
-            this._saveConfig({
-                isCondensed: true,
-                isScrollable: false
-            });
-        }
-        $.LeftSidebar.activateCondensedSidebar();
-    },
-
-    /**
-     * Deactivates the condensed side bar
-     */
-    LayoutThemeApp.prototype.deactivateCondensedSidebar = function() {
-        this._saveConfig({ isCondensed: false });
-        $.LeftSidebar.deactivateCondensedSidebar();
     }
 
-    /**
-     * Activates the scrollable sidenar
-     */
-    LayoutThemeApp.prototype.activateScrollableSidebar = function() {
-        this._saveConfig({ isScrollable: true, isCondensed: false });
-        $.LeftSidebar.activateScrollableSidebar();
-    },
+    // Form Validation
+    function initFormValidation() {
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        // Loop over them and prevent submission
+        document.querySelectorAll('.needs-validation').forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
 
-    /**
-     * Deactivates the scrollable sidenar
-     */
-    LayoutThemeApp.prototype.deactivateScrollableSidebar = function() {
-        this._saveConfig({ isScrollable: false });
-        $.LeftSidebar.deactivateScrollableSidebar();
-    },
-
-    /**
-     * Activates the default theme
-     */
-    LayoutThemeApp.prototype.activateDefaultSidebarTheme = function() {
-        $.LeftSidebar.activateDefaultTheme();
-        this._saveConfig({ sideBarTheme: SIDEBAR_THEME_DEFAULT });
-    },
-
-    /**
-     * Activates the light theme
-     */
-    LayoutThemeApp.prototype.activateLightSidebarTheme = function() {
-        // this._resetLayout();
-        $.LeftSidebar.activateLightTheme();
-        this._saveConfig({ sideBarTheme: SIDEBAR_THEME_LIGHT });
-    },
-
-    /**
-     * Activates the dark theme
-     */
-    LayoutThemeApp.prototype.activateDarkSidebarTheme = function() {
-        // this._resetLayout();
-        $.LeftSidebar.activateDarkTheme();
-        this._saveConfig({ sideBarTheme: SIDEBAR_THEME_DARK });
-    },
-
-    /**
-     * toggle the dark mode
-     */
-    LayoutThemeApp.prototype.activateDarkMode = function() {
-        var self = this;
-        this.body.css('visibility', 'hidden');
-        $("#light-style").attr("disabled", true);
-        $("#dark-style").removeAttr("disabled");
-
-        setTimeout(function() {
-            self.body.css('visibility', 'visible');
-        }, 500);
-        
-
-        if (!this.body.attr('data-layout') === "detached") {
-            $.LeftSidebar.activateDarkTheme();
-            this._saveConfig({ isDarkModeEnabled: true, sideBarTheme: SIDEBAR_THEME_DARK });
-        } else {
-            this._saveConfig({ isDarkModeEnabled: true });
-        }
+                form.classList.add('was-validated')
+            }, false)
+        })
     }
 
-    /**
-     * Deactivate the dark mode
-     */
-    LayoutThemeApp.prototype.deactivateDarkMode = function() {
-        var self = this;
-        this.body.css('visibility', 'hidden');
-        $("#dark-style").attr("disabled", true);
-        $("#light-style").removeAttr("disabled");
-
-        setTimeout(function() {
-            self.body.css('visibility', 'visible');
-        }, 500);
-        
-        this._saveConfig({ isDarkModeEnabled: false });
-    }
-
-    /**
-     * Clear out the saved config
-     */
-    LayoutThemeApp.prototype.clearSavedConfig = function() {
-        this._config = DEFAULT_CONFIG;
-    },
-
-    /**
-     * Gets the config
-     */
-    LayoutThemeApp.prototype.getConfig = function() {
-        return this._config;
-    },
-
-    /**
-     * Reset to default
-     */
-    LayoutThemeApp.prototype.reset = function(callback) {
-        this.clearSavedConfig();
-        
-        var self = this;
-        if($("#main-style-container").length) {
-            self.defaultSelectedStyle = $("#main-style-container").attr('href');
-        }
-        self.deactivateCondensedSidebar();
-        self.deactivateDarkMode();
-        self.activateDefaultSidebarTheme();
-        self.activateFluid();
-        // calling the call back to let the caller know that it's done
-        callback();
-    },
-
-    /**
-     * 
-     */
-    LayoutThemeApp.prototype.init = function() {
-        var self = this;
-
-        if($("#main-style-container").length) {
-            self.defaultSelectedStyle = $("#main-style-container").attr('href');
-        }
-        
-        // initilize the menu
-        this._applyConfig();
-
-        // adjust layout based on width
-        this._adjustLayout();
-
-        // on window resize, make menu flipped automatically
-        this.window.on('resize', function (e) {
-            e.preventDefault();
-            self._adjustLayout();
-        });
-
-        // topbar
-        $.Topbar.init();
-    },
-
-    $.LayoutThemeApp = new LayoutThemeApp, $.LayoutThemeApp.Constructor = LayoutThemeApp
-}(window.jQuery);
-/**
- * Theme: Hyper - Responsive Bootstrap 5 Admin Dashboard
- * Author: Coderthemes
- * Module/App: Main Js
- */
-
-
-!function ($) {
-    "use strict";
-
-    /**
-    Portlet Widget
-    */
-    var Portlet = function () {
-        this.$body = $("body"),
-            this.$portletIdentifier = ".card",
-            this.$portletCloser = '.card a[data-bs-toggle="remove"]',
-            this.$portletRefresher = '.card a[data-bs-toggle="reload"]'
-    };
-
-    //on init
-    Portlet.prototype.init = function () {
-        // Panel closest
-        var $this = this;
-        $(document).on("click", this.$portletCloser, function (ev) {
-            ev.preventDefault();
-            var $portlet = $(this).closest($this.$portletIdentifier);
-            var $portlet_parent = $portlet.parent();
-            $portlet.remove();
-            if ($portlet_parent.children().length == 0) {
-                $portlet_parent.remove();
-            }
-        });
-
-        // Panel Reload
-        $(document).on("click", this.$portletRefresher, function (ev) {
-            ev.preventDefault();
-            var $portlet = $(this).closest($this.$portletIdentifier);
-            // This is just a simulation, nothing is going to be reloaded
-            $portlet.append('<div class="card-disabled"><div class="card-portlets-loader"></div></div>');
-            var $pd = $portlet.find('.card-disabled');
-            setTimeout(function () {
-                $pd.fadeOut('fast', function () {
-                    $pd.remove();
-                });
-            }, 500 + 300 * (Math.random() * 5));
-        });
-    },
-        //
-        $.Portlet = new Portlet, $.Portlet.Constructor = Portlet
-
-}(window.jQuery),
-
-    function ($) {
-        'use strict';
-
-        var AdvanceFormApp = function () {
-            this.$body = $('body'),
-                this.$window = $(window)
-        };
-
-
-        /** 
-         * Initlizes the select2
-        */
-        AdvanceFormApp.prototype.initSelect2 = function () {
-            // Select2
+    // Form Advance
+    function initFormAdvance() {
+        // Select2
+        if (jQuery().select2) {
             $('[data-toggle="select2"]').select2();
-        },
+        }
 
-            /** 
-             * Initlized mask
-            */
-            AdvanceFormApp.prototype.initMask = function () {
-                $('[data-toggle="input-mask"]').each(function (idx, obj) {
-                    var maskFormat = $(obj).data("maskFormat");
-                    var reverse = $(obj).data("reverse");
-                    if (reverse != null)
-                        $(obj).mask(maskFormat, { 'reverse': reverse });
-                    else
-                        $(obj).mask(maskFormat);
-                });
-            },
+        // Input Mask
+        if (jQuery().mask) {
+            $('[data-toggle="input-mask"]').each(function (idx, obj) {
+                var maskFormat = $(obj).data("maskFormat");
+                var reverse = $(obj).data("reverse");
+                if (reverse != null)
+                    $(obj).mask(maskFormat, { 'reverse': reverse });
+                else
+                    $(obj).mask(maskFormat);
+            });
+        }
 
-            // Datetime and date range picker
-            AdvanceFormApp.prototype.initDateRange = function () {
-                var defaultOptions = {
-                    "cancelClass": "btn-light",
-                    "applyButtonClasses": "btn-success"
-                };
-
-                // date pickers
-                $('[data-toggle="date-picker"]').each(function (idx, obj) {
-                    var objOptions = $.extend({}, defaultOptions, $(obj).data());
-                    $(obj).daterangepicker(objOptions);
-                });
-
-                //date pickers ranges only
-                var start = moment().subtract(29, 'days');
-                var end = moment();
-                var defaultRangeOptions = {
-                    startDate: start,
-                    endDate: end,
-                    ranges: {
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    }
-                };
-
-                $('[data-toggle="date-picker-range"]').each(function (idx, obj) {
-                    var objOptions = $.extend({}, defaultRangeOptions, $(obj).data());
-                    var target = objOptions["targetDisplay"];
-                    //rendering
-                    $(obj).daterangepicker(objOptions, function (start, end) {
-                        if (target)
-                            $(target).html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                    });
-                });
-            },
-
-            // time picker
-            AdvanceFormApp.prototype.initTimePicker = function () {
-                var defaultOptions = {
-                    "showSeconds": true,
-                    "icons": {
-                        "up": "mdi mdi-chevron-up",
-                        "down": "mdi mdi-chevron-down"
-                    }
-                };
-
-                // time picker
-                $('[data-toggle="timepicker"]').each(function (idx, obj) {
-                    var objOptions = $.extend({}, defaultOptions, $(obj).data());
-                    $(obj).timepicker(objOptions);
-                });
-            },
-
-            // touchspin
-            AdvanceFormApp.prototype.initTouchspin = function () {
-                var defaultOptions = {
-                };
-
-                // touchspin
-                $('[data-toggle="touchspin"]').each(function (idx, obj) {
-                    var objOptions = $.extend({}, defaultOptions, $(obj).data());
-                    $(obj).TouchSpin(objOptions);
-                });
-            },
-
-            // maxlength
-            AdvanceFormApp.prototype.initMaxlength = function () {
-                var defaultOptions = {
-                    warningClass: "badge bg-success",
-                    limitReachedClass: "badge bg-danger",
-                    separator: ' out of ',
-                    preText: 'You typed ',
-                    postText: ' chars available.',
-                    placement: 'bottom',
-                };
-
-                // maxlength
-                $('[data-toggle="maxlength"]').each(function (idx, obj) {
-                    var objOptions = $.extend({}, defaultOptions, $(obj).data());
-                    $(obj).maxlength(objOptions);
-                });
-            },
-
-            /** 
-             * Initilize
-            */
-            AdvanceFormApp.prototype.init = function () {
-                this.initSelect2();
-                this.initMask();
-                this.initDateRange();
-                this.initTimePicker();
-                this.initTouchspin();
-                this.initMaxlength();
-            },
-
-            $.AdvanceFormApp = new AdvanceFormApp, $.AdvanceFormApp.Constructor = AdvanceFormApp
-
-
-    }(window.jQuery),
-
-    function ($) {
-        'use strict';
-
-        var NotificationApp = function () {
-        };
-
-
-        /**
-         * Send Notification
-         * @param {*} heading heading text
-         * @param {*} body body text
-         * @param {*} position position e.g top-right, top-left, bottom-left, etc
-         * @param {*} loaderBgColor loader background color
-         * @param {*} icon icon which needs to be displayed
-         * @param {*} hideAfter automatically hide after seconds
-         * @param {*} stack 
-         */
-        NotificationApp.prototype.send = function (heading, body, position, loaderBgColor, icon, hideAfter, stack, showHideTransition) {
-            // default      
-            if (!hideAfter)
-                hideAfter = 3000;
-            if (!stack)
-                stack = 1;
-
-            var options = {
-                heading: heading,
-                text: body,
-                position: position,
-                loaderBg: loaderBgColor,
-                icon: icon,
-                hideAfter: hideAfter,
-                stack: stack
+        // Date-Range-Picker
+        if (jQuery().daterangepicker) {
+            //date pickers ranges only
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+            var defaultRangeOptions = {
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
             };
 
-            if (showHideTransition)
-                options.showHideTransition = showHideTransition;
-            else
-                options.showHideTransition = 'fade';
-
-            $.toast().reset('all');
-            $.toast(options);
-        },
-
-            $.NotificationApp = new NotificationApp, $.NotificationApp.Constructor = NotificationApp
-
-    }(window.jQuery),
-
-    function ($) {
-        "use strict";
-
-        var Components = function () { };
-
-        //initializing tooltip
-        Components.prototype.initTooltipPlugin = function () {
-            $.fn.tooltip && $('[data-toggle="tooltip"]').tooltip()
-        },
-
-            //initializing popover
-            Components.prototype.initPopoverPlugin = function () {
-                $.fn.popover && $('[data-bs-toggle="popover"]').each(function (idx, obj) {
-                    $(this).popover();
+            $('[data-toggle="date-picker-range"]').each(function (idx, obj) {
+                var objOptions = $.extend({}, defaultRangeOptions, $(obj).data());
+                var target = objOptions["targetDisplay"];
+                //rendering
+                $(obj).daterangepicker(objOptions, function (start, end) {
+                    if (target)
+                        $(target).html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                 });
-            },
+            });
 
-            //initializing toast
-            Components.prototype.initToastPlugin = function () {
-                $.fn.toast && $('[data-toggle="toast"]').toast()
-            },
+            // Datetime and date range picker
+            var defaultOptions = {
+                "cancelClass": "btn-light",
+                "applyButtonClasses": "btn-success"
+            };
 
-            //initializing form validation
-            Components.prototype.initFormValidation = function () {
-                $(".needs-validation").on('submit', function (event) {
-                    $(this).addClass('was-validated');
-                    if ($(this)[0].checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        return false;
-                    }
-                    return true;
-                });
-            },
+            $('[data-toggle="date-picker"]').each(function (idx, obj) {
+                var objOptions = $.extend({}, defaultOptions, $(obj).data());
+                $(obj).daterangepicker(objOptions);
+            });
+        }
 
-            Components.prototype.initShowHidePassword = function () {
-                $("[data-password]").on('click', function () {
-                    if ($(this).attr('data-password') == "false") {
-                        $(this).siblings("input").attr("type", "text");
-                        $(this).attr('data-password', 'true');
-                        $(this).addClass("show-password");
-                    } else {
-                        $(this).siblings("input").attr("type", "password");
-                        $(this).attr('data-password', 'false');
-                        $(this).removeClass("show-password");
-                    }
-                });
-            },
-
-            Components.prototype.initMultiDropdown = function () {
-                $('.dropdown-menu a.dropdown-toggle').on('click', function () {
-                    if (
-                        !$(this)
-                            .next()
-                            .hasClass('show')
-                    ) {
-                        $(this)
-                            .parents('.dropdown-menu')
-                            .first()
-                            .find('.show')
-                            .removeClass('show');
-                    }
-                    var $subMenu = $(this).next('.dropdown-menu');
-                    $subMenu.toggleClass('show');
-
-                    return false;
-                });
-            },
-
-            Components.prototype.initSyntaxHighlight = function () {
-                //syntax
-                var entityMap = {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': '&quot;',
-                    "'": '&#39;',
-                    "/": '&#x2F;'
-                };
-                function escapeHtml(string) {
-                    return String(string).replace(/[&<>"'\/]/g, function (s) {
-                        return entityMap[s];
-                    });
+        // Bootstrap Timepicker
+        if (jQuery().timepicker) {
+            var defaultOptions = {
+                "showSeconds": true,
+                "icons": {
+                    "up": "mdi mdi-chevron-up",
+                    "down": "mdi mdi-chevron-down"
                 }
+            };
 
-                $(document).ready(function (e) {
-                    document.querySelectorAll("pre span.escape").forEach(function (element, n) {
-                        if (element.classList.contains("escape")) {
-                            var text = element.innerText;
+            $('[data-toggle="timepicker"]').each(function (idx, obj) {
+                var objOptions = $.extend({}, defaultOptions, $(obj).data());
+                $(obj).timepicker(objOptions);
+            });
+        }
+
+        // Bootstrap Touchspin
+        if (jQuery().TouchSpin) {
+            var defaultOptions = {
+
+            };
+
+            $('[data-toggle="touchspin"]').each(function (idx, obj) {
+                var objOptions = $.extend({}, defaultOptions, $(obj).data());
+                $(obj).TouchSpin(objOptions);
+            });
+        }
+
+        // Bootstrap Maxlength
+        if (jQuery().maxlength) {
+            var defaultOptions = {
+                warningClass: "badge bg-success",
+                limitReachedClass: "badge bg-danger",
+                separator: ' out of ',
+                preText: 'You typed ',
+                postText: ' chars available.',
+                placement: 'bottom',
+            };
+
+            $('[data-toggle="maxlength"]').each(function (idx, obj) {
+                var objOptions = $.extend({}, defaultOptions, $(obj).data());
+                $(obj).maxlength(objOptions);
+            });
+        }
+    }
+
+    function init() {
+        initComponents();
+        initPortletCard();
+        initMultiDropdown();
+        initLeftSidebar()
+        initTopbarMenu();
+        initSearch();
+        initfullScreenListener();
+        initShowHidePassword();
+        initFormValidation();
+        initFormAdvance();
+    }
+
+    init();
+
+})(jQuery)
+
+/**
+* Theme: Hyper - Responsive Bootstrap 5 Admin Dashboard
+* Author: Coderthemes
+* Module/App: Layout Js
+*/
+
+class ThemeCustomizer {
+
+    constructor() {
+        this.html = document.getElementsByTagName('html')[0]
+        this.config = {};
+        this.defaultConfig = window.config;
+    }
+
+    initConfig() {
+        this.defaultConfig = JSON.parse(JSON.stringify(window.defaultConfig));
+        this.config = JSON.parse(JSON.stringify(window.config));
+        this.setSwitchFromConfig();
+    }
+
+    changeMenuColor(color) {
+        this.config.menu.color = color;
+        this.html.setAttribute('data-menu-color', color);
+        this.setSwitchFromConfig();
+    }
+
+    changeLeftbarSize(size, save = true) {
+        this.html.setAttribute('data-sidenav-size', size);
+        if (save) {
+            this.config.sidenav.size = size;
+            this.setSwitchFromConfig();
+        }
+    }
+
+    changeLayoutMode(mode, save = true) {
+        this.html.setAttribute('data-layout-mode', mode);
+        if (save) {
+            this.config.layout.mode = mode;
+            this.setSwitchFromConfig();
+        }
+    }
+
+    changeLayoutPosition(position) {
+        this.config.layout.position = position;
+        this.html.setAttribute('data-layout-position', position);
+        this.setSwitchFromConfig();
+    }
+
+    changeLayoutColor(color) {
+        this.config.theme = color;
+        this.html.setAttribute('data-theme', color);
+        this.setSwitchFromConfig();
+    }
+
+    changeTopbarColor(color) {
+        this.config.topbar.color = color;
+        this.html.setAttribute('data-topbar-color', color);
+        this.setSwitchFromConfig();
+    }
+
+    changeSidebarUser(showUser) {
+
+        this.config.sidenav.user = showUser;
+        if (showUser) {
+            this.html.setAttribute('data-sidenav-user', showUser);
+        } else {
+            this.html.removeAttribute('data-sidenav-user');
+        }
+        this.setSwitchFromConfig();
+    }
+
+    resetTheme() {
+        this.config = JSON.parse(JSON.stringify(window.defaultConfig));
+        this.changeMenuColor(this.config.menu.color);
+        this.changeLeftbarSize(this.config.sidenav.size);
+        this.changeLayoutColor(this.config.theme);
+        this.changeLayoutMode(this.config.layout.mode);
+        this.changeLayoutPosition(this.config.layout.position);
+        this.changeTopbarColor(this.config.topbar.color);
+        this.changeSidebarUser(this.config.sidenav.user);
+        this._adjustLayout();
+    }
+
+    initSwitchListener() {
+        var self = this;
+        document.querySelectorAll('input[name=data-menu-color]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeMenuColor(element.value);
+            })
+        });
+
+        document.querySelectorAll('input[name=data-sidenav-size]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeLeftbarSize(element.value);
+            })
+        });
+
+        document.querySelectorAll('input[name=data-theme]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeLayoutColor(element.value);
+            })
+        });
+        document.querySelectorAll('input[name=data-layout-mode]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeLayoutMode(element.value);
+            })
+        });
+
+        document.querySelectorAll('input[name=data-layout-position]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeLayoutPosition(element.value);
+            })
+        });
+        document.querySelectorAll('input[name=data-layout]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                window.location = element.value === 'horizontal' ? 'layouts-horizontal.html' : 'index.html'
+            })
+        });
+        document.querySelectorAll('input[name=data-topbar-color]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeTopbarColor(element.value);
+            })
+        });
+        document.querySelectorAll('input[name=sidebar-user]').forEach(function (element) {
+            element.addEventListener('change', function (e) {
+                self.changeSidebarUser(element.checked);
+            })
+        });
+
+
+        //TopBar Light Dark
+        var themeColorToggle = document.getElementById('light-dark-mode');
+        if (themeColorToggle) {
+            themeColorToggle.addEventListener('click', function (e) {
+
+                if (self.config.theme === 'light') {
+                    self.changeLayoutColor('dark');
+                } else {
+                    self.changeLayoutColor('light');
+                }
+            });
+        }
+
+        var resetBtn = document.querySelector('#reset-layout')
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function (e) {
+                self.resetTheme();
+            });
+        }
+
+        var menuToggleBtn = document.querySelector('.button-toggle-menu');
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', function () {
+                var configSize = self.config.sidenav.size;
+                var size = self.html.getAttribute('data-sidenav-size', configSize);
+
+                if (size === 'full') {
+                    self.showBackdrop();
+                } else {
+                    if (configSize == 'fullscreen') {
+                        if (size === 'fullscreen') {
+                            self.changeLeftbarSize(configSize == 'fullscreen' ? 'default' : configSize, false);
                         } else {
-                            var text = element.innerText;
+                            self.changeLeftbarSize('fullscreen', false);
                         }
-                        text = text.replace(/^\n/, '').trimRight();// goodbye starting whitespace
-                        var to_kill = Infinity;
-                        var lines = text.split("\n");
-                        for (var i = 0; i < lines.length; i++) {
-                            if (!lines[i].trim()) { continue; }
-                            to_kill = Math.min(lines[i].search(/\S/), to_kill);
+                    } else {
+                        if (size === 'condensed') {
+                            self.changeLeftbarSize(configSize == 'condensed' ? 'default' : configSize, false);
+                        } else {
+                            self.changeLeftbarSize('condensed', false);
                         }
-                        var out = [];
-                        for (var i = 0; i < lines.length; i++) {
-                            out.push(lines[i].replace(new RegExp("^ {" + to_kill + "}", "g"), ""));
-                        }
-                        element.innerText = out.join("\n");
-                    });
-
-                    document.querySelectorAll('pre span.escape').forEach(function (block) {
-                        hljs.highlightBlock(block);
-                    });
-                });
-            },
-
-
-            //initilizing
-            Components.prototype.init = function () {
-                this.initTooltipPlugin(),
-                    this.initPopoverPlugin(),
-                    this.initToastPlugin(),
-                    this.initFormValidation(),
-                    this.initShowHidePassword(),
-                    this.initMultiDropdown(),
-                    this.initSyntaxHighlight();
-            },
-
-            $.Components = new Components, $.Components.Constructor = Components
-
-    }(window.jQuery),
-
-
-    function ($) {
-        'use strict';
-
-        var App = function () {
-            this.$body = $('body'),
-                this.$window = $(window)
-        };
-
-        /**
-         * Activates the default theme
-         */
-        App.prototype.activateDefaultSidebarTheme = function () {
-            $.LayoutThemeApp.activateDefaultSidebarTheme();
-        },
-
-            /**
-             * Activates the light theme
-             */
-            App.prototype.activateLightSidebarTheme = function () {
-                $.LayoutThemeApp.activateLightSidebarTheme();
-            },
-
-            /**
-             * Activates the dark theme
-             */
-            App.prototype.activateDarkSidebarTheme = function () {
-                $.LayoutThemeApp.activateDarkSidebarTheme();
-            },
-
-            /**
-             * Activates the condensed sidebar
-             */
-            App.prototype.activateCondensedSidebar = function () {
-                $.LayoutThemeApp.activateCondensedSidebar();
-            },
-
-            /**
-             * Deactivates the condensed sidebar
-             */
-            App.prototype.deactivateCondensedSidebar = function () {
-                $.LayoutThemeApp.deactivateCondensedSidebar();
-            },
-
-            /**
-             * Activates the scrollable sidebar
-             */
-            App.prototype.activateScrollableSidebar = function () {
-                $.LayoutThemeApp.activateScrollableSidebar();
-            },
-
-            /**
-             * Deactivates the scrollable
-             */
-            App.prototype.deactivateScrollableSidebar = function () {
-                $.LayoutThemeApp.deactivateScrollableSidebar();
-            },
-
-            /**
-             * Activates the boxed mode
-             */
-            App.prototype.activateBoxed = function () {
-                $.LayoutThemeApp.activateBoxed();
-            },
-
-            /**
-             * Activate the fluid mode
-             */
-            App.prototype.activateFluid = function () {
-                $.LayoutThemeApp.activateFluid();
-            },
-
-            /**
-             * Toggle the dark mode
-             */
-            App.prototype.activateDarkMode = function () {
-                $.LayoutThemeApp.activateDarkMode();
-            },
-
-            /**
-             * Deactivate the dark mode
-             */
-            App.prototype.deactivateDarkMode = function () {
-                $.LayoutThemeApp.deactivateDarkMode();
-            },
-
-            /**
-             * clear the saved layout related settings
-             */
-            App.prototype.clearSavedConfig = function () {
-                $.LayoutThemeApp.clearSavedConfig();
-            },
-
-            /**
-             * Gets the layout config
-             */
-            App.prototype.getLayoutConfig = function () {
-                return $.LayoutThemeApp.getConfig();
-            }
-
-        /**
-         * Reset the layout
-         */
-        App.prototype.resetLayout = function (callback) {
-            $.LayoutThemeApp.reset(callback);
-        },
-
-            /**
-             * initilizing
-             */
-            App.prototype.init = function () {
-                $.LayoutThemeApp.init();
-
-                // remove loading
-                setTimeout(function () {
-                    document.body.classList.remove('loading');
-                }, 400);
-				
-				/*
-                $.RightBar.init();
-
-                // showing the sidebar on load if user is visiting the page first time only
-                var bodyConfig = this.$body.data('layoutConfig');
-                if (window.sessionStorage && bodyConfig && bodyConfig.hasOwnProperty('showRightSidebarOnStart') && bodyConfig['showRightSidebarOnStart']) {
-                    var alreadyVisited = sessionStorage.getItem("_HYPER_VISITED_");
-                    if (!alreadyVisited) {
-                        $.RightBar.toggleRightSideBar();
-                        sessionStorage.setItem("_HYPER_VISITED_", true);
                     }
                 }
-				*/
 
-                //creating portles
-                $.Portlet.init();
-                $.AdvanceFormApp.init();
-                $.Components.init();
+                // Todo: old implementation
+                self.html.classList.toggle('sidebar-enable');
 
-                // loader - Preloader
-                $(window).on('load', function () {
-                    $('#status').fadeOut();
-                    $('#preloader').delay(350).fadeOut('slow');
-                });
+            });
+        }
 
+        var menuCloseBtn = document.querySelector('.button-close-fullsidebar');
+        if (menuCloseBtn) {
+            menuCloseBtn.addEventListener('click', function () {
+                self.html.classList.remove('sidebar-enable');
+                self.hideBackdrop();
+            });
+        }
 
+        var hoverBtn = document.querySelectorAll('.button-sm-hover');
+        hoverBtn.forEach(function (element) {
+            element.addEventListener('click', function () {
+                var configSize = self.config.sidenav.size;
+                var size = self.html.getAttribute('data-sidenav-size', configSize);
 
-                //Pop Overs
-                
-                var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-                var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                    return new bootstrap.Popover(popoverTriggerEl);
-                });
-                
-
-                //Tooltips
-
-                // document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(element) {
-                //     //new bootstrap.Tooltip(element);
-                //     element.addEventListener("mouseover", function( event ) {
-                //         new bootstrap.Tooltip(element).show();
-                //     });
-                // });
-
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                    return new bootstrap.Tooltip(tooltipTriggerEl)
-                })
-  
-
-                // offcanvas
-                var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
-                var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
-                  return new bootstrap.Offcanvas(offcanvasEl)
-                })
-
-
-
-                //Toasts
-
-                var toastPlacement = document.getElementById("toastPlacement");
-                if (toastPlacement) {
-                    document.getElementById("selectToastPlacement").addEventListener("change", function () {
-                        if (!toastPlacement.dataset.originalClass) {
-                            toastPlacement.dataset.originalClass = toastPlacement.className;
-                        }
-                        toastPlacement.className = toastPlacement.dataset.originalClass + " " + this.value;
-                    });
+                if (size === 'sm-hover-active') {
+                    self.changeLeftbarSize('sm-hover', false);
+                } else {
+                    self.changeLeftbarSize('sm-hover-active', false);
                 }
-    
-                var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-                var toastList = toastElList.map(function (toastEl) {
-                    return new bootstrap.Toast(toastEl)
-                })
+            });
+        })
+    }
+
+    showBackdrop() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'custom-backdrop';
+        backdrop.classList = 'offcanvas-backdrop fade show';
+        document.body.appendChild(backdrop);
+        document.body.style.overflow = "hidden";
+        if (window.innerWidth > 767) {
+            document.body.style.paddingRight = "15px";
+        }
+        const self = this
+        backdrop.addEventListener('click', function (e) {
+            self.html.classList.remove('sidebar-enable');
+            self.hideBackdrop();
+        })
+    }
+
+    hideBackdrop() {
+        var backdrop = document.getElementById('custom-backdrop');
+        if (backdrop) {
+            document.body.removeChild(backdrop);
+            document.body.style.overflow = null;
+            document.body.style.paddingRight = null;
+        }
+    }
 
 
-                //  RTL support js
-                if(document.getElementById('light-style').href.includes('rtl.min.css')){
-                    document.getElementsByTagName('html')[0].dir="rtl";
+    initWindowSize() {
+        var self = this;
+        window.addEventListener('resize', function (e) {
+            self._adjustLayout();
+        })
+    }
+
+    _adjustLayout() {
+        var self = this;
+
+        if (window.innerWidth <= 767.98) {
+            self.changeLeftbarSize('full', false);
+        } else if (window.innerWidth >= 767 && window.innerWidth <= 1140) {
+            if (self.config.sidenav.size !== 'full' && self.config.sidenav.size !== 'fullscreen') {
+                if (self.config.sidenav.size === 'sm-hover') {
+                    self.changeLeftbarSize('condensed');
+                } else {
+                    self.changeLeftbarSize('condensed', false);
                 }
+            }
+        } else {
+            self.changeLeftbarSize(self.config.sidenav.size);
+            self.changeLayoutMode(self.config.layout.mode);
+        }
+    }
 
-                if(document.getElementById('dark-style').href.includes('rtl.min.css')){
-                    document.getElementsByTagName('html')[0].dir="rtl";
-                }
+    setSwitchFromConfig() {
 
-            },
+        sessionStorage.setItem('__HYPER_CONFIG__', JSON.stringify(this.config));
+        // localStorage.setItem('__HYPER_CONFIG__', JSON.stringify(this.config));
 
-            $.App = new App, $.App.Constructor = App
-    }(window.jQuery),
+        document.querySelectorAll('.right-bar input[type=checkbox]').forEach(function (checkbox) {
+            checkbox.checked = false;
+        })
 
-    //initializing main application module
-    function ($) {
-        "use strict";
-        $.App.init();
+        var config = this.config;
+        if (config) {
+            var layoutNavSwitch = document.querySelector('input[type=radio][name=data-layout][value=' + config.nav + ']');
+            var layoutColorSwitch = document.querySelector('input[type=radio][name=data-theme][value=' + config.theme + ']');
+            var layoutModeSwitch = document.querySelector('input[type=radio][name=data-layout-mode][value=' + config.layout.mode + ']');
+            var topbarColorSwitch = document.querySelector('input[type=radio][name=data-topbar-color][value=' + config.topbar.color + ']');
+            var menuColorSwitch = document.querySelector('input[type=radio][name=data-menu-color][value=' + config.menu.color + ']');
+            var leftbarSizeSwitch = document.querySelector('input[type=radio][name=data-sidenav-size][value=' + config.sidenav.size + ']');
+            var layoutSizeSwitch = document.querySelector('input[type=radio][name=data-layout-position][value=' + config.layout.position + ']');
+            var sidebarUserSwitch = document.querySelector('input[type=checkbox][name=sidebar-user]');
 
+            if (layoutNavSwitch) layoutNavSwitch.checked = true;
+            if (layoutColorSwitch) layoutColorSwitch.checked = true;
+            if (layoutModeSwitch) layoutModeSwitch.checked = true;
+            if (topbarColorSwitch) topbarColorSwitch.checked = true;
+            if (menuColorSwitch) menuColorSwitch.checked = true;
+            if (leftbarSizeSwitch) leftbarSizeSwitch.checked = true;
+            if (layoutSizeSwitch) layoutSizeSwitch.checked = true;
+            if (sidebarUserSwitch && config.sidenav.user.toString() === "true") sidebarUserSwitch.checked = true;
+        }
+    }
 
+    init() {
+        this.initConfig();
+        this.initSwitchListener();
+        this.initWindowSize();
+        this._adjustLayout();
+        this.setSwitchFromConfig();
+    }
+}
 
-
-
-    }(window.jQuery);
+new ThemeCustomizer().init();

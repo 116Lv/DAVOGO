@@ -35,7 +35,7 @@
 						<input type="hidden" name="pageIndex" value="${searchParams.pageIndex}"/>
 	    
 					    <div class="row mb-2">
-					        <div class="col-sm-8 col-lg-6">
+					        <div class="col-sm-12 col-lg-12">
 					            <div class="text-end">
 					            	<div class="btn-group btn-group-sm">
 					            		
@@ -43,7 +43,7 @@
 									<button class="btn btn-sm btn-outline-secondary ms-1" type="button"
 									    data-bs-toggle="collapse" href="#searchCollapse"
 									    aria-expanded="false" aria-controls="searchCollapse" >
-									    <i class="dripicons-toggles" title="검색 toggle"></i>
+									    <i class="mdi mdi-cog-outline" title="검색 toggle"></i>
 									</button>
 					            </div>
 					        </div>

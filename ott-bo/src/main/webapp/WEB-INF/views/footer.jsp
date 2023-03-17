@@ -22,21 +22,3 @@
 	    </div> -->
 	</footer>
 	<!-- end Footer -->
-
-<%-- 직원 검색 --%>
-<div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-	</div>
-</div>
-
-<%-- 거래처 검색 --%>
-<div id="partner-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-	</div>
-</div>
-
-<%-- 모델 검색 --%>
-<div id="model-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-	</div>
-</div>

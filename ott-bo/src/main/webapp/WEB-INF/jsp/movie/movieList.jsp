@@ -49,7 +49,7 @@
 									<button class="btn btn-sm btn-outline-secondary ms-1" type="button"
 									    data-bs-toggle="collapse" href="#searchCollapse"
 									    aria-expanded="false" aria-controls="searchCollapse" >
-									    <i class="dripicons-toggles" title="검색 toggle"></i>
+									    <i class="mdi mdi-cog-outline" title="검색 toggle"></i>
 									</button>
 					            </div>
 					        </div>

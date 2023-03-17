@@ -18,30 +18,41 @@
 
 	<title>HOME | 게임 포탈 시스템</title>
 
-	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
-	
-    <!-- third party css -->
-	<link href="<c:url value="/css/vendor/dataTables.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/vendor/responsive.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/vendor/buttons.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/vendor/select.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/vendor/fixedHeader.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/vendor/fixedColumns.bootstrap5.css"/>" rel="stylesheet" type="text/css" />
-    <!-- third party css end -->
+<!-- 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="<c:url value="/css/common.css"/>">
 
-   	<!-- App css -->
-    <link href="<c:url value="/css/icons.min.css"/>" rel="stylesheet" type="text/css" />
-<%--     <link href="<c:url value="/css/app.css"/>" rel="stylesheet" type="text/css" id="light-style" /> --%>
-    <link href="<c:url value="/css/app.min.css"/>" rel="stylesheet" type="text/css" id="light-style" />
-    <link href="<c:url value="/css/app-dark.min.css"/>" rel="stylesheet" type="text/css" id="dark-style" />
+	<!-- Daterangepicker css -->
+    <link rel="stylesheet" href="<c:url value="/js/vendor/daterangepicker/daterangepicker.css"/>">
 
+    <!-- Datatables css -->
+    <link href="<c:url value="/js/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/js/vendor/datatables.net-keytable-bs5/css/keyTable.bootstrap5.min.css"/>" rel="stylesheet" type="text/css" />
+
+	<!-- Theme Config Js -->
+    <script src="<c:url value="/js/hyper-config.js"/>"></script>
     
-	<link href="<c:url value="/css/dynatree/ui.dynatree.css"/>" rel="stylesheet" type="text/css" />
-<%-- 	<link href="<c:url value="/css/dynatree/jquery.contextMenu.css"/>" rel="stylesheet" type="text/css" /> --%>
-	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
-    <link href="<c:url value="/css/game/common.css"/>" rel="stylesheet" type="text/css" />
+     <!-- Vendor js -->
+    <script src="<c:url value="/js/vendor.min.js"/>"></script>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<!--     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+
+    <!-- App css -->
+    <link href="<c:url value="/css/app-saas.min.css"/>" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="<c:url value="/css/icons.min.css"/>" rel="stylesheet" type="text/css" />
+    
+    <!-- 시간 Timer css -->
+    <link href="<c:url value="/js/vendor/flatpickr/flatpickr.min.css"/>" rel="stylesheet" type="text/css" />
+    
+	<!-- Plugin css -->
+    <link rel="stylesheet" href="<c:url value="/js/vendor/jquery-toast-plugin/jquery.toast.min.css"/>">
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
 
 </head>
 
