@@ -1,0 +1,46 @@
+.required:after {
+	content: " *";
+	color: red;
+}
+
+/* dynatree icon */
+span.root span.dynatree-icon
+{
+	background-position: 0 0;
+	background-image: url("../images/dynatree/root.gif");
+}
+
+span.folder span.dynatree-icon
+{
+	background-position: 0 0;
+	background-image: url("../images/dynatree/folder.png");
+}
+
+ul.dynatree-container {
+	border: 1px solid #eef2f7;
+}
+
+/* validation */
+.error {
+	color: red;
+	font-size: 9pt;
+}
+
+/* div 하단에 점으로 된 줄 긋기 */
+.hr-b {
+	border-bottom: 1px dashed var(--ct-gray-300);
+}
+
+.readonly {
+	background-color: var(--ct-gray-200) !important;
+  	opacity: 1;
+}
+
+/*
+.modal:nth-of-type(odd) {
+    z-index: 1062 !important;
+}
+.modal-backdrop.show:nth-of-type(odd) {
+    z-index: 1061 !important;
+}
+*/
