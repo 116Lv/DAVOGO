@@ -22,7 +22,7 @@ public class GameBootApplication extends SpringBootServletInitializer {
 		System.out.println("##### GameBootApplication Start #####");
 
 		SpringApplication springApplication = new SpringApplication(GameBootApplication.class);
-		springApplication.setBannerMode(Banner.Mode.OFF);
+		//springApplication.setBannerMode(Banner.Mode.OFF);
 		//springApplication.setLogStartupInfo(false);
 		springApplication.run(args);
 

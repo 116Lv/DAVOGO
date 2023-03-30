@@ -16,7 +16,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<c:url value="/images/favicon.ico"/>" />
 
-	<title>HOME | 게임 포탈 시스템</title>
+	<title>HOME | Davogo</title>
 
 <!-- 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="<c:url value="/css/common.css"/>">

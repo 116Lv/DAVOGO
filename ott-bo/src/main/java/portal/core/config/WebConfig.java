@@ -23,8 +23,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import portal.core.interceptor.AuthenticInterceptor;
-
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "portal", excludeFilters = {

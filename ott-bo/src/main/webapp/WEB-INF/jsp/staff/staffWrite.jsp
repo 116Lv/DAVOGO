@@ -5,6 +5,37 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 
+<style>
+	div.center {
+      width: 100%;
+      display:flex;
+    }
+    
+    div.left {
+      width: 50%;
+      padding: 30px;
+      float: left;
+      box-sizing: border-box;
+      border: 1px solid;
+    }
+    
+    div.right {
+      width: 50%;
+      padding: 30px;
+      float: right;
+      box-sizing: border-box;
+      /* border: 1px solid; */
+    }
+    
+  	input[type=text] {
+	  width: 100%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  display: inline-block;
+	  border: none;
+	}
+	
+</style>
 
 <!-- 플러그인에서 제공해주는 css 로딩 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
@@ -16,53 +47,23 @@
 	
 <!-- Start Content-->
 <div class="container-fluid">
-    
+
+    <form id="staffForm" action="/staff/save.do" method="post">
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
+            	<div class="page-title-right">
+	            	<a href="<c:url value="/staff.do"/>" class="btn btn-primary btn-sm">목록</a>
+	               	<button type="submit" class="btn btn-primary btn-sm">저장</button>
+	            </div>
                 <h4 class="page-title">직원 등록/수정</h4>
             </div>
         </div>
     </div>     
     <!-- end page title -->
     
-    <style>
- 		div.content {
-	      width: 100%;
-	      display:flex;
-	    }
-	    
-	    div.left {
-	      width: 50%;
-	      padding: 30px;
-	      float: left;
-	      box-sizing: border-box;
-	      border: 1px solid;
-	    }
-	    
-	    div.right {
-	      width: 50%;
-	      padding: 30px;
-	      float: right;
-	      box-sizing: border-box;
-	      /* border: 1px solid; */
-	    }
-	    
-	  	input[type=text] {
-		  width: 100%;
-		  padding: 15px;
-		  margin: 5px 0 22px 0;
-		  display: inline-block;
-		  border: none;
-		}
-		
-    </style>
-    
-    
-    <form action="/staff/save.do" method="post">
-    	<button type="submit" class="btn btn-primary btn-sm">저장</button>
-    	<div class="content">
+    	<div class="center">
     		<div class="left">
 	    		<h2>기본정보</h2>
 	    		<hr>

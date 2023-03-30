@@ -63,7 +63,7 @@
 			<p>${item.writer}</p>
 			
 			<label for="start_date"><b>공지일</b></label>
-			<p>${item.startDate}</p>
+			<p>${item.saveDate}</p>
 			
 			<label for="content"><b>공지내용</b></label>
 			<p>${item.content}</p>

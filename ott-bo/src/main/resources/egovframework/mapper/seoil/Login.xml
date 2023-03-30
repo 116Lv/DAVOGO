@@ -7,7 +7,7 @@
 		select count(*) 
 		from staff
 		where id = #{staffId} 
-		and password = #{password}
+		and `password` = #{password}
 	</select>
 	
 </mapper>

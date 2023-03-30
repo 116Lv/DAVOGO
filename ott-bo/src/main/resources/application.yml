@@ -9,17 +9,18 @@ server:
           enabled: true
           force: true
 
+
 logging:
     level:
         web: DEBUG
-    config: classpath:logback-${spring.profiles.active}.xml
+    config: classpath:logback-spring.xml
       
 
 spring: 
     application:
         name: game-bo
-    profiles:
-        active: local
+#    profiles:
+#        active: local
     message:
         basename: egovframework/message/com/message-common
     mvc:
@@ -39,3 +40,13 @@ transaction:
         timeout: 20
     write:
         timeout: 20
+
+file:
+  storePath: C:/OTT/img/
+  replaceSrc: C:/OTT/
+  replaceTrg: /
+  
+app:
+  kobis:
+    api-key: 623e218d4f42aed8cf65862c1e803746
+    item-per-page: 10

@@ -56,7 +56,7 @@
                         </div>
                     </form>
 
-                    <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
+                    <%-- <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
                         <!-- item-->
                         <div class="dropdown-header noti-title">
                             <h5 class="text-overflow mb-2">Found <span class="text-danger">17</span> results</h5>
@@ -108,7 +108,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> --%>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
                     </div>
                 </li>
 
-                <li class="dropdown">
+                <%-- <li class="dropdown">
                     <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="<c:url value="/images/flags/korea.jpg"/>" alt="user-image" class="me-0 me-sm-1" height="12">
                         <span class="align-middle d-none d-lg-inline-block">Korean</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
@@ -132,11 +132,11 @@
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
                         <!-- 베트남어-->
-                        <%--
+                        
                         <a href="javascript:void(0);" class="dropdown-item">
                             <img src="<c:url value="/images/flags/vietnam.jpg"/>" alt="user-image" class="me-1" height="12"> <span class="align-middle">Vietnam</span>
                         </a>
-                         --%>
+                        
 
                         <!-- 영어 -->
                         <a href="javascript:void(0);" class="dropdown-item">
@@ -144,14 +144,14 @@
                         </a>
 
                     </div>
-                </li>
+                </li> --%>
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="ri-notification-3-line font-22"></i>
                         <span class="noti-icon-badge"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
+                    <%-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
                         <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                             <div class="row align-items-center">
                                 <div class="col">
@@ -273,14 +273,14 @@
                             View All
                         </a>
 
-                    </div>
+                    </div> --%>
                 </li>
 				
-                <li class="d-none d-sm-inline-block">
+                <!-- <li class="d-none d-sm-inline-block">
                     <a class="nav-link" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
                         <i class="ri-settings-3-line font-22"></i>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="d-none d-sm-inline-block">
                     <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" title="Theme Mode">

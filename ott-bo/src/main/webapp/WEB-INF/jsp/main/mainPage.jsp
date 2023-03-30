@@ -20,7 +20,7 @@
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of Users">Users</h5>
 							<!-- Unum은 고객수 -->
-							<h3 class="mt-3 mb-3">${Unum}777</h3>
+							<h3 class="mt-3 mb-3">${Unum}</h3>
 						</div>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of Movies">Movies</h5>
 							<!-- Mnum은 현재 관리되고 있는 영화수 -->
-							<h3 class="mt-3 mb-3">${Mnum}777</h3>
+							<h3 class="mt-3 mb-3">${Mnum}</h3>
 						</div>
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of TV Programs">TV Programs</h5>
 							<!-- Tnum은 현재 관리되고 있는 tv프로그램수 -->
-							<h3 class="mt-3 mb-3">${Tnum}777</h3>
+							<h3 class="mt-3 mb-3">${Tnum}</h3>
 						</div>
 					</div>
 				</div>
@@ -61,7 +61,39 @@
 					<h4 class="header-title">사내게시판</h4>
 				</div>
 				<div class="card-body">
-					
+					<div class="table-responsive">
+						<table class="table table-centered table-no-wrap table-hover mb-0">
+							<thead>
+								<tr class="text-center">
+									<th scope="col">번호</th>
+									<th scope="col">제목</th>
+									<th scope="col">작성자명</th>
+									<th scope="col">등록일</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:choose>
+								<c:when test="${not empty list}">
+									<c:forEach var="item" items="${list}" varStatus="status">
+									<tr class="text-center">
+										<td>${item.num}</td>
+										<td>
+											<a href="/board/view.do?board_id=${item.boardId}">${item.title}</a>
+										</td>
+										<td>${item.writer}</td>
+										<td>${item.saveDate}</td>
+									</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="text-center">데이터가 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -72,7 +104,7 @@
 			<div class="card">
 				<div class="card-header">
 					<!-- 최근 5~10개정도의 리뷰 노출 -->
-					<h4 class="header-title">Recent Customer's Review</h4>
+					<h4 class="header-title">고객들의 최근 리뷰</h4>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -118,6 +150,39 @@
 				</div>
 				<div class="card-body">
 					<!-- 영화,tv프로그램별 업데이트된 날짜 표시 -->
+					<div class="table-responsive">
+						<table class="table table-centered table-no-wrap table-hover mb-0">
+							<thead>
+								<tr class="text-center">
+									<th scope="col">미디어명</th>
+									<th scope="col">미디어구분</th>
+									<th scope="col">장르</th>
+									<th scope="col">개봉일자</th>
+									<th scope="col">등록일자</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:choose>
+								<c:when test="${not empty lists}">
+									<c:forEach var="item" items="${lists}" varStatus="status">
+									<tr class="text-center">
+										<td>${item.mediaName}</td>
+										<td>${item.mediaDiv}</td>
+										<td>${item.genre}</td>
+										<td>${item.openDate}</td>
+										<td>${item.saveDate}</td>
+									</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="5" class="text-center">데이터가 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

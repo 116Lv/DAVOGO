@@ -7,7 +7,7 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <title>Log In | 게임 관리 시스템</title>
+        <title>Log In | Davogo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="" name="description" />
         <meta content="Coderthemes" name="author" />
@@ -32,11 +32,11 @@
                         <div class="card">
 
                             <!-- Logo -->
-                            <div class="card-header py-4 text-center bg-primary">
+                            <%-- <div class="card-header py-4 text-center bg-primary">
                                 <a href="<c:url value="/"/>">
                                     <span><img src="<c:url value="/images/white_logo.png"/>" alt="" height="80"></span>
                                 </a>
-                            </div>
+                            </div> --%>
 
                             <div class="card-body p-4">
                                 

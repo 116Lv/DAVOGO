@@ -2,9 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="portal.main.mapper.MainMapper">
-
-	<select id="init" resultType="EgovMap">
-		select 1 'first'
+	
+	<select id="getUserCount" resultType="int">
+		select count(*) as tot_cnt
+		from user
+	</select>
+	
+	<select id="getMovieCount" resultType="int">
+		select count(*) as tot_cnt
+		from media
+		where 1=1
+		and media_div = 1
+	</select>
+	
+	<select id="getTvCount" resultType="int">
+		select count(*) as tot_cnt
+		from media
+		where 1=1
+		and media_div = 2
+	</select>
+	
+	<select id="getBoardInfo" resultType="EgovMap">
+		select
+			row_number() over(order by board_id desc) as num
+			, board_id
+			, title
+			, writer
+			, save_date
+		from board
+	</select>
+	
+	<select id="getRecentMediaInfo" resultType="EgovMap">
+		select
+			a.*
+		from (
+			select
+				row_number() over(order by media_id desc) as num
+				, media_name
+				, media_div
+				, genre
+				, open_date
+				, save_date
+			from media
+			where 1=1
+			and save_date &lt; date_format(now(), '%Y%m%d')
+			order by
+				save_date desc
+			) a
+		where num between 1 and 10
 	</select>
 
 </mapper>

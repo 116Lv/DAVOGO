@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.egovframe.template</groupId>
-	<artifactId>simpleHomePage</artifactId> 
+	<groupId>ott.portal</groupId>
+	<artifactId>ott</artifactId> 
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<name>egovframework</name>
@@ -20,6 +20,7 @@
 		<spring.maven.artifact.version>5.3.6.RELEASE</spring.maven.artifact.version>
 		<org.egovframe.rte.version>4.0.0</org.egovframe.rte.version>
 		<log4j2.version>2.17.1</log4j2.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<repositories>
@@ -62,16 +63,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-                <exclusion>
-                    <artifactId>logback-classic</artifactId>
-                    <groupId>ch.qos.logback</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>log4j-to-slf4j</artifactId>
-                    <groupId>org.apache.logging.log4j</groupId>
-                </exclusion>
-            </exclusions>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-logging</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -82,27 +79,28 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
+		
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 			<artifactId>spring-boot-starter-log4j2</artifactId> -->
 <!-- 		</dependency> -->
-		
+			
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
-			
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		<!-- spring boot dependency end -->
-		
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.security</groupId> -->
-<!-- 			<artifactId>spring-security-core</artifactId> -->
-<!-- 			<version>${spring.maven.artifact.version}</version> -->
-<!-- 		</dependency> -->
 		
 		<dependency>
 			<groupId>org.egovframe.rte</groupId>
@@ -113,6 +111,20 @@
 			<groupId>org.egovframe.rte</groupId>
 			<artifactId>org.egovframe.rte.psl.dataaccess</artifactId>
 			<version>${org.egovframe.rte.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-slf4j-impl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax</groupId>
+					<artifactId>javaee-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.egovframe.rte</groupId>
@@ -129,11 +141,9 @@
 			<artifactId>org.egovframe.rte.fdl.string</artifactId>
 			<version>${org.egovframe.rte.version}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -212,39 +222,11 @@
 			<version>5.2.4.Final</version>
 		</dependency>
 
-		<!-- log4jdbc driver -->
-		<dependency>
-			<groupId>com.googlecode.log4jdbc</groupId>
-			<artifactId>log4jdbc</artifactId>
-			<version>1.2</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
-
-<!-- 
-		취약점 점검 조치중 2021.12.17
-		 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
 		</dependency>
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.servlet.jsp</groupId> -->
-<!-- 			<artifactId>javax.servlet.jsp-api</artifactId> -->
-<!-- 			<version>2.3.3</version> -->
-<!-- 			<scope>provided</scope> -->
-<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -256,7 +238,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
 		
@@ -292,8 +273,6 @@
 			<groupId>kr.or.kobis</groupId>
 			<artifactId>kobis-opcl-rest</artifactId>
 			<version>v1.0</version>
-<!-- 			<scope>system</scope> -->
-<!-- 			<systemPath>${project.basedir}/lib/kobis-opcl-rest-v1.0.jar</systemPath> -->
 		</dependency>
 				
 	</dependencies>
@@ -305,24 +284,12 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<port>80</port>
-						<path>/</path>
-						<systemProperties>
-							<JAVA_OPTS>-Xms256m -Xmx768m -XX:MaxPermSize=256m</JAVA_OPTS>
-						</systemProperties>
-					</configuration>
-				</plugin>
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<source>11</source>
-						<target>11</target>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
 						<encoding>UTF-8</encoding>
 						<maxmem>1024m</maxmem>
 					</configuration>
