@@ -11,13 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.extern.slf4j.Slf4j;
+import portal.common.Constants;
+import portal.kobis.service.KobisAPIService;
 import portal.main.sevice.MainService;
+import portal.media.service.MediaService;
 
 /**
  * 메인화면
  * @author 116Lv
  *
  */
+@Slf4j
 @Controller
 public class MainController {
 	
@@ -26,6 +31,12 @@ public class MainController {
 	@Autowired
 	private MainService mainService;
 
+	@Autowired
+	private KobisAPIService kobisApiService;
+	
+	@Autowired
+	private MediaService mediaService;
+	
 	@RequestMapping("/main.do")
 	public String mainPage(@RequestParam Map<String, Object> params, Model model) {
 		
@@ -50,6 +61,35 @@ public class MainController {
 		model.addAttribute("Tnum", tvCnt);
 		
 		return "/main/mainPage";
+	}
+	
+	@RequestMapping("/main/pullMovieData.do")
+	public String pullMovieData(Model model) {
+		
+		try {
+			kobisApiService.saveDailyMovieList();
+			
+			model.addAttribute("resultMsg", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultMsg", "fail");
+		}
+		
+		return Constants.VIEW_NAME_JSON;
+	}
+	
+	@RequestMapping("/main/pullTvData.do")
+	public String pullTvData(Model model) {
+		
+		try {
+			mediaService.pullTvData();
+			
+			model.addAttribute("resultMsg", "success");
+		} catch (Exception e) {
+			log.error("tv pull error", e);
+			model.addAttribute("resultMsg", "fail");
+		}
+		
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 }

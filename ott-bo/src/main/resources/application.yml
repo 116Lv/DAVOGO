@@ -9,7 +9,6 @@ server:
           enabled: true
           force: true
 
-
 logging:
     level:
         web: DEBUG

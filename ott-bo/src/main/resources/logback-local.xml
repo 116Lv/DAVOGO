@@ -10,7 +10,10 @@
 	<logger name="egovframework" level="ERROR" />
 	<logger name="org.springframework" level="ERROR" />
 	<logger name="org.springframework.web" level="ERROR" />
-	<logger name="portal" additivity="false" level="DEBUG" />
+	<logger name="portal" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="STDOUT" />
+	</logger>
 	
 	<logger name="java.sql" level="ERROR" />
 	

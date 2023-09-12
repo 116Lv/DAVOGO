@@ -40,7 +40,6 @@ public class LoginController {
 		int count = loginService.checkStaffData(params);
 		
 		if (count == 1) {
-			
 			request.getSession().setAttribute("StaffVO", params);
 			model.addAttribute("user", params);
 			return "redirect:/main.do";
@@ -50,10 +49,10 @@ public class LoginController {
 		}
 	}
 	
-	/*
-	 * @RequestMapping("/logout.do") public String logout() {
-	 * RequestContextHolder.getRequestAttributes().removeAttribute("StaffVO",
-	 * RequestAttributes.SCOPE_SESSION); return "forward:/loginForm.do"; }
-	 */
+	@RequestMapping("/logout.do")
+	public String logout() {
+		RequestContextHolder.getRequestAttributes().removeAttribute("StaffVO", RequestAttributes.SCOPE_SESSION);
+		return "forward:loginForm.do";
+	}
 	
 }

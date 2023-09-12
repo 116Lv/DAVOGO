@@ -6,7 +6,7 @@ import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper
 public interface KobisMapper {
-	public int checkMediaData(String movieCd);
+	public int checkMediaData(String mediaCd);
 	
 	public void insertDailyBoxOffice(Map<String, Object> movieInfo);
 

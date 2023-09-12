@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Configuration
 @EnableWebMvc
@@ -105,4 +106,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 		exceptionResolvers.add(simpleMappingExceptionResolver);
 	}
+	
+    @Bean
+    public MappingJackson2JsonView jsonView() {
+    	return new MappingJackson2JsonView();
+    }
+	
 }

@@ -1,14 +1,18 @@
 package portal.media.service.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.ibatis.common.logging.Log;
 
 import lombok.extern.slf4j.Slf4j;
 import portal.media.mapper.MediaMapper;
@@ -75,6 +79,44 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public Map<String, Object> getMediaInfo(String id) {
 		return mediaMapper.getMediaInfo(id);
+	}
+	
+	@Override
+	public void pullTvData() throws Exception {
+		log.debug("Python Call");
+		
+        List<String> fileNames = new ArrayList<String>();
+        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvMain.py");
+        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvInfo.py");
+        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvExtraInfo.py");
+        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvActorInfo.py");
+        int i=1;
+        ByteArrayOutputStream outputStream = null;
+        
+    	for (String fileName : fileNames) {
+        	CommandLine commandLine = CommandLine.parse("python");
+            commandLine.addArgument(fileName);
+
+            try {
+	            outputStream = new ByteArrayOutputStream();
+	            PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
+	            DefaultExecutor executor = new DefaultExecutor();
+	            executor.setStreamHandler(pumpStreamHandler);
+	            int result;
+					result = executor.execute(commandLine);
+	            log.debug("result: " + result);
+	            log.debug("output: " + outputStream.toString("UTF-8"));
+            
+            } catch (IOException e) {
+            	e.printStackTrace();
+            } finally {
+            	if(outputStream != null) {
+            		outputStream.close();
+            	}
+            }
+            log.debug(i+"단계통과");
+            i++;
+    	}
 	}
 
 	

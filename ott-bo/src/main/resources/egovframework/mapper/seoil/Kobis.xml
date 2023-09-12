@@ -6,7 +6,7 @@
 	<select id="checkMediaData" resultType="int">
 		select count(*) 
 		from media
-		where movie_code = #{movieCd}
+		where media_code = #{mediaCd}
 	</select>
 
 	<insert id="insertDailyBoxOffice">
@@ -22,7 +22,7 @@
 			running_time,
 			rating_grade,
 			genre,
-			movie_code,
+			media_code,
 			`rank`,
 			audiAcc,
 			save_date
@@ -72,8 +72,8 @@
 		set
 			`rank` = #{rank},
 			audiAcc = #{audiAcc},
-			save_date = date_format(now(), '%Y%m%d')
-		where movie_code = #{movieCd}
+			update_date = date_format(now(), '%Y%m%d')
+		where media_code = #{movieCd}
 	</update>
 
 

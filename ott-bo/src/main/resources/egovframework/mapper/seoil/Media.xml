@@ -19,12 +19,11 @@
 				, channel
 				, open_date
 				, period
-				, episode
 				, running_time
 				, rating_grade
 				, genre
 				, introduce
-				, movie_code
+				, media_code
 				, `rank`
 				, audiAcc
 				, save_date
@@ -87,7 +86,8 @@
 			open_date,
 			running_time,
 			rating_grade,
-			introduce
+			introduce,
+			save_date
 		)
 		values
 		(
@@ -101,7 +101,8 @@
 			replace(substr(#{open_date},1,10),'/',''),
 			#{running_time},
 			#{rating_grade},
-			#{introduce}
+			#{introduce},
+			date_format(now(), '%Y%m%d')
 		)
 	
 	</insert>
@@ -119,7 +120,8 @@
 			open_date = replace(substr(#{open_date},1,10),'/',''),
 			running_time = #{running_time},
 			rating_grade = #{rating_grade},
-			introduce = #{introduce}
+			introduce = #{introduce},
+			update_date = date_format(now(), '%Y%m%d')
 		where 
 			media_id = #{media_id}
 	</update>

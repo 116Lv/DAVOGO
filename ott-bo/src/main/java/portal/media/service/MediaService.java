@@ -15,4 +15,6 @@ public interface MediaService {
 
 	public Map<String, Object> getMediaInfo(String id);
 
+	public void pullTvData() throws Exception;
+
 }

@@ -19,14 +19,14 @@ public class GameBootApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("##### GameBootApplication Start #####");
+		System.out.println("##### BackEndBootApplication Start #####");
 
 		SpringApplication springApplication = new SpringApplication(GameBootApplication.class);
 		//springApplication.setBannerMode(Banner.Mode.OFF);
 		//springApplication.setLogStartupInfo(false);
 		springApplication.run(args);
 
-		System.out.println("##### GameBootApplication End #####");
+		System.out.println("##### BackEndBootApplication End #####");
 	}
 
 }

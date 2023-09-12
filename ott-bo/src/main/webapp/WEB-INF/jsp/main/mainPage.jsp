@@ -2,8 +2,39 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="container-fluid">
+<script>
+function pullMovieData() {
+	$.ajax({
+		type : "post",
+		url  : "/main/pullMovieData.do",
+		//data : frm.serialize(),
+		dataType : "json",
+		success:function(result){
+			
+			//여기에 결과 처리하는 부분 넣기.
+			alert(result.resultMsg);
+			
+		}
+	});
+}
 
+function pullTvData() {
+	$.ajax({
+		type : "post",
+		url  : "/main/pullTvData.do",
+		//data : frm.serialize(),
+		dataType : "json",
+		success:function(result){
+			
+			//여기에 결과 처리하는 부분 넣기.
+			alert(result.resultMsg);
+			
+		}
+	});
+}
+</script>
+
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<div class="page-title-box">
@@ -20,7 +51,7 @@
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of Users">Users</h5>
 							<!-- Unum은 고객수 -->
-							<h3 class="mt-3 mb-3">${Unum}</h3>
+							<h2 class="mt-3 mb-3">${Unum}</h2>
 						</div>
 					</div>
 				</div>
@@ -37,8 +68,11 @@
 					<div class="card widget-flat">
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of Movies">Movies</h5>
+							<div class="float-end">
+								<a href="javascript:pullMovieData();"><i class="ri-refresh-line widget-icon"></i></a>
+							</div>
 							<!-- Mnum은 현재 관리되고 있는 영화수 -->
-							<h3 class="mt-3 mb-3">${Mnum}</h3>
+							<h2 class="mt-3 mb-3">${Mnum}</h2>
 						</div>
 					</div>
 				</div>
@@ -46,8 +80,11 @@
 					<div class="card widget-flat">
 						<div class="card-body">
 							<h5 class="text muted fw-normal mt-0" title="Number Of TV Programs">TV Programs</h5>
+							<div class="float-end">
+								<a href="javascript:pullTvData();"><i class="ri-refresh-line widget-icon"></i></a>
+							</div>
 							<!-- Tnum은 현재 관리되고 있는 tv프로그램수 -->
-							<h3 class="mt-3 mb-3">${Tnum}</h3>
+							<h2 class="mt-3 mb-3">${Tnum}</h2>
 						</div>
 					</div>
 				</div>

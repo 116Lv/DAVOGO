@@ -12,4 +12,5 @@ public interface KobisAPIService {
 	 */
 	public void saveWeeklyMovieList();
 	
+	
 }
