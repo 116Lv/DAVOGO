@@ -1,6 +1,7 @@
 package portal.media.service.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,17 +86,19 @@ public class MediaServiceImpl implements MediaService {
 	public void pullTvData() throws Exception {
 		log.debug("Python Call");
 		
+		String executePath = this.getClass().getClassLoader().getResource(".").getPath() + "python" + File.separator;
         List<String> fileNames = new ArrayList<String>();
-        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvMain.py");
-        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvInfo.py");
-        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvExtraInfo.py");
-        fileNames.add("C:/Users/lbw01/Desktop/OTT/tvActorInfo.py");
+        fileNames.add("tvMain.py");
+        fileNames.add("tvInfo.py");
+        fileNames.add("tvExtraInfo.py");
+        fileNames.add("tvActorInfo.py");
         int i=1;
         ByteArrayOutputStream outputStream = null;
         
     	for (String fileName : fileNames) {
-        	CommandLine commandLine = CommandLine.parse("python");
-            commandLine.addArgument(fileName);
+        	CommandLine commandLine = CommandLine.parse("python39");
+        	log.debug("execute Path : " + executePath + fileName);
+            commandLine.addArgument(executePath + fileName);
 
             try {
 	            outputStream = new ByteArrayOutputStream();
@@ -106,15 +109,18 @@ public class MediaServiceImpl implements MediaService {
 					result = executor.execute(commandLine);
 	            log.debug("result: " + result);
 	            log.debug("output: " + outputStream.toString("UTF-8"));
+	            
+	            log.debug(i+"단계통과");
             
             } catch (IOException e) {
             	e.printStackTrace();
+            	throw e;
             } finally {
             	if(outputStream != null) {
             		outputStream.close();
             	}
             }
-            log.debug(i+"단계통과");
+            
             i++;
     	}
 	}
