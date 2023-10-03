@@ -118,4 +118,38 @@
 			comm_id = #{commId}
 	</select>
 
+	<select id="getUserVoteInfo" resultType="egovMap">
+		select
+			v.vote_id, v.comm_id, v.total_cnt
+		from
+			vote v, vote_user u 
+		where 
+			v.vote_id = u.vote_id
+			and v.comm_id = #{commId}
+			and u.email_id = #{loginEmailId}
+	</select>
+	
+	<insert id="insertVoteUser">
+		insert into 
+			vote_user (email_id, vote_id)
+		values
+			(#{loginEmailId}, #{voteId})
+	</insert>
+	
+	<delete id="deleteVoteUser">
+		delete from
+			vote_user
+		where
+			email_id = #{loginEmailId}
+			and vote_id = #{voteId}
+	</delete>
+	
+	<update id="updateVoteUser">
+		update vote_user
+		set
+			vote_id = #{voteId}
+		where 
+			email_id = #{loginEmailId}
+			and vote_id = #{beforeVoteId}
+	</update>
 </mapper>

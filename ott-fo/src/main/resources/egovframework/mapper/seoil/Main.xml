@@ -3,7 +3,7 @@
 
 <mapper namespace="portal.main.mapper.MainMapper">
 
-	<select id="getCategoryList" resultType="EgovMap">
+	<select id="getCategoryList" resultType="egovMap">
 		select 
 			distinct category_title 
 		from 
@@ -12,7 +12,7 @@
 			save_date = (select MAX(save_date) from watcha_rank)
 	</select>
 
-	<select id="getContentsList" resultType="EgovMap">
+	<select id="getContentsList" resultType="egovMap">
 		select 
 			m.period, m.country, w.*, r.media_rank
 		from 

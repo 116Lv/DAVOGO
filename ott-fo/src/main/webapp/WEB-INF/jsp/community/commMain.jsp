@@ -62,7 +62,7 @@
 									<div class="input-group my-1">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<input type="checkbox" name="vote_id" value="${item.voteId}" commId="${item.commId}" style="border-radius: 0.5em;">
+												<input type="checkbox" name="vote_id" value="${item.voteId}" commId="${item.commId}">
 											</div>
 										</div>
 										<div class="form-control" id="item${item.voteId}">

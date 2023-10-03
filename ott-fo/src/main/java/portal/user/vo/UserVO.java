@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,5 +34,9 @@ public class UserVO implements Serializable //implements UserDetails
 
     @JsonIgnore
     private String role;
+    
+    public String getEmailId() {
+    	return StringUtils.substringBefore(this.email, "@");
+    }
 
 }

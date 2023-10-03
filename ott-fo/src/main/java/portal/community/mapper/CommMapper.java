@@ -18,5 +18,11 @@ public interface CommMapper {
 
 	public List<Map> getVoteItems(Map params);
 
+	public Map getUserVoteInfo(Map params);
+
+	public void insertVoteUser(Map params);
 	
+	public void deleteVoteUser(Map params);
+	
+	public void updateVoteUser(Map params);
 }

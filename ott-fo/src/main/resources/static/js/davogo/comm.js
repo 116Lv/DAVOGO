@@ -81,11 +81,15 @@ $(document).ready(function() {
 	});
 	
 	$("[name=vote_id]").on("click", function(event) {
+		
 		if($(event.target).is(':checked')) {
+			//이미 선택된게 있는데 다른걸 체크한 경우 이전 선택한 것을 빼주는 로직
+			$(event.target).closest(".card").find("[name=vote_id]:checked").not(event.target).attr("checked", false);
+			
 			$.ajax({
 				type : "post",
 				url  : "/comm/saveVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId"), action: "vote" },
+				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
@@ -93,7 +97,8 @@ $(document).ready(function() {
 		                return;
 		        	}
 					
-		            alert("투표 처리되었습니다.");
+		            console.log("투표 처리되었습니다.");
+
 					var items = result.items;
 					if (items != null && items.length > 0) {
 						for (i=0; i<items.length; i++) {
@@ -115,7 +120,7 @@ $(document).ready(function() {
 			$.ajax({
 				type : "post",
 				url  : "/comm/saveVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId"), action: "cancel" },
+				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
@@ -123,7 +128,7 @@ $(document).ready(function() {
 		                return;
 		        	}
 					
-		            alert("투표 취소되었습니다.");
+		            console.log("투표 취소되었습니다.");
 					var items = result.items;
 					if (items != null && items.length > 0) {
 						for (i=0; i<items.length; i++) {

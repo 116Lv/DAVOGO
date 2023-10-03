@@ -39,7 +39,45 @@ public class CommServiceImpl implements CommService{
 	@Override
 	public void saveVoteClick(Map params) {
 		
-		commMapper.saveVoteClick(params);
+		Map beforeVoteInfo = commMapper.getUserVoteInfo(params);
+		
+		//이전에 클릭한 정보가 없으면 
+		if (beforeVoteInfo == null || beforeVoteInfo.isEmpty()) {
+			//사용자 투표정보 insert 및 투표 수량 plus
+			commMapper.insertVoteUser(params);
+			
+			params.put("action", "vote");
+			commMapper.saveVoteClick(params);
+			
+		//이전에 클릭한 정보가 있으면
+		} else {	
+			Integer beforeVoteId = (Integer) beforeVoteInfo.get("voteId");
+			Integer voteId = Integer.parseInt((String) params.get("voteId"));
+			
+			//클릭했던 정보가 현재 클릭한 번호와 동일할 경우
+			if (beforeVoteId == voteId) {
+				//클랙했던 사용자 투표정보 삭제 및 투표 수량 minus
+				commMapper.deleteVoteUser(params);
+				
+				params.put("action", "cancel");
+				commMapper.saveVoteClick(params);
+			
+			//클릭한 투표 정보를 변경한 경우
+			} else {
+				//클릭했던 사용자의 투표정보 업데이트
+				params.put("beforeVoteId", beforeVoteId);
+				commMapper.updateVoteUser(params);
+				
+				//새로 선택한 투표수량은 plus
+				params.put("action", "vote");
+				commMapper.saveVoteClick(params);
+				
+				//이전 투표한 수량은 minus
+				beforeVoteInfo.put("action", "cancel");
+				commMapper.saveVoteClick(beforeVoteInfo);
+			}
+			
+		}
 	}
 
 	@Override
