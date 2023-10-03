@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+	 "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+	 
+<tiles-definitions>
+
+	<definition name="emptyTemplate" template="/WEB-INF/views/layout-empty.jsp">
+		<put-attribute name="content" value="" />
+	</definition>
+
+	<definition name="/login/*" extends="emptyTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/login/{1}.jsp" />
+	</definition>
+
+	<definition name="/modal/*/*" extends="emptyTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+	</definition>
+
+	<!-- 기본 템플릿 -->
+	<definition name="defaultTemplate" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="htmlheader" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="topbar" value="/WEB-INF/views/topbar.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+	</definition>
+	
+	<!-- 와이드 템플릿 -->
+	<definition name="wideTemplate" template="/WEB-INF/views/wideLayout.jsp">
+		<put-attribute name="htmlheader" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="topbar" value="/WEB-INF/views/topbar.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+	</definition>
+	
+	<definition name="/community/world/*" extends="wideTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/community/world/{1}.jsp" />
+	</definition>
+	
+	<definition name="/community/*" extends="defaultTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/community/{1}.jsp" />
+	</definition>
+	
+	<definition name="/main/*" extends="defaultTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/main/{1}.jsp" />
+	</definition>
+	
+	<definition name="/movie/*" extends="defaultTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/movie/{1}.jsp" />
+	</definition>
+	
+	<definition name="/review/*" extends="defaultTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/review/{1}.jsp" />
+	</definition>
+	
+	<definition name="/tv/*" extends="defaultTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/tv/{1}.jsp" />
+	</definition>
+	
+</tiles-definitions>

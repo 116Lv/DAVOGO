@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.community.mapper.CommMapper">
+
+	<insert id="saveVote">
+		<selectKey keyProperty="comm_id" resultType="int" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into community
+		(
+			comm_div,
+			writer,
+			title,
+			save_date
+		) 
+		values 
+		(
+			#{comm_div},
+			#{writer},
+			#{title},
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
+	
+	<insert id="saveVoteItem">
+		insert into vote
+		(
+			comm_id,
+			item,
+			save_date
+		)
+		values
+		(
+			#{comm_id},
+			#{item},
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
+	
+	<resultMap id="communityListMap" type="EgovMap">
+		<result property="commId" column="comm_id" /> 
+		<result property="commDiv" column="comm_div" />
+		<result property="writer" column="writer" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="likeCnt" column="like_cnt" />
+		<result property="dislikeCnt" column="dislike_cnt" />
+		
+		<collection column="commId=comm_id" property="items" javaType="List" ofType="EgovMap" select="getVoteItems" />
+	</resultMap>
+	
+	<select id="getCommunityList" resultMap="communityListMap">
+		select
+			comm_id,
+			comm_div,
+			writer,
+			title,
+			content,
+			like_cnt,
+			dislike_cnt
+		from
+			community c
+		where
+			1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and (
+				writer like concat('%', #{searchText}, '%')
+				or title like concat('%', #{searchText}, '%')
+				)
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(comm_div)">
+			and comm_div = #{comm_div}
+			</if>
+			and dislike_cnt &lt;= 20
+		<if test="@portal.common.util.StringUtil@notEmpty(sort_name)">
+		order by 
+			<choose>
+				<when test='"recent".equals(sort_name)'><!-- 최신순 -->
+					save_date desc
+				</when>
+				<otherwise>
+					like_cnt desc
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<update id="saveVoteClick">
+		update 
+			vote
+		set
+			<choose>
+				<when test='"vote".equals(action)'><!-- 투표 -->
+					total_cnt = total_cnt + 1,
+				</when>
+				<when test='"cancel".equals(action)'><!-- 투표 취소 -->
+					total_cnt = total_cnt - 1,
+				</when>
+			</choose>
+			update_date = date_format(now(), '%Y%m%d')
+		where vote_id = #{voteId}
+	</update>
+	
+	<select id="getVoteItems" resultType="EgovMap">
+		select
+			vote_id, 
+			comm_id, 
+			item, 
+			total_cnt,
+			(	select sum(b.total_cnt) 
+				from vote b
+				where b.comm_id = a.comm_id
+				group by b.comm_id ) as sum_clicked_cnt
+		from
+			vote a
+		where
+			comm_id = #{commId}
+	</select>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.media.mapper.TvMapper">
+
+	<select id="getCategoryList" resultType="EgovMap">
+		select 
+			distinct category_title 
+		from 
+			watcha_rank
+		where
+			save_date = (select MAX(save_date) from watcha_rank)
+	</select>
+
+	<select id="getContentsList" resultType="EgovMap">
+		select 
+			m.period, m.country, w.*, r.media_rank 
+		from 
+			media m, watcha w, watcha_rank r 
+		where 
+			r.category_title = #{categoryTitle} 
+			and r.media_id = w.media_id 
+			and m.media_id = w.media_id 
+			and r.save_date = (select MAX(save_date) from watcha_rank)
+		order by 
+			r.media_rank
+	</select>
+	
+	
+
+</mapper>

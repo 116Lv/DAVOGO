@@ -1,0 +1,34 @@
+spring:
+    config:
+        activate:
+            on-profile: dev
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ott?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+        username: lbw0109
+        password: Lgt010109@@
+
+logging:
+    level:
+        web: INFO
+    config: classpath:logback-dev.xml
+
+jwt:
+    issuer: SEOIL
+    api-key: 1234567
+    secret-key: abcdefghijklmnopqrstuvwxyz
+    token-prefix: Bearer
+    header-name: Authorization
+    token-expiration-time: 1
+    refresh-token-expiration-time: 60
+    ignorePath: /images/**,/css/**,/fonts/**,/js/**,/api/**,/auth/**
+    
+file:
+  storePath: /home/ec2-user/files/img/
+  replaceSrc: /home/ec2-user/files/
+  replaceTrg: /
+  
+#app:
+#  kobis:
+#    api-key: 623e218d4f42aed8cf65862c1e803746
+#    item-per-page: 10

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.user.mapper.UserMapper">
+
+	<!-- 직원 목록 -->
+	<select id="findUserList" resultType="EgovMap">
+		/* User.findUserList */
+		select
+			a.*
+			, ifnull(b.tot_annual_day, 0) as tot_annual_day
+			, ifnull(b.used_annual_day, 0) as used_annual_day
+			, ifnull(b.add_annual_day, 0) as add_annual_day
+			, ifnull((b.tot_annual_day - b.used_annual_day + b.add_annual_day), 0) as calc_annual_day 
+		from (
+				select
+					user_no
+					, user_id
+					, user_name
+					, birth_dt
+					, join_dt
+					, ifnull(user_tel, emergency_tel) as user_tel
+					, depart
+					, `position` as pos
+					, use_yn
+					, date_format(mod_dt, '%Y-%m-%d %H:%i:%s') as mod_dt
+				from tb_user a
+				<include refid="where-findUserList"/>
+				order by join_dt desc
+				limit #{firstIndex}, #{recordCountPerPage}
+		) a
+		left join tb_annual b
+		on a.user_no = b.user_no
+		and b.year = date_format(now(), '%Y')
+	</select>
+	
+	<select id="getCountOfFindUserList" resultType="int">
+		/* User.getCountOfFindUserList */
+		select count(*) as tot_cnt
+		from tb_user a
+		<include refid="where-findUserList"/>
+	</select>
+	
+	<sql id="where-findUserList">
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(userName)">
+			and user_name like concat('%', #{userName}, '%')
+		</if>
+		<choose>
+			<when test="@portal.common.util.StringUtil@notEmpty(useFlag)">
+				and use_yn = #{useFlag}
+			</when>
+			<otherwise>
+				and use_yn = 'N'
+			</otherwise>
+		</choose>	
+	</sql>
+	
+	<!-- 직원정보 -->
+	<select id="getUser" resultType="EgovMap">
+		/* User.getUser */
+		select 
+			a.user_no
+			, a.user_id
+			, a.user_name
+			, a.password
+			, a.birth_dt
+			, a.join_dt
+			, a.user_tel
+			, a.emergency_tel
+			, a.depart
+			, `position`
+			, a.user_auth
+			, a.user_email
+			, a.post_code
+			, a.addr_basic
+			, a.addr_detail
+			, a.addr_extra
+			, a.use_yn
+			, a.file_path
+			, date_format(a.mod_dt, '%Y-%m-%d %H:%i:%s') as mod_dt
+			, a.mod_no
+			, date_format(now(), '%Y') as current_year
+			, ifnull(b.tot_annual_day, 0) as tot_annual_day
+			, ifnull(b.used_annual_day, 0) as used_annual_day
+			, ifnull(b.add_annual_day, 0) as add_annual_day
+			, ifnull((b.tot_annual_day - b.used_annual_day + b.add_annual_day), 0) as calc_annual_day
+		from tb_user a
+		left join tb_annual b
+			on a.user_no = b.user_no
+			and b.year = date_format(now(), '%Y')
+		where a.user_no = #{userNo}
+	</select>
+
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="userNo">
+<!-- 		<selectKey keyProperty="userNo" resultType="string" order="BEFORE"> -->
+<!-- 			SELECT NEXTVAL(USER_SEQ) -->
+<!-- 		</selectKey> -->
+		/* User.insertUser */
+		insert into tb_user
+		(
+			/* user_no generate */
+			user_id
+			, user_name
+			, password
+			, birth_dt
+			, join_dt
+			, user_tel
+			, emergency_tel
+			, depart
+			, `position`
+			, user_auth
+			, user_email
+			, post_code
+			, addr_basic
+			, addr_detail
+			, addr_extra
+			, use_yn
+			, file_path
+			, reg_dt
+			, reg_no
+			, mod_dt
+			, mod_no
+		)
+		values
+		(
+			#{userId}
+			, #{userName}
+			, #{password}
+			, #{birthDt}
+			, #{joinDt}
+			, #{userTel}
+			, #{emergencyTel}
+			, #{depart}
+			, #{position}
+			, #{userAuth}
+			, #{userEmail}
+			, #{postCode}
+			, #{addrBasic}
+			, #{addrDetail}
+			, #{addrExtra}
+			, 'Y'
+			, #{filePath}
+			, now()
+			, #{regUserNo}
+			, now()
+			, #{regUserNo}
+		)
+	</insert>
+	
+	<insert id="insertAnnual">
+		/* User.insertAnnual */
+		insert into tb_annual
+		(
+			`year`
+			, user_no
+			, tot_annual_day
+			, used_annual_day
+			, add_annual_day
+		)
+		select
+			date_format(now(), '%Y')
+			, #{userNo}
+			, (
+				case 
+					when a.diff_month &lt; 12 then a.diff_month
+					else 15 + ((a.diff_year - 1) div 2)
+				end
+			)
+			, 0
+			, 0
+		from (
+			select 
+				timestampdiff(month, #{joinDt}, date_format(now(), '%Y%m%d')) as diff_month
+				,  timestampdiff(year, #{joinDt}, date_format(now(), '%Y%m%d')) as diff_year
+		) as a
+	</insert>
+	
+	<update id="updateUser">
+		/* User.updateUser */
+		update tb_user
+		set
+			user_name		= #{userName}
+			, birth_dt		= #{birthDt}
+			, join_dt		= #{joinDt}
+			, user_tel		= #{userTel}
+			, emergency_tel	= #{emergencyTel}
+			, depart		= #{depart}
+			, `position`	= #{position}
+			, user_auth		= #{userAuth}
+			, user_email	= #{userEmail}
+			, post_code		= #{postCode}
+			, addr_basic	= #{addrBasic}
+			, addr_detail	= #{addrDetail}
+			, addr_extra	= #{addrExtra}
+			, use_yn		= ifnull(#{useYn}, 'N')
+			<if test="@portal.common.util.StringUtil@notEmpty(filePath)">
+			, file_path		= #{filePath}
+			</if>
+			, mod_dt		= now()
+			, mod_no		= #{regUserNo}
+		where user_no = #{userNo}
+	</update>
+	
+	<!-- 연차정보 수정 -->
+	<update id="updateAnnual">
+		/* User.updateAnnual */
+		update tb_annual a
+		set
+			<if test="@portal.common.util.StringUtil@notEmpty(joinDt)">
+			tot_annual_day = (select 
+								case 
+									when timestampdiff(month, #{joinDt}, date_format(now(), '%Y%m%d')) &lt; 12 then timestampdiff(month, #{joinDt}, date_format(now(), '%Y%m%d'))
+									else 15 + ((timestampdiff(year, #{joinDt}, date_format(now(), '%Y%m%d')) - 1) div 2)
+			 					end
+			 				 )
+			, 
+			</if>
+			used_annual_day = (select
+									ifnull(sum(b.occur_day), 0)
+								 from tb_annual_used b
+								 where b.occur_dt like concat(date_format(now(), '%Y'), '%') 
+								 and b.annual_type = 'use'
+								)
+			, add_annual_day = (select
+									ifnull( sum(b.occur_day), 0)
+								 from tb_annual_used b
+								 where b.occur_dt like concat(date_format(now(), '%Y'), '%') 
+								 and b.annual_type = 'add')
+		where `year` = date_format(now(), '%Y')
+		and user_no = #{userNo} 
+	</update>
+	
+	<!-- 직원ID 중복체크를 위한 사용 갯수 조회 -->
+	<select id="findUserId" resultType="int">
+		/* User.findUserId */
+		select count(*) as cnt
+		from tb_user
+		where user_id = #{userId} 
+	</select>
+	
+	<!-- 연차 내역 -->
+	<select id="findUsedAnnualList" resultType="EgovMap">
+		/* User.findUsedAnnualList */
+		select
+			annual_no
+			, occur_dt
+			, annual_type
+			, reason
+			, occur_day
+			, date_format(mod_dt, '%Y-%m-%d %H:%i:%s') as mod_dt
+			, mod_no
+		from tb_annual_used
+		where user_no = #{userNo}
+		and occur_dt like concat(#{searchYear}, '%')
+		order by occur_dt
+	</select>
+	
+	<!-- 연차 요약 정보 조회 -->
+	<select id="getUserAnnualSummary" resultType="EgovMap">
+		/* User.getUserAnnualSummary */
+		select
+			a.user_no
+			, ifnull(b.tot_annual_day, 0) as tot_annual_day
+			, ifnull(b.used_annual_day, 0) as used_annual_day
+			, ifnull(b.add_annual_day, 0) as add_annual_day
+			, ifnull((b.tot_annual_day - b.used_annual_day + b.add_annual_day), 0) as calc_annual_day 
+		from tb_user a
+		left join tb_annual b
+			on a.user_no = b.user_no
+			and b.year = #{searchYear}
+		where a.user_no = #{userNo}
+	</select>
+
+	<!-- 연차 정보 등록 -->
+	<insert id="insertAnnualInfo" useGeneratedKeys="true" keyProperty="annualNo">
+<!-- 		<selectKey keyProperty="annualNo" resultType="string" order="BEFORE"> -->
+<!-- 			SELECT NEXTVAL(USER_ANNUAL_SEQ) -->
+<!-- 		</selectKey> -->
+		/* User.insertAnnualInfo */
+		insert into tb_annual_used
+		(
+			/* annual_no generate */
+			user_no
+			, occur_dt
+			, annual_type
+			, reason
+			, occur_day
+			, reg_dt
+			, reg_no
+			, mod_dt
+			, mod_no
+		)
+		values
+		(
+			#{userNo}
+			, #{occurDt}
+			, #{annualType}
+			, #{reason}
+			, #{occurDay}
+			, now()
+			, #{regUserNo}
+			, now()
+			, #{regUserNo}
+		)
+	</insert>
+	
+	<!-- 연차 정보 수정 -->
+	<update id="updateAnnualInfo">
+		/* User.updateAnnualInfo */
+		update tb_annual_used
+		set
+			occur_dt = #{occurDt}
+			, annual_type = #{annualType}
+			, reason = #{reason}
+			, occur_day = #{occurDay}
+		where annual_no = #{annualNo}
+		and user_no = #{userNo}
+	</update>
+	
+	<!-- 연차 정보 삭제 -->
+	<delete id="deleteAnnualInfo">
+		/* User.deleteAnnualInfo */
+		delete from tb_annual_used
+		where annual_no = #{annualNo}
+	</delete>
+		
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="true" /> <!-- default: true -->
+		<setting name="lazyLoadingEnabled" value="true" /> <!-- default: true -->
+		<setting name="multipleResultSetsEnabled" value="false" /> <!-- default: true -->
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- default: SIMPLE -->
+		<setting name="jdbcTypeForNull" value="VARCHAR"/> <!-- null 값에 대한 JDBC 타입을 지정 -->
+		<setting name="callSettersOnNulls" value="true"/> <!-- Map사용할 때 리턴값이 null이어도 컬럼 누락되지 않도록. default: false  -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/> <!-- A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑 -->
+	</settings>
+
+    <typeAliases>
+		<typeAlias alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
+    </typeAliases>
+</configuration>
