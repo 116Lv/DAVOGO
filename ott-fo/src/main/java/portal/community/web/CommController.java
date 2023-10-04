@@ -107,6 +107,8 @@ public class CommController {
 		List<Map> list = commService.getCommentList(params);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("params", params);
+		
 		return "/modal/community/commentPage";
 	}
 	
@@ -117,6 +119,8 @@ public class CommController {
 			commService.saveComment(params);
 			
 			model.addAttribute("resultCode", "success");
+			model.addAttribute("commId", params.get("comm_id"));
+			
 		} catch (Exception e) {
 			model.addAttribute("resultCode", "fail");
 			model.addAttribute("resultMessage", e.getMessage());

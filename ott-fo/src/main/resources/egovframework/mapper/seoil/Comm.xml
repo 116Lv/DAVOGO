@@ -173,7 +173,8 @@
 	<delete id="deleteComment">
 		delete from comment
 		where
-			writer = #{writer}
+			comm_id = #{comm_id}
+			and writer = #{writer}
 	</delete>
 	
 	<select id="getCommentList" resultType="EgovMap">
@@ -182,7 +183,7 @@
 		from
 			comment
 		where
-			comm_id = #{comm_id}
+			comm_id = #{commId}
 	</select>
 	
 	<select id="getCommentCnt" resultType="int">

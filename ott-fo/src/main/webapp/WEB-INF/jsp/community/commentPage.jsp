@@ -5,34 +5,80 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 
-<form id="commentForm" action="/comm/comment.do" method="POST">
-		<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
-		<input type="hidden" id="comm_id" name="comm_id" value="${item.comm_id}">
-		<div class="row">
-			<div class="col-sm-10">
-				<input type="text" placeholder="댓글 추가..." id="comment" name="comment" size="50" required>
-			</div>
-			<div class="col-sm-2">
-				<button class="" type="button" id="addComment">등록</button>
-			</div>
+<form id="commentForm" name="commentForm" action="/comm/comment.do" method="POST">
+	<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
+	<input type="hidden" id="comm_id" name="comm_id" value="${params.commId}">
+
+	<div class="input-group mb-3">
+		<input type="text" id="comment" name="comment" class="form-control" placeholder="댓글 추가...">
+		<div class="input-group-append">
+			<button class="btn btn-outline-secondary" type="button" id="saveComment">등록</button>
 		</div>
-		<hr>
-		<c:if test="${not empty list}">
-			<div class="row">
-				<c:forEach var="comment" items="${list}" varStatus="status">
-					<p>${comment.writer}</p>
-					<p>${comment.comment}</p>
-					<c:choose>
-						<c:when test="${comment.writer eq loginUser.emailId}">
-							<button type="button" id="deleteComment"><i class="uil uil-trash-alt"></i></button>
-						</c:when>
-					</c:choose>
-					<hr>
-				</c:forEach>
+	</div>
+	<c:if test="${not empty list}">
+	<hr>
+		<c:forEach var="comment" items="${list}">
+			<div class="media">
+				<div class="mr-3"><i class="uil uil-user-circle" style="font-size: 2em;"></i></div>
+				<div class="media-body">
+					<h5 class="mt-0">${comment.writer}</h5>
+					${comment.comment}
+				</div>
+				<c:if test="${comment.writer eq loginUser.emailId}">
+					<div class="btn" id="deleteComment"><i class="uil uil-trash-alt"></i></div>
+				</c:if>
 			</div>
-		</c:if>
+		</c:forEach>
+	</c:if>
 </form>
 
-<script>
-	$("#commentCnt").html("${item.commentCnt}");
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#commentCnt").html("${fn:length(list)}");
+
+	//댓글창에서 등록 클릭
+	$("#saveComment").on('click', function() {
+		$.ajax({
+			type : "post",
+			url  : "/comm/saveComment.do",
+			data : $("#commentForm").serialize(),
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("작성되었습니다.");
+				reloadComments(result.commId);
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
+
+	//댓글창에서 본인댓글 삭제시
+	$("#deleteComment").on("click", function(event) {
+		$.ajax({
+			type : "post",
+			url  : "/comm/deleteComment.do",
+			data : $("#commentForm").serialize(),	//수정필요
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("삭제되었습니다.");
+				//어디로 보내야할지 정해야함
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
+
+});
 </script>

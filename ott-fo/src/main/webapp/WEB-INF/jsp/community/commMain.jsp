@@ -54,7 +54,7 @@
 			<div class="col-md-3 px-2">
 				<c:choose>
 					<c:when test="${comm.commDiv eq 1}">	<!-- 투표 -->
-						<div class="card my-3" commId="${item.commId}">
+						<div class="card my-3" commId="${comm.commId}">
 							<div class="card-body">
 								<p class="card-text">${comm.writer}</p>
 								<h5 class="card-title">${comm.title}</h5>
@@ -162,17 +162,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="commentWriteModalLabel">게시물 댓글</h5><span id="commentCnt">0</span>
+        <h5 class="modal-title" id="commentWriteModalLabel">게시물 댓글</h5> (<span id="commentCnt">0</span>)
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 		
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
       </div>
     </div>
   </div>

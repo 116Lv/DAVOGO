@@ -3,8 +3,7 @@
 /* commVote에서 테이블 행추가시 작동 */
 $(document).ready(function() {
 	
-	//모달창 open
-	//투표생성창
+	//투표생성 모달창 open
 	$('#voteWriteModal').on('shown.bs.modal', function (event) {
 		
 		//var button = $(event.relatedTarget);
@@ -23,11 +22,19 @@ $(document).ready(function() {
 		});
 	});
 	
-	//댓글창
-	$('#commentWriteModal').on('shown.bs.modal', function (event) {
-		
-		//var button = $(event.relatedTarget);
-		//var prdNo = button.data("prd-no");
+	//투표생성 모달창 close
+	$('#voteWriteModal').on('hidden.bs.modal', function (event) {
+		var modalDiv = $(event.target).find(".modal-body");
+		modalDiv.empty();
+	});
+	
+	//댓글 모달창 open
+	$('#commentWriteModal').on('show.bs.modal', function (event) {
+		if (!isLogin) {
+			alert("로그인이 필요한 서비스입니다.");
+			return false;
+		}
+	}).on('shown.bs.modal', function (event) { 
 		
 		$.ajax({
 			type : "post",
@@ -42,12 +49,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	//모달창 close
-	$('#voteWriteModal').on('hidden.bs.modal', function (event) {
-		var modalDiv = $(event.target).find(".modal-body");
-		modalDiv.empty();
-	});
-	
+	//댓글 모달창 close
 	$('#commentWriteModal').on('hidden.bs.modal', function (event) {
 		var modalDiv = $(event.target).find(".modal-body");
 		modalDiv.empty();
@@ -77,8 +79,7 @@ $(document).ready(function() {
         });
     });
 
-	//모달 저장
-	//투표창
+	//투표생성 모달창 저장
 	$("#saveBtn").on('click', function() {
 		$.ajax({
 			type : "post",
@@ -92,28 +93,6 @@ $(document).ready(function() {
 	        	}
 				
 	            alert("저장되었습니다.");
-				location.reload();
-			},
-			error: function( xhr, status, error ) {
-				alert(error);
-			}
-		});
-	});
-	
-	//댓글창
-	$("#addComment").on('click', function() {
-		$.ajax({
-			type : "post",
-			url  : "/comm/saveComment.do",
-			data : $("#commentForm").serialize(),
-			dataType : "json",
-			success: function(result) {
-				if (result.resultCode == 'fail') {
-	        		alert(result.resultMessage);
-	                return;
-	        	}
-				
-	            alert("작성되었습니다.");
 				location.reload();
 			},
 			error: function( xhr, status, error ) {
@@ -200,26 +179,18 @@ $(document).ready(function() {
 		}
 	});
 	
-	//댓글창에서 본인댓글 삭제시
-	$("#deleteComment").on("click", function(event) {
-		$.ajax({
-			type : "post",
-			url  : "/comm/deleteComment.do",
-			data : $("#commentForm").serialize(),	//수정필요
-			dataType : "json",
-			success: function(result) {
-				if (result.resultCode == 'fail') {
-	        		alert(result.resultMessage);
-	                return;
-	        	}
-				
-	            alert("삭제되었습니다.");
-				//어디로 보내야할지 정해야함
-			},
-			error: function( xhr, status, error ) {
-				alert(error);
-			}
-		});
-	});
-	
 });
+
+function reloadComments(commId) {
+	var modalDiv = $('#commentWriteModal').find(".modal-body");
+	modalDiv.empty();
+	$.ajax({
+		type : "post",
+		url  : "/comm/comment.do",
+		data : {commId : commId},
+		dataType : "html",
+		success:function(result){
+			modalDiv.append(result);
+		}
+	});
+}
