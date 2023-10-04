@@ -85,6 +85,24 @@ public class CommServiceImpl implements CommService{
 		return commMapper.getVoteItems(params);
 	}
 	
-	
+	@Override
+	public void saveComment(Map params) {
+		commMapper.saveComment(params);
+	}
+
+	@Override
+	public void deleteComment(Map params) {
+		commMapper.deleteComment(params);
+	}
+
+	@Override
+	public List<Map> getCommentList(Map params) {
+		return commMapper.getCommentList(params);
+	}
+
+	@Override
+	public int getCommentCnt() {
+		return commMapper.getCommentCnt();
+	}
 
 }

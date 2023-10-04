@@ -54,7 +54,7 @@
 			<div class="col-md-3 px-2">
 				<c:choose>
 					<c:when test="${comm.commDiv eq 1}">	<!-- 투표 -->
-						<div class="card my-3">
+						<div class="card my-3" commId="${item.commId}">
 							<div class="card-body">
 								<p class="card-text">${comm.writer}</p>
 								<h5 class="card-title">${comm.title}</h5>
@@ -75,20 +75,21 @@
 										</div>
 									</div>
 								</c:forEach>
-								<div class="row my-2">
+								<div class="row mt-2">
 									<div class="col-sm-3">
-										<div class="like">
+										<div class="btn like">
 											<i class="uil uil-thumbs-up mx-1"></i>${comm.likeCnt}
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<div class="disLike">
+										<div class="btn disLike">
 											<i class="uil uil-thumbs-down"></i><%-- ${comm.dislikeCnt } --%>
 										</div>
 									</div>
 									<div class="col-sm-3">
-										<div>
-											<i class="uil uil-comment-dots mx-1"></i><%-- ${comm.commentCnt } --%>
+										<div class="btn comment" data-toggle="modal" data-target="#commentWriteModal">
+											<i class="uil uil-comment-dots mx-1"></i>
+											${commentCnt}
 										</div>
 									</div>
 								</div>
@@ -135,11 +136,33 @@
 	</div>
 </c:if>
 
+<!-- 투표게시글 작성 모달창 -->
 <div class="modal fade" id="voteWriteModal" tabindex="-1" role="dialog" aria-labelledby="voteWriteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="voteWriteModalLabel">투표 게시글 작성</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 댓글 작성 모달창 -->
+<div class="modal fade" id="commentWriteModal" tabindex="-1" role="dialog" aria-labelledby="commentWriteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentWriteModalLabel">게시물 댓글</h5><span id="commentCnt">0</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

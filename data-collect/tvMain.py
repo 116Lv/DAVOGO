@@ -27,7 +27,7 @@ def init_driver():
 
     driver_exec_path = ChromeDriverManager().install()
     print("driver_exec_path=" + driver_exec_path)
-    driver = uc.Chrome(driver_executable_path=driver_exec_path, use_subprocess=True, options=chrome_options)
+    driver = uc.Chrome(driver_executable_path=driver_exec_path)
     #driver = uc.Chrome(options=chrome_options)
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()), options=chrome_options)
     driver.get("https://pedia.watcha.com/ko-KR/?domain=tv")

@@ -12,28 +12,28 @@
 			    
 			        <nav class="navbar navbar-expand-lg justify-content-between">
 			            <!-- Brand and toggle get grouped for better mobile display -->
-		                <a class="navbar-brand" href="/"><img src="/images/Davogo_Logo.jpg"></a>
+		                <a class="navbar-brand mr-3" href="/"><img src="/images/Davogo_Logo.jpg"></a>
 			            <!--End of navbar-header-->
 			            
 			            <div class="collapse navbar-collapse" id="navbar1">
 			            	<div class="navbar-nav">
-								<a class="nav-item nav-link" href="/movie.do">영화</a>
-								<a class="nav-item nav-link" href="/tv.do">TV프로그램</a>
-								<a class="nav-item nav-link" href="/comm.do">커뮤니티</a>
+								<a class="nav-item nav-link mx-2" href="/movie.do">영화</a>
+								<a class="nav-item nav-link mx-2" href="/tv.do">TV프로그램</a>
+								<a class="nav-item nav-link mx-2" href="/comm.do">커뮤니티</a>
 							</div>
 						</div>
-			            <div class="collapse navbar-collapse" id="navbar2">
-			                <div class="navbar-nav mx-auto">
-			                	<a class="nav-item nav-link search"><i class="fa fa-search"></i></a>
+			            <div class="collapse navbar-collapse justify-content-end" id="navbar2">
+			                <div class="navbar-nav">
+			                	<a class="nav-item nav-link search mx-2"><i class="fa fa-search"></i></a>
 			                	<c:choose>
 				                	<c:when test="${empty loginUser}">
-					                	<a class="nav-item nav-link" href="/signIn.do">로그인</a>
-					                	<a class="nav-item nav-link" href="/signUp.do">회원가입</a>
+					                	<a class="nav-item nav-link mx-2" href="/signIn.do">로그인</a>
+					                	<a class="nav-item nav-link mx-2" href="/signUp.do">회원가입</a>
 					                </c:when>
 					                <c:otherwise>
 					                	<a class="nav-item nav-link">${loginUser.userId}</a>
-					                	<a class="nav-item nav-link" href="/myPage.do">마이페이지</a><%-- bootstrap의 Popovers 사용 --%>
-					                	<a class="nav-item nav-link" href="/logout.do">로그아웃</a>
+					                	<a class="nav-item nav-link mx-2" href="/myPage.do">마이페이지</a><%-- bootstrap의 Popovers 사용 --%>
+					                	<a class="nav-item nav-link mx-2" href="/logout.do">로그아웃</a>
 					                </c:otherwise>
 				                </c:choose>
 			                </div>

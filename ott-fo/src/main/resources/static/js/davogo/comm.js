@@ -4,6 +4,7 @@
 $(document).ready(function() {
 	
 	//모달창 open
+	//투표생성창
 	$('#voteWriteModal').on('shown.bs.modal', function (event) {
 		
 		//var button = $(event.relatedTarget);
@@ -22,8 +23,32 @@ $(document).ready(function() {
 		});
 	});
 	
+	//댓글창
+	$('#commentWriteModal').on('shown.bs.modal', function (event) {
+		
+		//var button = $(event.relatedTarget);
+		//var prdNo = button.data("prd-no");
+		
+		$.ajax({
+			type : "post",
+			url  : "/comm/comment.do",
+			data : {commId : $(event.relatedTarget).closest('.card').attr('commId')},
+			dataType : "html",
+			success:function(result){
+				//result.title = "상품정보 보기";
+				var modalDiv = $(event.target).find(".modal-body");
+				modalDiv.append(result);
+			}
+		});
+	});
+	
 	//모달창 close
 	$('#voteWriteModal').on('hidden.bs.modal', function (event) {
+		var modalDiv = $(event.target).find(".modal-body");
+		modalDiv.empty();
+	});
+	
+	$('#commentWriteModal').on('hidden.bs.modal', function (event) {
 		var modalDiv = $(event.target).find(".modal-body");
 		modalDiv.empty();
 	});
@@ -52,10 +77,12 @@ $(document).ready(function() {
         });
     });
 
+	//모달 저장
+	//투표창
 	$("#saveBtn").on('click', function() {
 		$.ajax({
 			type : "post",
-			url  : "/comm/save.do",
+			url  : "/comm/saveVote.do",
 			data : $("#voteForm").serialize(),
 			dataType : "json",
 			success: function(result) {
@@ -73,6 +100,29 @@ $(document).ready(function() {
 		});
 	});
 	
+	//댓글창
+	$("#addComment").on('click', function() {
+		$.ajax({
+			type : "post",
+			url  : "/comm/saveComment.do",
+			data : $("#commentForm").serialize(),
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("작성되었습니다.");
+				location.reload();
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
+	
+	//정렬조건 화면반영
 	$(".commMain .nav-item").on("click", function(event) {
 		var target = $(event.target);
 		var type = target.attr("type");
@@ -80,6 +130,7 @@ $(document).ready(function() {
 		$("#searchForm").submit();
 	});
 	
+	//투표참여-클릭기능
 	$("[name=vote_id]").on("click", function(event) {
 		
 		if($(event.target).is(':checked')) {
@@ -88,7 +139,7 @@ $(document).ready(function() {
 			
 			$.ajax({
 				type : "post",
-				url  : "/comm/saveVote.do",
+				url  : "/comm/clickVote.do",
 				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
 				dataType : "json",
 				success: function(result) {
@@ -119,7 +170,7 @@ $(document).ready(function() {
 		} else {
 			$.ajax({
 				type : "post",
-				url  : "/comm/saveVote.do",
+				url  : "/comm/clickVote.do",
 				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
 				dataType : "json",
 				success: function(result) {
@@ -147,6 +198,28 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	
+	//댓글창에서 본인댓글 삭제시
+	$("#deleteComment").on("click", function(event) {
+		$.ajax({
+			type : "post",
+			url  : "/comm/deleteComment.do",
+			data : $("#commentForm").serialize(),	//수정필요
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("삭제되었습니다.");
+				//어디로 보내야할지 정해야함
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
 	});
 	
 });

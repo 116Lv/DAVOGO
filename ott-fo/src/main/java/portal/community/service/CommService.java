@@ -13,5 +13,11 @@ public interface CommService {
 
 	public List<Map> getVoteItems(Map params);
 
-	
+	public void saveComment(Map params);
+
+	public void deleteComment(Map params);
+
+	public List<Map> getCommentList(Map params);
+
+	public int getCommentCnt();
 }

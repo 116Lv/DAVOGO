@@ -152,4 +152,47 @@
 			email_id = #{loginEmailId}
 			and vote_id = #{beforeVoteId}
 	</update>
+	
+	<insert id="saveComment">
+		insert into comment
+		(
+			comm_id,
+			writer,
+			comment,
+			save_date
+		)
+		values
+		(
+			#{comm_id},
+			#{writer},
+			#{comment},
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
+	
+	<delete id="deleteComment">
+		delete from comment
+		where
+			writer = #{writer}
+	</delete>
+	
+	<select id="getCommentList" resultType="EgovMap">
+		select
+			*
+		from
+			comment
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	<select id="getCommentCnt" resultType="int">
+		select
+			count(comment_id)
+		from 
+			comment
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	
 </mapper>

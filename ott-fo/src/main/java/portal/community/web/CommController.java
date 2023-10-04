@@ -60,7 +60,7 @@ public class CommController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/comm/save.do")
+	@RequestMapping("/comm/saveVote.do")
 	public String saveVote(@RequestParam Map params, @RequestParam("items") String[] items, Model model) {
 		try {
 			params.put("items", items);
@@ -81,7 +81,7 @@ public class CommController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/comm/saveVote.do")
+	@RequestMapping("/comm/clickVote.do")
 	public String saveVoteAction(@RequestParam Map params, Model model) {
 		try {
 			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -92,6 +92,42 @@ public class CommController {
 			
 			//투표결과 조회
 			model.addAttribute("items", commService.getVoteItems(params));
+			
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
+	}
+	
+	@RequestMapping("/comm/comment.do")
+	public String commentPage(@RequestParam Map params, Model model) {
+		log.info("모달창 진입");
+		List<Map> list = commService.getCommentList(params);
+		
+		model.addAttribute("list", list);
+		return "/modal/community/commentPage";
+	}
+	
+//	댓글창에서 댓글달고 저장누른 경우
+	@RequestMapping("/comm/saveComment.do")
+	public String saveComment(@RequestParam Map params, Model model) {
+		try {
+			commService.saveComment(params);
+			
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
+	}
+	
+	@RequestMapping("/comm/deleteComment.do")
+	public String deleteComment(@RequestParam Map params, Model model) {
+		try {
+			commService.deleteComment(params);
 			
 			model.addAttribute("resultCode", "success");
 		} catch (Exception e) {

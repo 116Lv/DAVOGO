@@ -25,4 +25,12 @@ public interface CommMapper {
 	public void deleteVoteUser(Map params);
 	
 	public void updateVoteUser(Map params);
+	
+	public void saveComment(Map params);
+
+	public void deleteComment(Map params);
+
+	public List<Map> getCommentList(Map params);
+
+	public int getCommentCnt();
 }
