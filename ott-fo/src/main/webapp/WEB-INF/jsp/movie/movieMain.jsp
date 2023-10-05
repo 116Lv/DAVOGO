@@ -38,15 +38,14 @@
 					<!-- Swiper_TV -->
 					<div class="swiper mySwiper${status.index}">
 						<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<a href="${image.mediaHref}">
-										<img src="${image.imgSrc}" alt="${image.mediaName}">
-										<p>${image.mediaName}</p>
-										<p>${image.period} - ${image.country}</p>
-										<p>${image.avg_score}</p>
-									</a>
-								</div>
-							</c:forEach>
+							<div class="swiper-slide">
+								<a href="${image.mediaHref}">
+									<img src="${image.imgSrc}" alt="${image.mediaName}">
+									<p>${image.mediaName}</p>
+									<p>${image.period} - ${image.country}</p>
+									<p>${image.avg_score}</p>
+								</a>
+							</div>
 						</div>
 						<div class="swiper-button-next"></div>
 						<div class="swiper-button-prev"></div>

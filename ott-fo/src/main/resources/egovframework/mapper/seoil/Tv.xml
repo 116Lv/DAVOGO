@@ -26,6 +26,32 @@
 			r.media_rank
 	</select>
 	
-	
+	<select id="getContent" resultType="EgovMap">
+		select
+			*
+		from
+			media
+		where
+			media_id = #{media_id}
+	</select>
 
+	<select id="getImage" resultType="EgovMap">
+		select
+			w.img_src, r.*
+		from
+			watcha w, watcha_rank r
+		where
+			r.media_id = #{media_id}
+			and	w.media_id = r.media_id
+	</select>
+	
+	<select id="getCategoryInfoList" resultType="EgovMap">
+		select
+			m.*, w.img_src
+		from
+			media m, watcha w
+		where
+			genre like concat('%', #{genre}, '%')
+			and m.media_id = w.media_id
+	</select>
 </mapper>

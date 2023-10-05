@@ -11,7 +11,7 @@
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-<div class="container">
+<div class="custom-container">
 	<c:if test="${not empty movieList}">
 		<div class="row">
 			<div class="col-md-12">
@@ -40,17 +40,17 @@
 
    	<c:if test="${not empty categoryList}">
 	   	<c:forEach var="category" items="${categoryList}" varStatus="status">
-			<div class="row">
+			<div class="row mt-3">
 				<div class="col-md-12">
-					<p>${category.categoryTitle}</p>
+					<h4 class="mb-1">${category.categoryTitle}</h4>
 					<!-- Swiper1 -->
-					<div class="swiper mySwiper${status.index}">
+					<div class="swiper mySwiper${status.index} mb-5">
 						<div class="swiper-wrapper">
 			   				<c:forEach var="image" items="${category.imageList}">
 								<div class="swiper-slide">
-									<a href="${image.mediaHref}">
+									<a class="text-dark" href="${image.mediaHref}">
 										<img src="${image.imgSrc}" alt="${image.mediaName}">
-										<p>${image.mediaName}</p>
+										<p class="font-weight-bold">${image.mediaName}</p>
 										<p>${image.period} - ${image.country}</p>
 										<p>${image.avg_score}</p>
 									</a>

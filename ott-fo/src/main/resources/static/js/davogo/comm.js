@@ -101,12 +101,20 @@ $(document).ready(function() {
 		});
 	});
 	
-	//정렬조건 화면반영
+	//메인창 정렬조건 화면반영
 	$(".commMain .nav-item").on("click", function(event) {
 		var target = $(event.target);
 		var type = target.attr("type");
 		$("#" + type).val(target.attr(type));
 		$("#searchForm").submit();
+	});
+	
+	//월드컵창 화면변경
+	$(".commWorldInfo .nav-item").on("click", function(event) {
+		var target = $(event.target);
+		var type = target.attr("type");
+		$("#" + type).val(target.attr(type));
+		$("#searchForm").submit();	/*이게 맞는지 확인필요*/
 	});
 	
 	//투표참여-클릭기능
@@ -180,6 +188,7 @@ $(document).ready(function() {
 	});
 	
 });
+
 
 function reloadComments(commId) {
 	var modalDiv = $('#commentWriteModal').find(".modal-body");

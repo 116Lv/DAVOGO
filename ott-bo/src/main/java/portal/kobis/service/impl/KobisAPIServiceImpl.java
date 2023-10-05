@@ -72,9 +72,7 @@ public class KobisAPIServiceImpl implements KobisAPIService {
 				
 				if (movieInfo != null) {
 					movieInfo.putAll(item);
-					
 					if(cnt == 0) {
-						
 						//제작사, 배급사 문자열 만들기
 						StringBuffer producer = new StringBuffer();
 						StringBuffer distributor = new StringBuffer();
@@ -92,13 +90,11 @@ public class KobisAPIServiceImpl implements KobisAPIService {
 						movieInfo.put("distributor", distributor.toString());
 						
 						kobisMapper.insertDailyBoxOffice(movieInfo);
-					}else {
+					} else {
 						kobisMapper.updateDailyBoxOffice(movieInfo);
 					}
-					
 				}
 			}
-			
 		} catch (OpenAPIFault e) {
 			log.error("api 호출 오류", e);
 		} catch (Exception e) {

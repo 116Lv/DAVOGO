@@ -77,6 +77,11 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="<c:url value="/js/jquery-1.12.3.min.js"/>"></script>
 	
+	<!-- icon -->
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+	
+	<!-- Dropzone -->
+	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
 </head>
 

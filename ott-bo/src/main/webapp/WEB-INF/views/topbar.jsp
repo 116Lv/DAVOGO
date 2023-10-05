@@ -8,13 +8,13 @@
     <div class="navbar-custom">
         <div class="topbar container-fluid">
             <div class="d-flex align-items-center gap-lg-2 gap-1">
-
+ 
                 <!-- Topbar Brand Logo -->
                 <div class="logo-topbar">
                     <!-- Logo light -->
                     <a href="index.html" class="logo-light">
                         <span class="logo-lg">
-                            <img src="<c:url value="/images/logo.png"/>" alt="logo">
+                            <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="logo">
                         </span>
                         <span class="logo-sm">
                             <img src="<c:url value="/images/logo-sm.png"/>" alt="small logo">
@@ -24,7 +24,7 @@
                     <!-- Logo Dark -->
                     <a href="index.html" class="logo-dark">
                         <span class="logo-lg">
-                            <img src="<c:url value="/images/logo-dark.png"/>" alt="dark logo">
+                            <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="dark logo">
                         </span>
                         <span class="logo-sm">
                             <img src="<c:url value="/images/logo-dark-sm.png"/>" alt="small logo">
@@ -37,7 +37,7 @@
                     <i class="mdi mdi-menu"></i>
                 </button>
 
-                <!-- Horizontal Menu Toggle Button -->
+<%--                <!-- Horizontal Menu Toggle Button -->
                 <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                     <div class="lines">
                         <span></span>
@@ -56,7 +56,7 @@
                         </div>
                     </form>
 
-                    <%-- <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
+                    <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
                         <!-- item-->
                         <div class="dropdown-header noti-title">
                             <h5 class="text-overflow mb-2">Found <span class="text-danger">17</span> results</h5>
@@ -108,8 +108,8 @@
                                 </div>
                             </a>
                         </div>
-                    </div> --%>
-                </div>
+                    </div>
+                </div> --%>
             </div>
 
             <ul class="topbar-menu d-flex align-items-center gap-3">
@@ -147,10 +147,10 @@
                 </li> --%>
 
                 <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <!-- <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="ri-notification-3-line font-22"></i>
                         <span class="noti-icon-badge"></span>
-                    </a>
+                    </a> -->
                     <%-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
                         <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                             <div class="row align-items-center">
@@ -312,16 +312,16 @@
                         </div>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
+                        <!-- <a href="javascript:void(0);" class="dropdown-item">
                             <i class="mdi mdi-account-circle me-1"></i>
                             <span>My Account</span>
-                        </a>
+                        </a> -->
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
+                        <!-- <a href="javascript:void(0);" class="dropdown-item">
                             <i class="mdi mdi-account-edit me-1"></i>
                             <span>User Menu 1</span>
-                        </a>
+                        </a> -->
 
                         <!-- item-->
                         <a href="<c:url value="/logout.do"/>" class="dropdown-item">

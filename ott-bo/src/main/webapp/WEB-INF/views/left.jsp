@@ -8,9 +8,9 @@
 	<div class="leftside-menu">
 	
 	    <!-- LOGO -->
-	    <%-- <a href="<c:url value="/"/>" class="logo text-center logo-light">
+	    <a href="<c:url value="/"/>" class="logo text-center logo-light">
 	        <span class="logo-lg">
-	            <img src="<c:url value="/images/white_logo.png"/>" alt="" height="60">
+	            <img src="<c:url value="/images/Davogo_Logo.jpg"/>" alt="" height="60">
 	        </span>
 	        <span class="logo-sm text-white">
 	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">
@@ -20,12 +20,12 @@
 	    <!-- LOGO -->
 	    <a href="<c:url value="/"/>" class="logo text-center logo-dark">
 	        <span class="logo-lg">
-	            <img src="<c:url value="/images/white_logo.png"/>" alt="" height="60">
+	            <img src="<c:url value="/images/Davogo_Logo.jpg"/>" alt="" height="60">
 	        </span>
 	        <span class="logo-sm text-white">
 	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">
 	        </span>
-	    </a> --%>
+	    </a>
 	
 	    <div class="h-100" id="left-side-menu-container" data-simplebar>
 	
@@ -93,7 +93,7 @@
 	            <li class="side-nav-item">
 	                <a href="/board.do" class="side-nav-link">
 	                    <i class="uil-clipboard-alt"></i>
-	                    <span> NOTICE BOARD </span>
+	                    <span> NOTICE </span>
 	                </a>
 	            </li>
 	
