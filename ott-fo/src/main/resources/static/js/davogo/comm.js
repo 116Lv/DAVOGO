@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$.ajax({
 			type : "post",
 			url  : "/comm/comment.do",
-			data : {commId : $(event.relatedTarget).closest('.card').attr('commId')},
+			data : {commId : $(event.relatedTarget).closest('.card').attr('comm_id')},
 			dataType : "html",
 			success:function(result){
 				//result.title = "상품정보 보기";
@@ -127,11 +127,12 @@ $(document).ready(function() {
 			$.ajax({
 				type : "post",
 				url  : "/comm/clickVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
+				data : { voteId: $(event.target).val(), commId: $(event.target).closest('.card').attr('comm_id') },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
 		        		alert(result.resultMessage);
+						$(event.target).attr("checked", false);
 		                return;
 		        	}
 					
@@ -187,9 +188,47 @@ $(document).ready(function() {
 		}
 	});
 	
+	//좋아요
+	$(".like").on("click", function(event) {
+		$.ajax({
+			type : "post",
+			url  : "/comm/saveLike.do",
+			data : {commId : $(this).closest('.card').attr('comm_id'), likeType: 'like'},
+			dataType : "json",
+			success:function(result){
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+
+				var likeCntObj = $(this).closest("span");
+				likeCntObj.html(parseInt(likeCntObj.html()) + 1);
+			}
+		});
+	});
+	
+	//싫어요
+	$(".disLike").on("click", function(event) {
+		$.ajax({
+			type : "post",
+			url  : "/comm/saveLike.do",
+			contentType: "application/json; charset=UTF-8",
+			data : {commId : $(this).closest('.card').attr('comm_id'), likeType: 'dislike'},
+			dataType : "json",
+			success:function(result){
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+
+				//$(this).closest("span").html()
+			}
+		});
+	});
+	
 });
 
-
+//댓글 리로드
 function reloadComments(commId) {
 	var modalDiv = $('#commentWriteModal').find(".modal-body");
 	modalDiv.empty();

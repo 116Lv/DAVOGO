@@ -8,11 +8,11 @@ import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 @Mapper
 public interface CommMapper {
 
+	public List<Map> getCommunityList(Map params);
+	
 	public void saveVote(Map params);
 
 	public void saveVoteItem(Map params);
-
-	public List<Map> getCommunityList(Map params);
 
 	public void saveVoteClick(Map params);
 
@@ -33,4 +33,12 @@ public interface CommMapper {
 	public List<Map> getCommentList(Map params);
 
 	public int getCommentCnt();
+	
+	public Map getCommLike(Map params);
+	
+	public void insertCommLike(Map params);
+	
+	public void updateCommLike(Map params);
+	
+	public void deleteCommLike(Map params);
 }

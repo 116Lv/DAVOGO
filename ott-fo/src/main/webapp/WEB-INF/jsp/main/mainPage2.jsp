@@ -40,19 +40,19 @@
 
    	<c:if test="${not empty categoryList}">
 	   	<c:forEach var="category" items="${categoryList}" varStatus="status">
-			<div class="row mt-3">
+			<div class="row mt-4">
 				<div class="col-md-12">
-					<h4 class="mb-1">${category.categoryTitle}</h4>
+					<h5 class="mb-2"><b>${category.categoryTitle}</b></h5>
 					<!-- Swiper1 -->
-					<div class="swiper mySwiper${status.index} mb-5">
+					<div class="swiper mySwiper${status.index} mb-4">
 						<div class="swiper-wrapper">
 			   				<c:forEach var="image" items="${category.imageList}">
 								<div class="swiper-slide">
 									<a class="text-dark" href="${image.mediaHref}">
 										<img src="${image.imgSrc}" alt="${image.mediaName}">
-										<p class="font-weight-bold">${image.mediaName}</p>
-										<p>${image.period} - ${image.country}</p>
-										<p>${image.avg_score}</p>
+										<div class="font-weight-bold font16">${image.mediaName}</div>
+										<div class="font14">${image.period} - ${image.country}</div>
+										<div>${image.avgScore}</div>
 									</a>
 								</div>
 							</c:forEach>

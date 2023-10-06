@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
+import portal.common.Constants;
 import portal.common.cmm.EgovUserDetailsHelper;
 import portal.user.vo.UserVO;
 
@@ -43,7 +44,18 @@ public class AuthenticInterceptor extends WebContentInterceptor {
 		if (loginVO != null && loginVO.getEmail() != null) {
 			return true;
 		} else {
-			ModelAndView modelAndView = new ModelAndView("redirect:/signIn.do");
+			String contentType = request.getContentType();
+			
+			ModelAndView modelAndView = new ModelAndView();
+			
+			if (contentType.contains("application/json")) {
+				modelAndView.addObject("resultCode", "fail");
+				modelAndView.addObject("resultMessage", "로그인이 필요한 서비스입니다.");
+				modelAndView.setViewName(Constants.VIEW_NAME_JSON);
+			} else {
+				modelAndView.setViewName("redirect:/signIn.do");
+			}
+			
 			throw new ModelAndViewDefiningException(modelAndView);
 		}
 	}

@@ -27,6 +27,11 @@ public class CommController {
 	@RequestMapping("/comm.do")
 	public String mainPage(@RequestParam Map params, Model model) {
 		
+		if (EgovUserDetailsHelper.isAuthenticated()) {
+			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			params.put("loginEmailId", loginUser.getEmailId());
+		}
+		
 		List<Map> communityList = commService.getCommunityList(params);
 		
 		model.addAttribute("list", communityList);
@@ -140,4 +145,29 @@ public class CommController {
 		}
 		return Constants.VIEW_NAME_JSON;
 	}
+	
+	/**
+	 * 좋아요 또는 싫어요 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/comm/saveLike.do")
+	public String saveLike(@RequestParam Map params, Model model) {
+		try {
+			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			params.put("loginEmailId", loginUser.getEmailId());
+			
+			commService.saveLike(params);
+			
+			model.addAttribute("resultCode", "success");
+			
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
+		
+	}
+	
 }

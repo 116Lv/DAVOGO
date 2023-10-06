@@ -38,19 +38,8 @@
 		)
 	</insert>
 	
-	<resultMap id="communityListMap" type="EgovMap">
-		<result property="commId" column="comm_id" /> 
-		<result property="commDiv" column="comm_div" />
-		<result property="writer" column="writer" />
-		<result property="title" column="title" />
-		<result property="content" column="content" />
-		<result property="likeCnt" column="like_cnt" />
-		<result property="dislikeCnt" column="dislike_cnt" />
-		
-		<collection column="commId=comm_id" property="items" javaType="List" ofType="EgovMap" select="getVoteItems" />
-	</resultMap>
-	
-	<select id="getCommunityList" resultMap="communityListMap">
+	<!-- 커뮤니티 전체 목록 조회 -->
+	<select id="getCommunityList" resultType="egovMap">
 		select
 			comm_id,
 			comm_div,
@@ -58,7 +47,23 @@
 			title,
 			content,
 			like_cnt,
-			dislike_cnt
+			dislike_cnt,
+			(
+				select 
+					case count(*) when 0 then 'false' else 'true' end 
+				from community_like_user b
+				where b.comm_id = c.comm_id
+				and b.email_id = #{loginEmailId}
+				and b.like_type = 'like'
+			) as user_liked,
+			(
+				select 
+					case count(*) when 0 then 'false' else 'true' end 
+				from community_like_user b
+				where b.comm_id = c.comm_id
+				and b.email_id = #{loginEmailId}
+				and b.like_type = 'dislike'
+			) as user_disliked
 		from
 			community c
 		where
@@ -106,7 +111,14 @@
 		select
 			vote_id, 
 			comm_id, 
-			item, 
+			item,
+			(
+				select
+					case count(*) when 0 then 'false' else 'true' end 
+				from vote_user b
+				where b.vote_id = a.vote_id
+				and b.email_id = #{loginEmailId}
+			) as user_voted,
 			total_cnt,
 			(	select sum(b.total_cnt) 
 				from vote b
@@ -195,5 +207,47 @@
 			comm_id = #{comm_id}
 	</select>
 	
+	<select id="getCommLike" resultType="egovMap">
+		select
+			like_type
+		from 
+			community_like_user
+		where
+			comm_id = #{commId}
+			and email_id = #{loginEmailId}
+	</select>
 	
+	<insert id="insertCommLike">
+		insert into community_like_user
+		(
+			comm_id,
+			email_id,
+			like_type
+		)
+		values
+		(
+			#{commId},
+			#{loginEmailId},
+			#{likeType}
+		)
+	</insert>
+	
+	<update id="updateCommLike">
+		update
+			community_like_user
+		set 
+			like_type = #{likeType}
+		where 
+			comm_id = #{commId}
+			and email_id = #{loginEmailId}
+	</update>
+	
+	<delete id="deleteCommLike">
+		delete from
+			community_like_user
+		where 
+			comm_id = #{commId}
+			and email_id = #{loginEmailId}
+	</delete>
+
 </mapper>

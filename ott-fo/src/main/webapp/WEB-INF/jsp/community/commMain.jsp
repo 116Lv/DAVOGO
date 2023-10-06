@@ -54,15 +54,17 @@
 			<div class="col-md-3 px-2">
 				<c:choose>
 					<c:when test="${comm.commDiv eq 1}">	<!-- 투표 -->
-						<div class="card my-3" commId="${comm.commId}">
+						<div class="card my-3" comm_id="${comm.commId}">
 							<div class="card-body">
-								<p class="card-text">${comm.writer}</p>
+								<p class="card-text font15">${comm.writer}</p>
 								<h5 class="card-title">${comm.title}</h5>
+								
+								<%-- 투표 아이템들 --%>
 								<c:forEach var="item" items="${comm.items}">
 									<div class="input-group my-1">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<input type="checkbox" name="vote_id" value="${item.voteId}" commId="${item.commId}">
+												<input type="checkbox" name="vote_id" value="${item.voteId}">
 											</div>
 										</div>
 										<div class="form-control" id="item${item.voteId}">
@@ -75,19 +77,39 @@
 										</div>
 									</div>
 								</c:forEach>
+								
 								<div class="row mt-2">
+									<div class="col-sm-3 px-0">
+										<c:choose>
+											<c:when test="${comm.userLiked == 'true'}">
+												<c:set var="btnClass" value="btn-primary"/>
+											</c:when>
+											<c:otherwise>
+												<c:set var="btnClass" value="btn-light"/>
+											</c:otherwise>
+										</c:choose>
+										<div class="btn ${btnClass} like">
+											<i class="uil uil-thumbs-up"></i>
+										</div>
+										<span>${comm.likeCnt}</span>
+									</div>
 									<div class="col-sm-3">
-										<div class="btn like">
-											<i class="uil uil-thumbs-up mx-1"></i>${comm.likeCnt}
+										<c:choose>
+											<c:when test="${comm.userDisliked == 'true'}">
+												<c:set var="btnClass" value="btn-primary"/>
+											</c:when>
+											<c:otherwise>
+												<c:set var="btnClass" value="btn-light"/>
+											</c:otherwise>
+										</c:choose>
+										<div class="btn ${btnClass} disLike">
+											<i class="uil uil-thumbs-down"></i>
 										</div>
 									</div>
-									<div class="col-sm-6">
-										<div class="btn disLike">
-											<i class="uil uil-thumbs-down"></i><%-- ${comm.dislikeCnt } --%>
-										</div>
+									<div class="col-sm-3">
 									</div>
 									<div class="col-sm-3">
-										<div class="btn comment" data-toggle="modal" data-target="#commentWriteModal">
+										<div class="btn btn-light comment" data-toggle="modal" data-target="#commentWriteModal">
 											<i class="uil uil-comment-dots mx-1"></i>
 											${commentCnt}
 										</div>
@@ -97,7 +119,7 @@
 						</div>
 					</c:when>
 					<c:when test="${comm.commDiv eq 2}">	<!-- 월드컵 -->
-						<div class="card">
+						<div class="card my-3" commId="${comm.commId}">
 							<div>
 								<input type="hidden" value="${item.writer}">
 								<div>

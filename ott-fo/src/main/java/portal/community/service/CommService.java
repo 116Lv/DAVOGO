@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface CommService {
 
-	public void saveVote(Map params);
-
 	public List<Map> getCommunityList(Map params);
+
+	public void saveVote(Map params);
 
 	public void saveVoteClick(Map params);
 
@@ -20,4 +20,7 @@ public interface CommService {
 	public List<Map> getCommentList(Map params);
 
 	public int getCommentCnt();
+
+	public void saveLike(Map params);
+
 }

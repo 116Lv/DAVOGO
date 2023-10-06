@@ -56,10 +56,10 @@ font-family: 'Roboto', sans-serif;
 
 /*UNIVERSAL CODE*/
 
-* {
+/* * {
     margin: 0;
     padding: 0;
-}
+} */
 .alignleft {
     float: left;
     margin-right: 15px
@@ -1232,5 +1232,15 @@ ul.entry-meta {
 .custom-row {
     margin-bottom: 10px; /* 각 요소 사이의 간격 조절 */
 }
-    
-    
+
+.font14 {
+	font-size: 14px;
+}
+   
+.font15 {
+	font-size: 15px;
+}
+   
+.font16 {
+	font-size: 16px;
+}

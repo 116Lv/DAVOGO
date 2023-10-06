@@ -16,6 +16,28 @@ public class CommServiceImpl implements CommService{
 	private CommMapper commMapper;
 
 	@Override
+	public List<Map> getCommunityList(Map params) {
+		
+		List<Map> list = commMapper.getCommunityList(params);
+		
+		for (Map map : list) {
+			Integer commDiv = (Integer) map.get("commDiv");
+			
+			//투표
+			if (commDiv == 1) {
+				map.put("items", commMapper.getVoteItems(map));
+				
+			//월드컵
+			} else if (commDiv == 2) {
+				map.put("items", null);
+			}
+			
+		}
+		
+		return list;
+	}
+
+	@Override
 	public void saveVote(Map params) {
 		
 		commMapper.saveVote(params);
@@ -28,12 +50,6 @@ public class CommServiceImpl implements CommService{
 			}
 			
 		}
-	}
-
-	@Override
-	public List<Map> getCommunityList(Map params) {
-		
-		return commMapper.getCommunityList(params);
 	}
 
 	@Override
@@ -103,6 +119,30 @@ public class CommServiceImpl implements CommService{
 	@Override
 	public int getCommentCnt() {
 		return commMapper.getCommentCnt();
+	}
+
+	@Override
+	public void saveLike(Map params) {
+		
+		Map userLiked = commMapper.getCommLike(params);
+		
+		if (userLiked == null) {
+			commMapper.insertCommLike(params);
+			//likeType에 따라 +1
+			//+1
+		} else {
+			String likeType = (String)userLiked.get("like_type");
+			
+			//이미 좋아요/싫어요를 한 후, 다시 동일한 버튼을 누르는 경우 데이터 삭제.
+			if (likeType.equals(params.get("likeType"))) {
+				commMapper.deleteCommLike(params);
+				//-1
+			} else {
+				commMapper.updateCommLike(params);
+				//+1 or -1
+			}
+		}
+		
 	}
 
 }

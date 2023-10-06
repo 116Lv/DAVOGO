@@ -6,17 +6,9 @@
 
 <head>
 	<!-- DEFAULT -->
-	<%-- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="Location" content="REPUBLIC OF KOREA" />
-	<meta name="Cache-control" content="No-Cache" />
-	<meta name="Pragma" content="no-cache" /> 
-	<meta name="X-UA-Compatible" content="IE=edge, chrome=1" />
-	<meta name="Content-Type" content="text/html; charset=utf-8" />
-	
+	<%-- 
     <!-- App favicon -->
     <link rel="shortcut icon" href="<c:url value="/images/favicon.ico"/>" />
-
-	<title>HOME | DAVOGO</title>
 
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
 	
@@ -34,22 +26,22 @@
     <link href="<c:url value="/css/app.css"/>" rel="stylesheet" type="text/css" id="light-style" />
     <link href="<c:url value="/css/app.min.css"/>" rel="stylesheet" type="text/css" id="light-style" />
     <link href="<c:url value="/css/app-dark.min.css"/>" rel="stylesheet" type="text/css" id="dark-style" />
-
     
-	<link href="<c:url value="/css/dynatree/ui.dynatree.css"/>" rel="stylesheet" type="text/css" />
-	<link href="<c:url value="/css/dynatree/jquery.contextMenu.css"/>" rel="stylesheet" type="text/css" />
 	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <link href="<c:url value="/css/game/common.css"/>" rel="stylesheet" type="text/css" />
 
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> --%>
-	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	--%>
 	
 	
 	<!-- bootstrap greenfair템플릿 사용 -->
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="Location" content="REPUBLIC OF KOREA" />
+	<meta name="Cache-control" content="No-Cache" />
+	<meta name="Pragma" content="no-cache" /> 
+	<meta name="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="Content-Type" content="text/html; charset=utf-8" />
 
     <title>HOME | DAVOGO</title>
 
@@ -83,5 +75,11 @@
 	<!-- Dropzone -->
 	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+	
+	<script type="text/javascript">
+	$.ajaxSetup({
+		contentType: "application/json; charset=UTF-8"
+	});
+	</script>
 </head>
 
