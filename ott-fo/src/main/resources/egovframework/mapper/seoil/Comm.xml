@@ -49,6 +49,21 @@
 			like_cnt,
 			dislike_cnt,
 			(
+				case comm_div 
+					when '1' 
+					then (
+						select 
+							case count(*) when 0 then 'false' else 'true' end
+						from 
+							vote v, vote_user u
+						where v.comm_id = c.comm_id
+						and v.vote_id = u.vote_id
+						and u.email_id = #{loginEmailId}
+						)
+					when '2' then 'false'
+				end
+			) as user_selected,
+			(
 				select 
 					case count(*) when 0 then 'false' else 'true' end 
 				from community_like_user b
@@ -207,7 +222,7 @@
 			comm_id = #{comm_id}
 	</select>
 	
-	<select id="getCommLike" resultType="egovMap">
+	<select id="getCommLike" resultType="string">
 		select
 			like_type
 		from 
@@ -250,4 +265,22 @@
 			and email_id = #{loginEmailId}
 	</delete>
 
+	<update id="updateCommunityForLike">
+		update community a
+		set
+			like_cnt = ( 
+						select count(*)
+						from community_like_user b
+						where a.comm_id = b.comm_id
+						and b.like_type = 'like'
+			),
+			dislike_cnt = ( 
+						select count(*)
+						from community_like_user b
+						where a.comm_id = b.comm_id
+						and b.like_type = 'dislike'
+			)
+		where
+			comm_id = #{commId}
+	</update>
 </mapper>

@@ -23,6 +23,7 @@ public class CommServiceImpl implements CommService{
 		for (Map map : list) {
 			Integer commDiv = (Integer) map.get("commDiv");
 			
+			map.put("loginEmailId", params.get("loginEmailId"));
 			//투표
 			if (commDiv == 1) {
 				map.put("items", commMapper.getVoteItems(map));
@@ -124,17 +125,16 @@ public class CommServiceImpl implements CommService{
 	@Override
 	public void saveLike(Map params) {
 		
-		Map userLiked = commMapper.getCommLike(params);
+		//사용자가 이전에 좋아요 또는 싫어요를 한 데이터가 있는지 조회
+		String userLikeType = commMapper.getCommLike(params);
 		
-		if (userLiked == null) {
+		//이전에 좋든 싫든을 한적이 없으면 insert
+		if (userLikeType == null) {
 			commMapper.insertCommLike(params);
-			//likeType에 따라 +1
-			//+1
 		} else {
-			String likeType = (String)userLiked.get("like_type");
 			
 			//이미 좋아요/싫어요를 한 후, 다시 동일한 버튼을 누르는 경우 데이터 삭제.
-			if (likeType.equals(params.get("likeType"))) {
+			if (userLikeType.equals((String)params.get("likeType"))) {
 				commMapper.deleteCommLike(params);
 				//-1
 			} else {
@@ -142,6 +142,8 @@ public class CommServiceImpl implements CommService{
 				//+1 or -1
 			}
 		}
+		
+		commMapper.updateCommunityForLike(params);
 		
 	}
 

@@ -44,7 +44,7 @@ public class AuthenticInterceptor extends WebContentInterceptor {
 		if (loginVO != null && loginVO.getEmail() != null) {
 			return true;
 		} else {
-			String contentType = request.getContentType();
+			String contentType = request.getHeader("accept");
 			
 			ModelAndView modelAndView = new ModelAndView();
 			

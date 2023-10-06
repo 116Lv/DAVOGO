@@ -144,9 +144,13 @@ $(document).ready(function() {
 							var voteId = "#item" + items[i].voteId;
 							var elem = $(voteId);
 							elem.css("padding", "0");
+							elem.css("height", "29.78px");
 							elem.children().css("height", "100%");
-							var percentage = items[i].totalCnt / items[i].sumClickedCnt * 100;
-							elem.children().children().css("width", percentage + "%");
+							var percentage = Math.round(items[i].totalCnt / items[i].sumClickedCnt * 100);
+							var progressBarObj = elem.children().children();
+							progressBarObj.css("width", percentage + "%");
+							progressBarObj.next().css("padding", ".375rem .75rem");
+							progressBarObj.next().children().next().html(percentage + "%");
 						}
 					}
 					
@@ -159,7 +163,7 @@ $(document).ready(function() {
 			$.ajax({
 				type : "post",
 				url  : "/comm/clickVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).attr("commId") },
+				data : { voteId: $(event.target).val(), commId: $(event.target).closest('.card').attr('comm_id') },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
@@ -173,10 +177,12 @@ $(document).ready(function() {
 						for (i=0; i<items.length; i++) {
 							var voteId = "#item" + items[i].voteId;
 							var elem = $(voteId);
-							elem.css("padding", "");
+							elem.removeAttr("style");
 							elem.children().css("height", "");
-							var percentage = items[i].totalCnt / items[i].sumClickedCnt * 100;
-							elem.children().children().removeAttr("style");
+							var progressBarObj = elem.children().children();
+							progressBarObj.removeAttr("style");
+							progressBarObj.next().removeAttr("style");
+							progressBarObj.next().children().next().html("");
 						}
 					}
 					
@@ -200,9 +206,23 @@ $(document).ready(function() {
 	        		alert(result.resultMessage);
 	                return;
 	        	}
-
-				var likeCntObj = $(this).closest("span");
-				likeCntObj.html(parseInt(likeCntObj.html()) + 1);
+				
+				var btnObj = $(event.target);
+				var cntObj = btnObj.next();
+				console.log(cntObj.html());
+				//사용자가 좋아요를 누른 경우 
+				if (btnObj.hasClass("btn-light")) {
+					btnObj.removeClass("btn-light");
+					btnObj.addClass("btn-primary");
+					cntObj.html(parseInt(cntObj.html()) + 1);
+				
+				//사용자가 좋아요를 취소한 경우
+				} else {
+					btnObj.removeClass("btn-primary");
+					btnObj.addClass("btn-light");
+					cntObj.html(parseInt(cntObj.html()) - 1);
+				}
+				
 			}
 		});
 	});
@@ -212,7 +232,6 @@ $(document).ready(function() {
 		$.ajax({
 			type : "post",
 			url  : "/comm/saveLike.do",
-			contentType: "application/json; charset=UTF-8",
 			data : {commId : $(this).closest('.card').attr('comm_id'), likeType: 'dislike'},
 			dataType : "json",
 			success:function(result){

@@ -38,32 +38,16 @@
 	<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
 	<!--End of Scroll to top-->
 
-	<!--Isotope-->
-	<!-- <script src="js/isotope/min/scripts-min.js"></script>
-	<script src="js/isotope/cells-by-row.js"></script>
-	<script src="js/isotope/isotope.pkgd.min.js"></script>
-	<script src="js/isotope/packery-mode.pkgd.min.js"></script>
-	<script src="js/isotope/scripts.js"></script> -->
-
-
 	<!--Back To Top-->
 	<script src="<c:url value="/js/backtotop.js"/>"></script>
 
-
 	<!--JQuery Click to Scroll down with Menu-->
-	<script src="<c:url value="/js/jquery.localScroll.min.js"/>"></script>
-	<script src="<c:url value="/js/jquery.scrollTo.min.js"/>"></script>
-	<!--WOW With Animation-->
-	<script src="<c:url value="/js/wow.min.js"/>"></script>
-	<!--WOW Activated-->
-	<script>
-		new WOW().init();
-	</script>
-
+<%-- 	<script src="<c:url value="/js/jquery.localScroll.min.js"/>"></script> --%>
+<%-- 	<script src="<c:url value="/js/jquery.scrollTo.min.js"/>"></script> --%>
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 	<!-- Custom JavaScript-->
-	<script src="<c:url value="/js/main.js"/>"></script>
+<%-- 	<script src="<c:url value="/js/main.js"/>"></script> --%>
 </body>
 </html>

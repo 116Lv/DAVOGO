@@ -62,26 +62,47 @@
 								<%-- 투표 아이템들 --%>
 								<c:forEach var="item" items="${comm.items}">
 									<div class="input-group my-1">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<input type="checkbox" name="vote_id" value="${item.voteId}">
-											</div>
-										</div>
-										<div class="form-control" id="item${item.voteId}">
-											<div class="progress position-relative" style="background-color: white;">
-												<div class="progress-bar"></div>
-												<div class="justify-content d-flex position-absolute w-100">
-												${item.item}
+									<c:choose>
+										<c:when test="${comm.userSelected == 'true'}"><%-- 투표한 경우 --%>
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<input type="checkbox" name="vote_id" value="${item.voteId}" <c:if test="${item.userVoted == 'true'}"> checked="checked"</c:if>>
 												</div>
 											</div>
-										</div>
+											<div class="form-control" id="item${item.voteId}" style="padding: 0; height: 29.78px;">
+												<div class="progress position-relative" style="background-color: white; height: 100%;">
+													<div class="progress-bar" style="width: ${item.totalCnt / item.sumClickedCnt *100}%"></div>
+													<div class="justify-content-between d-flex position-absolute w-100" style="padding: .375rem .75rem;">
+														<span>${item.item}</span>
+														<span><fmt:formatNumber type="percent" value="${item.totalCnt / item.sumClickedCnt}"  pattern="0%"/></span>
+													</div>
+												</div>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="input-group-prepend">
+												<div class="input-group-text">
+													<input type="checkbox" name="vote_id" value="${item.voteId}">
+												</div>
+											</div>
+											<div class="form-control" id="item${item.voteId}">
+												<div class="progress position-relative" style="background-color: white;">
+													<div class="progress-bar"></div>
+													<div class="justify-content-between d-flex position-absolute w-100">
+														<span>${item.item}</span>
+														<span></span>
+													</div>
+												</div>
+											</div>
+										</c:otherwise>
+									</c:choose>
 									</div>
 								</c:forEach>
 								
 								<div class="row mt-2">
 									<div class="col-sm-3 px-0">
 										<c:choose>
-											<c:when test="${comm.userLiked == 'true'}">
+											<c:when test="${comm.userLiked == 'true'}"><%--사용자가 좋아요를 한 경우 --%>
 												<c:set var="btnClass" value="btn-primary"/>
 											</c:when>
 											<c:otherwise>

@@ -34,11 +34,13 @@ public interface CommMapper {
 
 	public int getCommentCnt();
 	
-	public Map getCommLike(Map params);
+	public String getCommLike(Map params);
 	
 	public void insertCommLike(Map params);
 	
 	public void updateCommLike(Map params);
 	
 	public void deleteCommLike(Map params);
+	
+	public void updateCommunityForLike(Map params);
 }
