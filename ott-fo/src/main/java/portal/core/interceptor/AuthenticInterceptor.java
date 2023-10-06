@@ -48,7 +48,7 @@ public class AuthenticInterceptor extends WebContentInterceptor {
 			
 			ModelAndView modelAndView = new ModelAndView();
 			
-			if (contentType.contains("application/json")) {
+			if (contentType != null && contentType.contains("application/json")) {
 				modelAndView.addObject("resultCode", "fail");
 				modelAndView.addObject("resultMessage", "로그인이 필요한 서비스입니다.");
 				modelAndView.setViewName(Constants.VIEW_NAME_JSON);
