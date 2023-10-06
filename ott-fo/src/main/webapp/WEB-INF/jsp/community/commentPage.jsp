@@ -16,18 +16,21 @@
 		</div>
 	</div>
 	<c:if test="${not empty list}">
-	<hr>
+	<hr />
 		<c:forEach var="comment" items="${list}">
 			<div class="media">
 				<div class="mr-3"><i class="uil uil-user-circle" style="font-size: 2em;"></i></div>
 				<div class="media-body">
+<%-- 					<fmt:parseDate var="saveDate" value="${comment.saveDate}" pattern="yyyyMMddHHmmss"/> --%>
+<%-- 					<fmt:formatDate value="${saveDate}" type="date" dateStyle="full"/> --%>
 					<h5 class="mt-0">${comment.writer}</h5>
 					${comment.comment}
 				</div>
 				<c:if test="${comment.writer eq loginUser.emailId}">
-					<div class="btn" id="deleteComment"><i class="uil uil-trash-alt"></i></div>
+					<div class="btn deleteComment" comment-id="${comment.comment_id}"><i class="uil uil-trash-alt"></i></div>
 				</c:if>
 			</div>
+			<hr />
 		</c:forEach>
 	</c:if>
 </form>
@@ -37,33 +40,18 @@ $(document).ready(function() {
 	$("#commentCnt").html("${fn:length(list)}");
 
 	//댓글창에서 등록 클릭
-	$("#saveComment").on('click', function() {
-		$.ajax({
-			type : "post",
-			url  : "/comm/saveComment.do",
-			data : $("#commentForm").serialize(),
-			dataType : "json",
-			success: function(result) {
-				if (result.resultCode == 'fail') {
-	        		alert(result.resultMessage);
-	                return;
-	        	}
-				
-	            alert("작성되었습니다.");
-				reloadComments(result.commId);
-			},
-			error: function( xhr, status, error ) {
-				alert(error);
-			}
-		});
+	$("#saveComment").on('click', saveComment);
+	$("#commentForm").on('submit', function(event) {
+		saveComment();
+		event.preventDefault();
 	});
 
 	//댓글창에서 본인댓글 삭제시
-	$("#deleteComment").on("click", function(event) {
+	$(".deleteComment").on("click", function(event) {
 		$.ajax({
 			type : "post",
 			url  : "/comm/deleteComment.do",
-			data : $("#commentForm").serialize(),	//수정필요
+			data : $("#commentForm").serialize() + "&commentId=" + $(event.target).attr("comment-id"),
 			dataType : "json",
 			success: function(result) {
 				if (result.resultCode == 'fail') {
@@ -72,7 +60,7 @@ $(document).ready(function() {
 	        	}
 				
 	            alert("삭제되었습니다.");
-				//어디로 보내야할지 정해야함
+	            reloadComments("${params.commId}");
 			},
 			error: function( xhr, status, error ) {
 				alert(error);
@@ -81,4 +69,25 @@ $(document).ready(function() {
 	});
 
 });
+
+function saveComment() {
+	$.ajax({
+		type : "post",
+		url  : "/comm/saveComment.do",
+		data : $("#commentForm").serialize(),
+		dataType : "json",
+		success: function(result) {
+			if (result.resultCode == 'fail') {
+        		alert(result.resultMessage);
+                return;
+        	}
+			
+            alert("작성되었습니다.");
+			reloadComments(result.commId);
+		},
+		error: function( xhr, status, error ) {
+			alert(error);
+		}
+	});
+}
 </script>

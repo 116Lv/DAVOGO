@@ -132,7 +132,7 @@
 									<div class="col-sm-3">
 										<div class="btn btn-light comment" data-toggle="modal" data-target="#commentWriteModal">
 											<i class="uil uil-comment-dots mx-1"></i>
-											${commentCnt}
+											${comm.commentCnt}
 										</div>
 									</div>
 								</div>

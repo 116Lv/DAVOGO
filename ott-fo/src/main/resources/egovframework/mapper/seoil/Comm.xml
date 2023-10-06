@@ -78,7 +78,13 @@
 				where b.comm_id = c.comm_id
 				and b.email_id = #{loginEmailId}
 				and b.like_type = 'dislike'
-			) as user_disliked
+			) as user_disliked,
+			(
+				select
+					count(*)
+				from comment a
+				where a.comm_id = c.comm_id
+			) as comment_cnt
 		from
 			community c
 		where
@@ -193,7 +199,7 @@
 			#{comm_id},
 			#{writer},
 			#{comment},
-			date_format(now(), '%Y%m%d')
+			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>
 	
@@ -206,11 +212,16 @@
 	
 	<select id="getCommentList" resultType="EgovMap">
 		select
-			*
+			comment_id,
+			comm_id,
+			writer,
+			comment,
+			save_date
 		from
 			comment
 		where
 			comm_id = #{commId}
+		order by save_date desc
 	</select>
 	
 	<select id="getCommentCnt" resultType="int">

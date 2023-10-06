@@ -207,14 +207,18 @@ $(document).ready(function() {
 	                return;
 	        	}
 				
-				var btnObj = $(event.target);
+				var btnObj = $(event.target).closest('.row').find(".like");
 				var cntObj = btnObj.next();
-				console.log(cntObj.html());
 				//사용자가 좋아요를 누른 경우 
 				if (btnObj.hasClass("btn-light")) {
 					btnObj.removeClass("btn-light");
 					btnObj.addClass("btn-primary");
 					cntObj.html(parseInt(cntObj.html()) + 1);
+					
+					//싫어요 한게 있으면 없앰
+					var dislikeBtnObj = $(event.target).closest('.row').find(".disLike");
+					dislikeBtnObj.removeClass("btn-primary");
+					dislikeBtnObj.addClass("btn-light");
 				
 				//사용자가 좋아요를 취소한 경우
 				} else {
@@ -240,7 +244,24 @@ $(document).ready(function() {
 	                return;
 	        	}
 
-				//$(this).closest("span").html()
+				var btnObj = $(event.target).closest('.row').find(".disLike");
+				//사용자가 싫어요를 누른 경우 
+				if (btnObj.hasClass("btn-light")) {
+					btnObj.removeClass("btn-light");
+					btnObj.addClass("btn-primary");
+					
+					//좋아요 한게 있으면 없앰
+					var likeBtnObj = $(event.target).closest('.row').find(".like");
+					likeBtnObj.removeClass("btn-primary");
+					likeBtnObj.addClass("btn-light");
+					var cntObj = likeBtnObj.next();
+					cntObj.html(parseInt(cntObj.html()) - 1);
+				
+				//사용자가 싫어요를 취소한 경우
+				} else {
+					btnObj.removeClass("btn-primary");
+					btnObj.addClass("btn-light");
+				}
 			}
 		});
 	});
