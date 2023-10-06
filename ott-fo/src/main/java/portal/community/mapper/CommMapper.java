@@ -43,4 +43,11 @@ public interface CommMapper {
 	public void deleteCommLike(Map params);
 	
 	public void updateCommunityForLike(Map params);
+
+	public void insertWorldInfo(Map params);
+
+	public void insertWorld(Map params);
+
+	public void insertWorldImage(Map params);
+
 }

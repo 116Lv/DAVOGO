@@ -264,6 +264,63 @@
 			comm_id = #{commId}
 			and email_id = #{loginEmailId}
 	</delete>
+	
+	<update id="insertWorldInfo">
+		update
+			community
+		set
+			title = #{title},
+			content = #{content},
+			update_date = date_format(now(), '%Y%m%d')
+		where
+			comm_id = #{comm_id}
+			
+	</update>
+	
+	<insert id="insertWorld">
+		<selectKey keyProperty="comm_id" resultType="int" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into community
+		(
+			comm_div,
+			writer,
+			title,
+			content,
+			save_date
+		)
+		values
+		(
+			2,
+			#{writer},
+			"",
+			"",
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
+	
+	<insert id="insertWorldImage">
+		insert into world
+		(
+			comm_id,
+			item,
+			store_locate,
+			store_fname,
+			store_tname,
+			org_fname,
+			save_date
+		)
+		values
+		(
+			#{comm_id},
+			"",
+			#{fullPath},
+			#{fname},
+			#{tname},
+			#{orgFile},
+			date_format(now(), '%Y%m%d')
+		)
+	</insert>
 
 	<update id="updateCommunityForLike">
 		update community a

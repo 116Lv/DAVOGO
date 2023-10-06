@@ -25,14 +25,15 @@
 				<h5 class="card-title">이상형 월드컵 기본정보</h5>
 				<hr>
 				<p class="card-text">
-					<form id="worldForm" action="/comm/worldSave.do" method="POST">
+					<form id="worldForm" action="/comm/saveInfo.do" method="POST">
 						<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
+						<input type="hidden" name="comm_id" value="${params.comm_id}">
 						<div class="form-group row">
 							<div class="col-sm-1 text-center">
 								<label class="control-label">제목</label>
 							</div>
 							<div class="col-sm-11">
-								<input class="form-control" type="text" name="worldTitle" id="worldTitle" value="${item.worldTitle}" placeholder="이상형 월드컵의 제목을 입력하세요." />
+								<input class="form-control" type="text" name="title" id="title" value="${item.title}" placeholder="이상형 월드컵의 제목을 입력하세요." />
 							</div>
 						</div>
 						<div class="form-group row">
@@ -40,7 +41,7 @@
 								<label class="control-label">설명</label>
 							</div>
 							<div class="col-sm-11">
-								<input class="form-control" type="text" name="worldNotice" id="worldNotice" value="${item.worldNotice}" placeholder="설명, 하고싶은 말 등을 자유롭게 적으세요." />
+								<input class="form-control" type="text" name="content" id="content" value="${item.content}" placeholder="설명, 하고싶은 말 등을 자유롭게 적으세요." />
 							</div>
 						</div>
 						<div class="form-group row">
@@ -59,7 +60,8 @@
 					<h5 class="card-title">이상형 월드컵 이미지 업로드 (※ 음란물 등록시 임의로 삭제되며, 관련 법률에 의하여 처벌받을 수 있습니다.)</h5>
 					<hr>
 					<p class="card-text">
-						<form class="dropzone dz-clickable" id="worldFormImage" action="/comm/worldSave.do">
+						<form class="dropzone dz-clickable" id="worldFormImage" action="/comm/saveImage.do">
+							<input type="hidden" name="comm_id" value="${params.comm_id}">
 							<div class="dz-default dz-message">
 								<span>
 									<strong>

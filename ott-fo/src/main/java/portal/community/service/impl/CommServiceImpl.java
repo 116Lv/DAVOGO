@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import portal.common.util.DateUtil;
+import portal.common.util.FileUtil;
 import portal.community.mapper.CommMapper;
 import portal.community.service.CommService;
 
 @Service
 public class CommServiceImpl implements CommService{
+	
+	@Value("${file.storePath}")
+    private String fileStorePath;
 	
 	@Autowired
 	private CommMapper commMapper;
@@ -145,6 +152,49 @@ public class CommServiceImpl implements CommService{
 		
 		commMapper.updateCommunityForLike(params);
 		
+	}
+
+	@Override
+	public void insertWorldInfo(Map params) {
+		commMapper.insertWorldInfo(params);
+	}
+
+	@Override
+	public void insertWorldImage(Map params, MultipartFile file) throws Exception{
+		
+		String orgFileName = file.getOriginalFilename();
+		
+		String fileExt = orgFileName.substring(orgFileName.lastIndexOf(".") + 1).toLowerCase();
+		
+		String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS);
+		
+		String savePath = "community/world/";
+		
+		String fullPath = fileStorePath + savePath + params.get("comm_id");
+		
+		String fileName = prefixFileName + "." + fileExt;
+		
+		String fullFileName = fullPath + FileUtil.separator + fileName;
+		
+		FileUtil.uploadFile(file, fullPath, fileName);
+		
+		String thumbFileName = prefixFileName + "_thumb." + fileExt;
+		
+		String thumbFullFileName = fullPath + FileUtil.separator + thumbFileName;
+		
+		FileUtil.createThumbnail(fullFileName, thumbFullFileName, 400);
+		
+		params.put("fullPath", fullPath);
+		params.put("fname", fileName);
+		params.put("tname", thumbFileName);
+		params.put("orgFile", orgFileName);
+		
+		commMapper.insertWorldImage(params);
+	}
+
+	@Override
+	public void insertWorld(Map params) {
+		commMapper.insertWorld(params);	
 	}
 
 }

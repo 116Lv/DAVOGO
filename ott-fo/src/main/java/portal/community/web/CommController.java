@@ -1,15 +1,16 @@
 package portal.community.web;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import portal.common.Constants;
@@ -41,7 +42,14 @@ public class CommController {
 	}
 	
 	@RequestMapping("/comm/worldInfo.do")
-	public String worldPage() {
+	public String worldPage(@RequestParam Map params, Model model) {
+		
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		params.put("writer", loginUser.getEmailId());
+		
+		commService.insertWorld(params);
+		
+		model.addAttribute("params", params);
 		
 		return "/community/world/commWorldInfo";
 	}
@@ -50,6 +58,35 @@ public class CommController {
 	public String worldImagePage() {
 		
 		return "/community/world/commWorldImage";
+	}
+	
+	@RequestMapping("/comm/saveInfo.do")
+	public String insertInfo(@RequestParam Map params, Model model) {
+		
+		commService.insertWorldInfo(params);
+		
+		return "redirect:/comm.do";
+	}
+	
+	@RequestMapping("/comm/saveImage.do")
+	public String insertImage(@RequestParam Map<String, String> params, MultipartHttpServletRequest request, Model model) {
+		
+		MultipartFile file = request.getFile("file");
+		
+		try {
+			commService.insertWorldImage(params, file);
+		} catch (IOException e) {
+			model.addAttribute("message", "파일 저장 중 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
+			model.addAttribute("item", params);
+			return "/movie/movieWrite";
+			
+		} catch (Exception e) {
+			model.addAttribute("message", "오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
+			model.addAttribute("item", params);
+			return "/movie/movieWrite";
+		}
+		
+		return "/community/world/commWorldInfo";
 	}
 	
 	@RequestMapping("/comm/vote.do")

@@ -3,6 +3,8 @@ package portal.community.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface CommService {
 
 	public List<Map> getCommunityList(Map params);
@@ -22,5 +24,11 @@ public interface CommService {
 	public int getCommentCnt();
 
 	public void saveLike(Map params);
+
+	public void insertWorldInfo(Map params);
+
+	public void insertWorldImage(Map params, MultipartFile file) throws Exception;
+
+	public void insertWorld(Map params);
 
 }
