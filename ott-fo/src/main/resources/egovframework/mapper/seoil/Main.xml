@@ -27,6 +27,41 @@
 		
 	</select>
 	
-	
+	<select id="getContentSearchList" resultType="egovMap">
+		select
+			m.media_id
+			, m.media_name
+			, m.media_div
+			, m.director
+			, m.actor
+			, m.producer
+			, m.distributor
+			, m.author
+			, m.channel
+			, m.open_date
+			, m.period
+			, m.country
+			, m.running_time
+			, m.rating_grade
+			, m.genre
+			, m.media_code
+			, m.watchable
+			, w.img_src
+		from 
+			media m
+			left join watcha w
+			on m.media_id = w.media_id
+		where
+			(
+				m.media_name like concat('%', #{searchInput}, '%')
+				or
+				m.director like concat('%', #{searchInput}, '%')
+				or 
+				m.actor like concat('%', #{searchInput}, '%')
+				or 
+				m.genre like concat('%', #{searchInput}, '%')
+			) 
+		order by m.rank asc, m.update_date desc
+	</select>
 
 </mapper>

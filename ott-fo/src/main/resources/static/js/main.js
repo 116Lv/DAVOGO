@@ -1,35 +1,24 @@
-(function ($) {
-    "use strict";
+$(document).ready(function() {
+	
+	//검색버튼 클릭시
+	$(".search").on("click", function(event) {
+		if ($(this).is(":visible")) {
+			$("#searchInput").removeAttr("hidden");
+			/*$("#searchInput").animate({
+				opacity: 1,
+				width: "100%"
+			}, 1500);*/
+			$("#searchInput").focus();
+			$(this).hide();
+		} else {
+			$("#searchInput").attr("hidden");
+			$(this).show();
+		}
+	});
 
-
-    jQuery(document).ready(function ($) {
-
-
-        /*---------------------------------------------*
-        * Carousel
-        ---------------------------------------------*/
-        $('#Carousel').carousel({
-                interval: 5000,
-                item: 2
-            })
-            /*------------------------*/
-
-    });
-
-    /*---------------------------------------------*
-        * STICKY scroll
-    ---------------------------------------------*/
-
-    $.localScroll();
-
-    /**************************/
-
-
-    jQuery(window).load(function () {
-
-
-    });
-
-
-
-}(jQuery));
+	$("#searchInput").on("focusout", function(event) {
+		console.log("focusout event called");
+		$("#searchInput").attr("hidden", "hidden");
+		$(".search").show();
+	});
+});

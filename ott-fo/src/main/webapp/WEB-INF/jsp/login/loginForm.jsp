@@ -8,11 +8,15 @@
 <html lang="ko">
 	<head>
 		<title>Sign In | 다보고</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+		<meta name="Location" content="REPUBLIC OF KOREA" />
+		<meta name="Cache-control" content="No-Cache" />
+		<meta name="Pragma" content="no-cache" /> 
+		<meta name="X-UA-Compatible" content="IE=edge, chrome=1" />
+		<meta name="Content-Type" content="text/html; charset=utf-8" />
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/style_login.css">
+		<link rel="stylesheet" href="<c:url value="/css/style_login.css"/>">
 	</head>
 	<body>
 		<!-- 위로 공간 확보해야함 -->
@@ -50,7 +54,7 @@
 					</form>
 					<div class="row">
                     <div class="col-12 text-center">
-                        <p class="text-muted">Don't have an account? <a href="signUp.do" class="text-muted ml-1"><b>Sign Up</b></a></p>
+                        <p class="text-muted">Don't have an account? <a href="/signUp.do" class="text-muted ml-1"><b>Sign Up</b></a></p>
                     </div>
                 </div>
 				</div>
@@ -58,10 +62,10 @@
 		</div>
 		</div>
 		</section>
-		<script src="js/vendor/jquery/jquery.min.js"></script>
-		<script src="js/popper.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="<c:url value="/js/vendor/jquery/jquery.min.js"/>"></script>
+		<script src="<c:url value="/js/popper.js"/>"></script>
+		<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+		<script src="<c:url value="/js/main.js"/>"></script>
 		<script defer
 			src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"
 			integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg=="

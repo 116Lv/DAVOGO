@@ -58,6 +58,7 @@ public class WebConfig implements WebMvcConfigurer {
 	        		"/login.do",
 	        		"/logout.do",
 	        		"/main.do",
+	        		"/search.do",
 	        		"/movie.do",
 	        		"/tv.do",
 	        		"/comm.do",

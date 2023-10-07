@@ -25,4 +25,9 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.getContentsList(map);
 	}
 
+	@Override
+	public List<Map> getContentSearchList(Map params) {
+		return mainMapper.getContentSearchList(params);
+	}
+
 }

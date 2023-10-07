@@ -11,4 +11,6 @@ public interface MainMapper {
 	public List<Map> getCategoryList();
 
 	public List<Map> getContentsList(Map map);
+
+	public List<Map> getContentSearchList(Map params);
 }
