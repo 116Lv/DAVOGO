@@ -57,4 +57,18 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/tv/{1}.jsp" />
 	</definition>
 	
+	<!-- mypage 템플릿 -->
+	<definition name="mypageTemplate" template="/WEB-INF/views/mypageLayout.jsp">
+		<put-attribute name="htmlheader" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="topbar" value="/WEB-INF/views/topbar.jsp" />
+		<put-attribute name="left" value="/WEB-INF/views/left.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+	</definition>
+	
+	<definition name="/mypage/*" extends="mypageTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/mypage/{1}.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

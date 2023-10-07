@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.user.mapper.MyPageMapper">
+
+	<update id="updateUserPassword">
+		update
+			user
+		set
+			`password` = #{password}
+		where
+			user_id = #{userId} 
+	</update>
+
+	<select id="getMyCommunityList" resultType="egovMap">
+		select
+			comm_id,
+			comm_div,
+			writer,
+			title,
+			content,
+			like_cnt,
+			dislike_cnt,
+			(
+				select
+					count(*)
+				from comment a
+				where a.comm_id = c.comm_id
+			) as comment_cnt
+		from
+			community c
+		where
+			writer = #{loginEmailId}
+		order by 
+			save_date desc
+	</select>	
+
+</mapper>

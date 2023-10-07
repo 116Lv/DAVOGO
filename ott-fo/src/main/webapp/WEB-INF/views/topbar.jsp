@@ -37,7 +37,7 @@
 				                </c:when>
 				                <c:otherwise>
 				                	<a class="nav-item nav-link">${loginUser.userId}</a>
-				                	<a class="nav-item nav-link text-dark mx-2" href="/myPage.do"><h5 class="font-weight-bold">마이페이지</h5></a> <%-- bootstrap의 Popovers 사용 --%>
+				                	<a class="nav-item nav-link text-dark mx-2" href="/mypage.do"><h5 class="font-weight-bold">마이페이지</h5></a> <%-- bootstrap의 Popovers 사용 --%>
 				                	<a class="nav-item nav-link text-dark mx-2" href="/logout.do"><h5 class="font-weight-bold">로그아웃</h5></a>
 				                </c:otherwise>
 			                </c:choose>

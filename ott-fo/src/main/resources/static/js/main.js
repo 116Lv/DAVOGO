@@ -21,4 +21,15 @@ $(document).ready(function() {
 		$("#searchInput").attr("hidden", "hidden");
 		$(".search").show();
 	});
+	
+	//mypage 선택된 메뉴 active처리
+	var currUrl = window.location.pathname;
+	if ($("#mypageMenus")) {
+		$("#mypageMenus").find("a").removeClass("list-group-item-primary");
+		$("#mypageMenus").find("a").each(function(index, item) {
+			if (currUrl == $(item).attr("href")) {
+				$(item).addClass("list-group-item-primary");
+			}
+		});
+	}
 });

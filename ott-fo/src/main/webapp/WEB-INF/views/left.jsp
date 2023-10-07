@@ -3,131 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	
+    <div class="h-100 my-5">
 
-	<!-- ========== Left Sidebar Start ========== -->
-	<div class="leftside-menu">
-	
-	    <!-- LOGO -->
-	    <%-- <a href="<c:url value="/"/>" class="logo text-center logo-light">
-	        <span class="logo-lg">
-	            <img src="<c:url value="/images/white_logo.png"/>" alt="" height="60">
-	        </span>
-	        <span class="logo-sm text-white">
-	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">
-	        </span>
-	    </a>
-	
-	    <!-- LOGO -->
-	    <a href="<c:url value="/"/>" class="logo text-center logo-dark">
-	        <span class="logo-lg">
-	            <img src="<c:url value="/images/white_logo.png"/>" alt="" height="60">
-	        </span>
-	        <span class="logo-sm text-white">
-	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">
-	        </span>
-	    </a> --%>
-	
-	    <div class="h-100" id="left-side-menu-container" data-simplebar>
-	
-	        <!--- Sidemenu -->
-	        <ul class="side-nav">
-	
-	            <!-- <li class="side-nav-title side-nav-item">Menu</li> -->
-	
-	            <li class="side-nav-item">
-	                <a href="/main.do" class="side-nav-link">
-	                    <i class="uil-home-alt"></i>
-	                    <span> Home </span>
-	                </a>
-	            </li>
-	            
-	            <li class="side-nav-item">
-	                <a href="/customer/list.do" class="side-nav-link">
-	                    <i class="uil-home-alt"></i>
-	                    <span> Customer </span>
-	                </a>
-	            </li>
-	
-	            <li class="side-nav-item">
-	                <a href="/game/list.do" class="side-nav-link">
-	                    <i class="uil-user-square"></i>
-	                    <span> Game </span>
-	                </a>
-	            </li>
-	
-	            <li class="side-nav-item">
-	                <a href="/review/list.do" class="side-nav-link">
-	                    <i class="uil-calculator-alt"></i>
-	                    <span> Review </span>
-	                </a>
-	            </li>
-	
-	            <li class="side-nav-item">
-	                <a href="/sale/list.do" class="side-nav-link">
-	                    <i class="uil-calender"></i>
-	                    <span> Sale </span>
-	                </a>
-	            </li>
-	
-	            <li class="side-nav-item">
-	                <a href="/store/list.do" class="side-nav-link">
-	                    <i class="dripicons-user-group"></i>
-	                    <span> Store </span>
-	                </a>
-	            </li>
-	
-	            <li class="side-nav-item">
-	                <a href="/staff/list.do" class="side-nav-link">
-	                    <i class="dripicons-link"></i>
-	                    <span> Staff </span>
-	                </a>
-	            </li>
-	
-                <!-- <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarStatistics" aria-expanded="false" aria-controls="sidebarStatistics" class="side-nav-link">
-                        <i class="uil-chart"></i>
-                        <span> 통계 </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarStatistics">
-	                    <ul class="side-nav-second-level">
-	                        <li>
-	                            <a href="/stat/page1.do">화면1</a>
-	                        </li>
-	                        <li>
-	                            <a href="/stat/page2.do">화면2</a>
-	                        </li>
-	                    </ul>
-                    </div>
-                </li>
-	
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarSystem" aria-expanded="false" aria-controls="sidebarSystem" class="side-nav-link">
-                        <i class="dripicons-device-desktop"></i>
-                        <span> 시스템 </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarSystem">
-	                    <ul class="side-nav-second-level">
-	                        <li>
-	                            <a href="/system/codeTree.do">코드관리</a>
-	                        </li>
-	                        <li>
-	                            <a href="/system/noticeList.do">공지사항</a>
-	                        </li>
-	                    </ul>
-					</div>
-                </li> -->
-	
-	        </ul>
-	
-	        <!-- End Sidebar -->
-	
-	        <div class="clearfix"></div>
-	
-	    </div>
-	    <!-- Sidebar -left -->
-	
-	</div>
-	<!-- Left Sidebar End -->
-            
+        <div class="list-group" id="mypageMenus">
+			<a href="/mypage/userInfo.do" class="list-group-item list-group-item-action">내 정보 수정</a>
+			<a href="/mypage/myComment.do" class="list-group-item list-group-item-action">내 미디어 Comment</a>
+			<a href="/mypage/madeComm.do" class="list-group-item list-group-item-action">내가 만든 투표&월드컵</a>
+			<a href="/mypage/joinComm.do" class="list-group-item list-group-item-action">참여한 투표&월드컵</a>
+		</div>
+
+    </div>
