@@ -41,8 +41,7 @@
 						<div class="swiper-wrapper">
 			   				<c:forEach var="image" items="${category.imageList}">
 								<div class="swiper-slide">
-									<a class="text-dark" href="/tv/contents.do">
-										<input type="hidden" value="${image.mediaId}">
+									<a class="text-dark" href="/tv/contents.do?media_id=${image.mediaId}">
 										<img src="${image.imgSrc}" alt="${image.mediaName}">
 										<p class="font-weight-bold">${image.mediaName}</p>
 										<p>${image.period} - ${image.country}</p>

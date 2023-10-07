@@ -1233,6 +1233,10 @@ ul.entry-meta {
     margin-bottom: 10px; /* 각 요소 사이의 간격 조절 */
 }
 
+.font12 {
+	font-size: 12px;
+}
+
 .font14 {
 	font-size: 14px;
 }
@@ -1243,4 +1247,14 @@ ul.entry-meta {
    
 .font16 {
 	font-size: 16px;
+}
+
+.px-10 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.py-10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
 }

@@ -45,7 +45,7 @@
 
     <title>HOME | DAVOGO</title>
 
-    <!--    Google Fonts-->
+    <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 
     <!--Fontawesom-->
@@ -56,9 +56,11 @@
 
     <!-- Bootstrap -->
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+    
     <!--Bootstrap Carousel-->
     <link type="text/css" rel="stylesheet" href="<c:url value="/css/carousel.css"/>" />
 
+	<!-- isotope -->
     <link rel="stylesheet" href="<c:url value="/css/isotope/style.css"/>">
 
     <!--Main Stylesheet-->
@@ -69,11 +71,20 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="<c:url value="/js/jquery-1.12.3.min.js"/>"></script>
 	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	
 	<!-- icon -->
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 	
 	<!-- Dropzone -->
 	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+	
+	<!-- star-rating -->
+	<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/js/star-rating.js" type="text/javascript"></script>
+	
+	<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/themes/krajee-svg/theme.js"></script>
 </head>
 

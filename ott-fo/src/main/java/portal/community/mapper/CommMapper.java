@@ -50,4 +50,6 @@ public interface CommMapper {
 
 	public void insertWorldImage(Map params);
 
+	public List<Map> getWorldImages(Map map);
+
 }

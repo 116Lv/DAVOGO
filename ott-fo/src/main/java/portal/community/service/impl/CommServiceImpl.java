@@ -37,7 +37,7 @@ public class CommServiceImpl implements CommService{
 				
 			//월드컵
 			} else if (commDiv == 2) {
-				map.put("items", null);
+				map.put("items", commMapper.getWorldImages(map));
 			}
 			
 		}

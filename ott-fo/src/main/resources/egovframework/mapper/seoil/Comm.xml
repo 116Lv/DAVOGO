@@ -98,6 +98,7 @@
 			<if test="@portal.common.util.StringUtil@notEmpty(comm_div)">
 			and comm_div = #{comm_div}
 			</if>
+			and (title != null or title != '')
 			and dislike_cnt &lt;= 20
 		<if test="@portal.common.util.StringUtil@notEmpty(sort_name)">
 		order by 
@@ -149,6 +150,23 @@
 			vote a
 		where
 			comm_id = #{commId}
+	</select>
+	
+	<select id="getWorldImages" resultType="egovMap">
+		select
+			world_id,
+			comm_id,
+			item,
+			total_cnt,
+			store_locate,
+			store_tname,
+			org_fname
+		from
+			world
+		where
+			comm_id = #{commId}
+		order by
+			total_cnt desc limit 2
 	</select>
 
 	<select id="getUserVoteInfo" resultType="egovMap">
@@ -351,4 +369,5 @@
 		where
 			comm_id = #{commId}
 	</update>
+	
 </mapper>

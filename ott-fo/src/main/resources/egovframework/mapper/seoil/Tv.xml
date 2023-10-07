@@ -43,6 +43,7 @@
 		where
 			r.media_id = #{media_id}
 			and	w.media_id = r.media_id
+			and r.save_date = (select MAX(save_date) from watcha_rank)
 	</select>
 	
 	<select id="getCategoryInfoList" resultType="EgovMap">
