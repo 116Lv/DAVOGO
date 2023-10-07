@@ -171,7 +171,9 @@
 
 	<select id="getUserVoteInfo" resultType="egovMap">
 		select
-			v.vote_id, v.comm_id, v.total_cnt
+			v.vote_id, 
+			v.comm_id, 
+			v.total_cnt
 		from
 			vote v, vote_user u 
 		where 
@@ -369,5 +371,28 @@
 		where
 			comm_id = #{commId}
 	</update>
+	
+	<select id="getWorldImageList" resultType="EgovMap">
+		select
+			c.title,
+			c.content,
+			w.world_id,
+			w.item,
+			w.total_cnt,
+			w.store_tname
+		from
+			community c, world w
+		where
+			w.comm_id = #{comm_id}
+			and c.comm_id = w.comm_id
+	</select>
+	
+	<select id="getWorldImageCount" resultType="INT">
+		select
+			count(*)
+		from world
+		where
+			comm_id = #{comm_id}
+	</select>
 	
 </mapper>

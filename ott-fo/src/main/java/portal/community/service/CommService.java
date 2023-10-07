@@ -31,4 +31,8 @@ public interface CommService {
 
 	public void insertWorld(Map params);
 
+	public List<Map> getWorldImageList(Map params);
+
+	public int getWorldImageCount(Map params);
+
 }

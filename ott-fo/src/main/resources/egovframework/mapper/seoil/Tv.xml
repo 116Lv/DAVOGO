@@ -42,6 +42,7 @@
 			watcha w, watcha_rank r
 		where
 			r.media_id = #{media_id}
+			and r.category_title = #{category_title}
 			and	w.media_id = r.media_id
 			and r.save_date = (select MAX(save_date) from watcha_rank)
 	</select>
@@ -55,4 +56,33 @@
 			genre like concat('%', #{genre}, '%')
 			and m.media_id = w.media_id
 	</select>
+	
+	<select id="getCommentList" resultType="EgovMap">
+		select
+			*,
+			count(*) as total
+		from
+			media_comment
+		where
+			media_id = #{media_id}
+	</select>
+	
+	<insert id="saveComment">
+		insert into media_comment
+		(
+			media_id,
+			writer,
+			content,
+			assess_rate,
+			save_date
+		)
+		values
+		(
+			#{media_id},
+			#{writer},
+			#{content},
+			#{assessRate},
+			date_format(now(), '%Y%m%d%H%i%s')
+		)
+	</insert>
 </mapper>

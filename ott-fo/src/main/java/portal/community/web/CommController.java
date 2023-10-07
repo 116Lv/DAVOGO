@@ -204,7 +204,19 @@ public class CommController {
 			model.addAttribute("resultMessage", e.getMessage());
 		}
 		return Constants.VIEW_NAME_JSON;
+	}
+	
+	@RequestMapping("/comm/world/play/playWorld.do")
+	public String playWorld(@RequestParam Map params, Model model) {
 		
+		List<Map> imageList = commService.getWorldImageList(params);
+		
+		int image_cnt = commService.getWorldImageCount(params);
+		
+		model.addAttribute("imageList", imageList);
+		model.addAttribute("image_cnt", image_cnt);
+		
+		return "/comm/world/playWorld";
 	}
 	
 }

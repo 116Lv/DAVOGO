@@ -15,4 +15,8 @@ public interface TvService {
 
 	public List<Map> getCategoryInfoList(String params);
 
+	public List<Map> getCommentList(Map params);
+
+	public void saveComment(Map params);
+
 }

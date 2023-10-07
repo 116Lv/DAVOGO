@@ -30,19 +30,16 @@ public class MyPageController {
 		return "/mypage/userInfo";
 	}
 	
-	@RequestMapping("/mypage/saveUserInfo.do")
-	public String saveUserInfo(@RequestParam Map params, Model model) {
-		
-		try {
-			params.put("items", items);
-			commService.saveVote(params);
-			
-			model.addAttribute("resultCode", "success");
-		} catch (Exception e) {
-			model.addAttribute("resultCode", "fail");
-			model.addAttribute("resultMessage", e.getMessage());
-		}
-	}
+	/*
+	 * @RequestMapping("/mypage/saveUserInfo.do") public String
+	 * saveUserInfo(@RequestParam Map params, Model model) {
+	 * 
+	 * try { params.put("items", items); commService.saveVote(params);
+	 * 
+	 * model.addAttribute("resultCode", "success"); } catch (Exception e) {
+	 * model.addAttribute("resultCode", "fail"); model.addAttribute("resultMessage",
+	 * e.getMessage()); } }
+	 */
 	
 	/**
 	 * 내 미디어 Comment

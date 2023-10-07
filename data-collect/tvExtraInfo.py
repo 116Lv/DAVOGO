@@ -13,7 +13,7 @@ from datetime import datetime
 conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
 # conn = MySQLdb.connect(host='3.35.38.53', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
 cursor = conn.cursor()
-sql1 = "SELECT w.media_id, w.media_href FROM watcha w, media m where w.media_id = m.media_id and m.media_div = 2 and m.watchable is null"
+sql1 = "SELECT w.media_id, w.media_href FROM watcha w, media m where w.media_id = m.media_id and m.watchable is null"
 cursor.execute(sql1)
 href_list = cursor.fetchall()
 

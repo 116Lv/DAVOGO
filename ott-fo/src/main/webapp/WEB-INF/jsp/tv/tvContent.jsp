@@ -5,31 +5,40 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
 <div class="row">
 	<div class="" style="height: 100px; background-color: #888888;">
 	</div>
 </div>
+
 <div class="row mb-4">
 	<div class="col-2">
 		<img class="rounded float-left img-thumbnail " src="${image.imgSrc}">
 	</div>
 	<div class="col-10">
+		<p class="font14">${image.categoryTitle} ${image.mediaRank}위</p>
 		<h5 class="font-weight-bold">${content.mediaName}</h5>
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>
-		<!-- 평점 -->
+		<div class="row">
+			<h5>평균</h5>
+		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4">
 				<label class="text-center">평가하기</label>
-				<input class="rating" id="input-5 assess_rate" name="assess_rate" value="${item.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
+				<input class="rating" id="assess_rate" name="assess_rate" value="${item.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
 			</div>
 			<div class="col-8">
 				<div class="row">
 					<div class="col">
 						<i class="uil uil-plus">보고싶어요</i>
 					</div>
-					<div class="col">
+					<div class="col" data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}">
 						<i class="uil uil-pen">코멘트</i>
 					</div>
 					<div class="col">
@@ -56,51 +65,61 @@
 			<hr/>
 			<div class="card-body">
 				<h5 class="card-title">출연/제작</h5>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<p><!-- 배우, 감독, 작가 정보 하나씩 풀어야함 --></p>
-						<p></p>
-					</li>
-				</ul>
+				<div class="swiper mySwiper">
+					<div class="swiper-wrapper">
+						<c:set var="actor" value="${fn:split(content.actor, '^')}"/>
+						<c:forEach var="person" items="${actor}" varStatus="status">
+							<c:if test="${status.index % 12 == 0}">
+								<div class="swiper-slide">
+									<div class="row">
+							</c:if>
+							<c:if test="${status.index % 3 == 0}">
+										<div class="col-3">
+											<ul class="list-group">
+							</c:if>
+												<li class="list-group-item text-left">
+													<!-- 얼굴사진 -->
+													<p>${person}</p>
+													<p>출연</p>
+												</li>
+							<c:if test="${status.index % 3 == 2}">
+											</ul>
+										</div>
+							</c:if>
+							<c:if test="${status.index % 12 == 11}">
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-pagination"></div>
+				</div>
 			</div>
 			<hr/>
 			<div class="card-body">
-				<h5 class="card-title">코멘트</h5>
+				<c:forEach var="comment" items="${commentList}">
+				<h5 class="card-title">코멘트 ${comment.total}</h5>
 				<div class="card">
 					<div class="card-body">
 						<div class="card-title">
-							<div class="col-sm-3">
-								<i class="uil uil-user-circle"></i>${comment.writer}
-							</div>
-							<div class="col-sm-9 float-right"><!-- 우측정렬 필요 -->
-								<!-- 별점 -->
+							<div class="row">
+								<div class="col-3 text-left">
+									<i class="uil uil-user-circle"></i>${comment.writer}
+								</div>
+								<div class="col-9 text-right">
+									<i class="uil uil-star">${comment.assessRate}</i>
+								</div>
 							</div>
 						</div>
 						<hr>
 						<div class="card-text">
-							<p>${comment.comment}</p>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="btn like">
-									<i class="uil uil-thumbs-up mx-1"></i>${comm.likeCnt}
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="btn disLike">
-									<i class="uil uil-thumbs-down"></i><%-- ${comm.dislikeCnt } --%>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="btn comment" data-toggle="modal" data-target="#commentWriteModal">
-									<i class="uil uil-comment-dots mx-1"></i>
-									${commentCnt}
-								</div>
-							</div>
+							<p>${comment.content}</p>
 						</div>
 					</div>
 				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -108,18 +127,52 @@
 		<div class="card">
 			<div class="card-body">
 				<h5 class="card-title">감상 가능한곳</h5>
-				<%-- <c:if test="${not empty content.watchable}">
-					<c:choose>
-						<c:when test="${fn:replace(content.watchable, '^')}" alt="">
-							<div class="row">
-								<img src="">
-								<p></p>
-								<i class="uil uil-angle-right-b"></i>
-							</div>
-						</c:when>
-					</c:choose>
-				</c:if> --%>
+				<!-- 조건 충족 필요 -->
+				<c:set var="watchable" value="${fn:split(content.watchable, '^')}"/>
+				<c:forEach var="watch" items="${watchable}" varStatus="status">
+					<div class="row">
+						<img src="">
+						<p>${watch}</p>
+						<i class="uil uil-angle-right-b"></i>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
+	<script>
+		var swiper = new Swiper(".mySwiper", {
+		    slidesPerView: 1,
+		    spaceBetween: 30,
+		    slidesPerGroup: 1,
+		    loopFillGroupWithBlank: true,
+		    navigation: {
+		      nextEl: ".swiper-button-next",
+		      prevEl: ".swiper-button-prev",
+			},
+		});
+	</script>
 </div>
+
+<!-- 미디어 평가 모달창 -->
+<div class="modal fade" id="mediaWriteModal" tabindex="-1" role="dialog" aria-labelledby="mediaWriteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mediaWriteModalLabel">${content.mediaName} 코멘트작성</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- js파일 임포트 -->
+<script src="<c:url value="/js/davogo/tv.js"/>"></script>

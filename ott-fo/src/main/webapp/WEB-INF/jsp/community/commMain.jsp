@@ -146,56 +146,58 @@
 					
 					<c:when test="${comm.commDiv eq 2}">	<!-- 월드컵 -->
 						<div class="card my-3" comm_id="${comm.commId}">
-							<div class="row">
-							<c:forEach var="item" items="${comm.items}" varStatus="status">
-								<div class="col-sm-6 <c:choose><c:when test="${status.index == 0}">pr-0</c:when><c:otherwise>pl-0</c:otherwise></c:choose>">
-									<img class="card-img-top" src="${fn:replace(item.storeLocate, replaceSrc, replaceTrg)}/${item.storeTname}" alt="${item.orgFname}"/>
-									<p class="font12">${item.item}1</p>
+							<a href="/comm/world/play/playWorld.do?comm_id=${comm.commId}">
+								<div class="row">
+								<c:forEach var="item" items="${comm.items}" varStatus="status">
+									<div class="col-sm-6 <c:choose><c:when test="${status.index == 0}">pr-0</c:when><c:otherwise>pl-0</c:otherwise></c:choose>">
+										<img class="card-img-top" src="${fn:replace(item.storeLocate, replaceSrc, replaceTrg)}/${item.storeTname}" alt="${item.orgFname}"/>
+										<p class="font12">${item.item}1</p>
+									</div>
+								</c:forEach>
 								</div>
-							</c:forEach>
-							</div>
-							<div class="card-body px-10 py-10">
-								<input type="hidden" value="${comm.writer}">
-								<h5 class="card-title">${comm.title}</h5>
-								<p class="card-text">${comm.content}</p>
-								<div class="row mt-2 mx-0">
-									<div class="col-sm-3 px-0">
-										<c:choose>
-											<c:when test="${comm.userLiked == 'true'}"><%--사용자가 좋아요를 한 경우 --%>
-												<c:set var="btnClass" value="btn-primary"/>
-											</c:when>
-											<c:otherwise>
-												<c:set var="btnClass" value="btn-light"/>
-											</c:otherwise>
-										</c:choose>
-										<div class="btn ${btnClass} like">
-											<i class="uil uil-thumbs-up"></i>
+								<div class="card-body px-10 py-10">
+									<input type="hidden" value="${comm.writer}">
+									<h5 class="card-title">${comm.title}</h5>
+									<p class="card-text">${comm.content}</p>
+									<div class="row mt-2 mx-0">
+										<div class="col-sm-3 px-0">
+											<c:choose>
+												<c:when test="${comm.userLiked == 'true'}"><%--사용자가 좋아요를 한 경우 --%>
+													<c:set var="btnClass" value="btn-primary"/>
+												</c:when>
+												<c:otherwise>
+													<c:set var="btnClass" value="btn-light"/>
+												</c:otherwise>
+											</c:choose>
+											<div class="btn ${btnClass} like">
+												<i class="uil uil-thumbs-up"></i>
+											</div>
+											<span>${comm.likeCnt}</span>
 										</div>
-										<span>${comm.likeCnt}</span>
-									</div>
-									<div class="col-sm-3">
-										<c:choose>
-											<c:when test="${comm.userDisliked == 'true'}">
-												<c:set var="btnClass" value="btn-primary"/>
-											</c:when>
-											<c:otherwise>
-												<c:set var="btnClass" value="btn-light"/>
-											</c:otherwise>
-										</c:choose>
-										<div class="btn ${btnClass} disLike">
-											<i class="uil uil-thumbs-down"></i>
+										<div class="col-sm-3">
+											<c:choose>
+												<c:when test="${comm.userDisliked == 'true'}">
+													<c:set var="btnClass" value="btn-primary"/>
+												</c:when>
+												<c:otherwise>
+													<c:set var="btnClass" value="btn-light"/>
+												</c:otherwise>
+											</c:choose>
+											<div class="btn ${btnClass} disLike">
+												<i class="uil uil-thumbs-down"></i>
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-3">
-									</div>
-									<div class="col-sm-3">
-										<div class="btn btn-light comment" data-toggle="modal" data-target="#commentWriteModal">
-											<i class="uil uil-comment-dots mx-1"></i>
-											${comm.commentCnt}
+										<div class="col-sm-3">
+										</div>
+										<div class="col-sm-3">
+											<div class="btn btn-light comment" data-toggle="modal" data-target="#commentWriteModal">
+												<i class="uil uil-comment-dots mx-1"></i>
+												${comm.commentCnt}
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</a>
 						</div>
 					</c:when>
 				</c:choose>

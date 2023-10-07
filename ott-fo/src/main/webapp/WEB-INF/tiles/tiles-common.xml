@@ -16,6 +16,10 @@
 	<definition name="/modal/*/*" extends="emptyTemplate">
 		<put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
 	</definition>
+	
+	<definition name="/community/world/play/*" extends="worldTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/community/world/{1}.jsp" />
+	</definition>
 
 	<!-- 기본 템플릿 -->
 	<definition name="defaultTemplate" template="/WEB-INF/views/layout.jsp">
@@ -31,6 +35,14 @@
 		<put-attribute name="topbar" value="/WEB-INF/views/topbar.jsp" />
 		<put-attribute name="content" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+	</definition>
+	
+	<!-- 월드컵플레이 템플릿 -->
+	<definition name="worldTemplate" template="/WEB-INF/views/worldLayout.jsp">
+		<put-attribute name="htmlheader" value="/WEB-INF/views/header.jsp" />
+		<!-- <put-attribute name="topbar" value="/WEB-INF/views/topbar.jsp" /> -->
+		<put-attribute name="content" value="" />
+		<!-- <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" /> -->
 	</definition>
 	
 	<definition name="/community/world/*" extends="wideTemplate">

@@ -52,4 +52,8 @@ public interface CommMapper {
 
 	public List<Map> getWorldImages(Map map);
 
+	public List<Map> getWorldImageList(Map params);
+
+	public int getWorldImageCount(Map params);
+
 }
