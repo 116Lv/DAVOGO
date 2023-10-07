@@ -35,4 +35,10 @@ public interface CommService {
 
 	public int getWorldImageCount(Map params);
 
+	public List<Integer> getWorldImageId(Map params);
+
+	public Map getWorldImageInfo(Map params);
+
+	public Map getWorldInfo(Map params);
+
 }

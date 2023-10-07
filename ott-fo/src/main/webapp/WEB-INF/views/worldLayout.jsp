@@ -23,7 +23,7 @@
 	<!-- ============================================================== -->
 	<!-- Start Page Content here -->
 	<!-- ============================================================== -->
-	<div class="custom-container">
+	<div class="container-fluid">
 		<tiles:insertAttribute name="content" />
 	</div>
 

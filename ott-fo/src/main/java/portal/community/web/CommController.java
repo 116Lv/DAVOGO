@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import portal.common.Constants;
 import portal.common.cmm.EgovUserDetailsHelper;
+import portal.common.util.RandomUtil;
 import portal.community.service.CommService;
 import portal.user.vo.UserVO;
 
@@ -209,14 +210,32 @@ public class CommController {
 	@RequestMapping("/comm/world/play/playWorld.do")
 	public String playWorld(@RequestParam Map params, Model model) {
 		
-		List<Map> imageList = commService.getWorldImageList(params);
+//		List<Map> imageList = commService.getWorldImageList(params);
+//		
+//		int image_cnt = commService.getWorldImageCount(params);
+//		
+//		model.addAttribute("imageList", imageList);
+//		model.addAttribute("image_cnt", image_cnt);
 		
-		int image_cnt = commService.getWorldImageCount(params);
+		model.addAttribute("community", commService.getWorldInfo(params));
 		
-		model.addAttribute("imageList", imageList);
-		model.addAttribute("image_cnt", image_cnt);
+		List<Integer> imageIdList = commService.getWorldImageId(params);
+		Integer[] intArray = new Integer[imageIdList.size()];
+		model.addAttribute("imageIdList", RandomUtil.mix(imageIdList.toArray(intArray)));
 		
-		return "/comm/world/playWorld";
+		return "/community/world/play/playWorld";
+	}
+	
+	@RequestMapping("/comm/world/play/worldInfo.do")
+	public String worldInfo(@RequestParam Map params, Model model) {
+		try {
+			model.addAttribute("world", commService.getWorldImageInfo(params));
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 }
