@@ -221,5 +221,15 @@ public class CommServiceImpl implements CommService{
 	public Map getWorldInfo(Map params) {
 		return commMapper.getWorldInfo(params);
 	}
+
+	@Override
+	public void saveResult(Map params) {
+		commMapper.saveResult(params);
+	}
+
+	@Override
+	public void saveResultUserInfo(Map params) {
+		commMapper.saveResultUserInfo(params);
+	}
 	
 }

@@ -10,7 +10,7 @@
 	    <!-- LOGO -->
 	    <a href="<c:url value="/"/>" class="logo text-center logo-light">
 	        <span class="logo-lg">
-	            <img src="<c:url value="/images/Davogo_Logo.jpg"/>" alt="" height="60">
+	            <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="" height="60">
 	        </span>
 	        <span class="logo-sm text-white">
 	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">
@@ -20,7 +20,7 @@
 	    <!-- LOGO -->
 	    <a href="<c:url value="/"/>" class="logo text-center logo-dark">
 	        <span class="logo-lg">
-	            <img src="<c:url value="/images/Davogo_Logo.jpg"/>" alt="" height="60">
+	            <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="" height="60">
 	        </span>
 	        <span class="logo-sm text-white">
 	            <img src="<c:url value="/images/logo_sm1.png"/>" alt="" height="45">

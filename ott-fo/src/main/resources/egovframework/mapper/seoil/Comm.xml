@@ -422,4 +422,28 @@
 			world_id = #{worldId}
 	</select>
 	
+	<update id="saveResult">
+		update world
+		set
+			total_cnt = total_cnt + 1,
+			update_date = date_format(now(), '%Y%m%d%H%i%s')
+		where
+			world_id = #{selected_id}
+	</update>
+	
+	<insert id="saveResultUserInfo">
+		insert into world_user
+		(
+			email_id,
+			world_id,
+			save_date
+		)
+		values
+		(
+			#{loginEmailId},
+			#{selected_id},
+			date_format(now(), '%Y%m%d%H%i%s')
+		)
+	</insert>
+	
 </mapper>

@@ -62,4 +62,8 @@ public interface CommMapper {
 
 	public Map getWorldImageInfo(Map params);
 
+	public void saveResult(Map params);
+
+	public void saveResultUserInfo(Map params);
+
 }

@@ -238,4 +238,31 @@ public class CommController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	@RequestMapping("/comm/world/play/saveWorld.do")
+	public String saveWorldResult(@RequestParam Map params, Model model) {
+		
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		params.put("loginEmailId", loginUser.getEmailId());
+		
+		commService.saveResult(params);
+		
+		commService.saveResultUserInfo(params);
+		
+		return Constants.VIEW_NAME_JSON;
+	}
+	
+	@RequestMapping("/comm/world/play/viewResult.do")
+	public String resultPage(@RequestParam Map params, Model model) {
+		
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		model.addAttribute("loginEmailId", loginUser.getEmailId());
+		
+		Map imageInfo = commService.getWorldImageInfo(params);
+		
+		imageInfo.put("title", commService.getWorldInfo(params)); /* comm_id가지고 있는지 확인 필요 */
+		
+		model.addAttribute("imageInfo", imageInfo);
+		
+		return "/community/world/resultPage";
+	}
 }
