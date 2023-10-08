@@ -36,7 +36,7 @@ public class TvServiceImpl implements TvService{
 	}
 
 	@Override
-	public List<Map> getCategoryInfoList(String params) {
+	public List<Map> getCategoryInfoList(Map params) {
 		return tvMapper.getCategoryInfoList(params);
 	}
 

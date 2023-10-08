@@ -58,6 +58,7 @@
 		where
 			genre like concat('%', #{genre}, '%')
 			and m.media_id = w.media_id
+			and m.media_div = #{mediaDiv}
 	</select>
 	
 	<select id="getCommentList" resultType="EgovMap">

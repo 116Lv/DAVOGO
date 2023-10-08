@@ -16,7 +16,7 @@ public interface TvMapper {
 
 	public Map getImage(Map params);
 
-	public List<Map> getCategoryInfoList(String params);
+	public List<Map> getCategoryInfoList(Map params);
 
 	public List<Map> getCommentList(Map params);
 

@@ -16,7 +16,7 @@
 </style>
 
 <div class="row">
-	<div class="col" style="height: 100px; background-color: #888888;">
+	<div class="col" style="height: 50px;">
 	</div>
 </div>
 
@@ -25,7 +25,9 @@
 		<img class="rounded float-left img-thumbnail " src="${image.imgSrc}">
 	</div>
 	<div class="col-9 pt-2">
+		<c:if test="${not empty image.categoryTitle}">
 		<p class="font14">${image.categoryTitle} ${image.mediaRank}위</p>
+		</c:if>
 		<h5 class="font-weight-bold">${content.mediaName}</h5>
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>

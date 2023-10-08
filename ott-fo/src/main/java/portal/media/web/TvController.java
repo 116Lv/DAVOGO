@@ -22,6 +22,11 @@ public class TvController {
 	@Autowired
 	private TvService tvService;
 	
+	/**
+	 * tv프로그램 메인화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/tv.do")
 	public String mainPage(Model model) {
 		
@@ -39,6 +44,12 @@ public class TvController {
 		return "/tv/tvMain";
 	}
 	
+	/**
+	 * tv프로그램 컨텐츠 상세 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/tv/contents.do")
 	public String contentPage(@RequestParam Map params, Model model) {
 		
@@ -55,13 +66,21 @@ public class TvController {
 		return "/tv/tvContent";
 	}
 	
+	/**
+	 * tv프로그램 장르 조회 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/tv/category.do")
-	public String categoryPage(@RequestParam("genre") String params, Model model) {
+	public String categoryPage(@RequestParam Map params, Model model) {
 		
+		//tv프로그램만 조회
+		params.put("mediaDiv", "2");
 		List<Map> categoryInfoList = tvService.getCategoryInfoList(params);
 		
 		model.addAttribute("list", categoryInfoList);
-		model.addAttribute("genre", params);
+		model.addAttribute("params", params);
 		
 		return "/tv/tvCategory";
 	}
