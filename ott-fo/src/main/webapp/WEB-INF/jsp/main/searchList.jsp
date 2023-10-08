@@ -15,12 +15,14 @@
 				<c:forEach var="item" items="${searchList}">
 					<div class="col-md-15">
 						<div class="card my-3">
-							<img class="card-img-top" src="${item.imgSrc}" alt="${item.mediaName}" onerror="this.src='/images/no-img.jpg';"/>
-							<div class="card-body px-10 py-10">
-								<h5 class="card-title font15 my-0 text-truncate">${item.mediaName}</h5>
-								<div class="font13" style="color: #a0a0a0;">${item.period} - ${item.country}</div>
-								<div class="font12" style="color: #a0a0a0;">${item.mediaDiv == '1' ? '영화' : 'TV프로그램'}</div>
-							</div>
+							<a class="text-dark" href="<c:url value="/tv/contents.do?media_id=${item.mediaId}"/>">
+								<img class="card-img-top" src="${item.imgSrc}" alt="${item.mediaName}" onerror="this.src='/images/no-img.jpg';"/>
+								<div class="card-body px-10 py-10">
+									<h5 class="card-title font15 my-0 text-truncate">${item.mediaName}</h5>
+									<div class="font13" style="color: #a0a0a0;">${item.period} - ${item.country}</div>
+									<div class="font12" style="color: #a0a0a0;">${item.mediaDiv == '1' ? '영화' : 'TV프로그램'}</div>
+								</div>
+							</a>
 						</div>
 					</div>
 				</c:forEach>

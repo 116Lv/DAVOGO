@@ -75,6 +75,10 @@
 	
 	<!-- icon -->
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+	<!-- Validation js -->
+	<script src="<c:url value="/js/vendor/jquery-validation/jquery.validate.js"/>"></script>
+	<script src="<c:url value="/js/vendor/jquery-validation/localization/messages_ko.js"/>"></script>
 	
 	<!-- Dropzone -->
 	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>

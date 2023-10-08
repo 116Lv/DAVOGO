@@ -3,11 +3,22 @@
 
 <mapper namespace="portal.user.mapper.MyPageMapper">
 
+	<select id="getUserInfo" resultType="egovMap">
+		select
+			user_id,
+			email
+		from
+			user
+		where 
+			email = #{email}
+			and `password` = #{password}
+	</select>
+
 	<update id="updateUserPassword">
 		update
 			user
 		set
-			`password` = #{password}
+			`password` = #{newPassword}
 		where
 			user_id = #{userId} 
 	</update>

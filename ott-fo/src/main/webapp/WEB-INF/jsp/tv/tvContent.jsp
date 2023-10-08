@@ -9,49 +9,91 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<style>
+.round-logo{
+	border-radius: 0.5em;
+}
+</style>
 
 <div class="row">
-	<div class="" style="height: 100px; background-color: #888888;">
+	<div class="col" style="height: 100px; background-color: #888888;">
 	</div>
 </div>
 
 <div class="row mb-4">
-	<div class="col-2">
+	<div class="col-3">
 		<img class="rounded float-left img-thumbnail " src="${image.imgSrc}">
 	</div>
-	<div class="col-10">
+	<div class="col-9 pt-2">
 		<p class="font14">${image.categoryTitle} ${image.mediaRank}위</p>
 		<h5 class="font-weight-bold">${content.mediaName}</h5>
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>
-		<div class="row">
-			<h5>평균</h5>
-		</div>
-		<hr/>
-		<div class="row">
+		<div class="row text-center">
 			<div class="col-4">
-				<label class="text-center">평가하기</label>
+				<div>평균 별점</div>
+				<h4 class="py-4" style="height: 60px;">4.0</h4>
+			</div>
+			<div class="col-4">
+				<div>평가하기</div>
 				<input class="rating" id="assess_rate" name="assess_rate" value="${item.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
 			</div>
-			<div class="col-8">
+			<div class="col-4">
+				<!-- <div class="col">
+					<i class="uil uil-plus">보고싶어요</i>
+				</div> -->
+				<div>코멘트</div>
+				<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
+					<i class="uil uil-pen"></i>
+				</div>
+				<!-- <div class="col">
+					<i class="uil uil-eye">보는중</i>
+				</div> -->
+			</div>
+		</div>
+		<hr class="mt-0" />
+		<div class="row">
+			<div class="col">
 				<div class="row">
-					<div class="col">
-						<i class="uil uil-plus">보고싶어요</i>
+				<div>감상 가능한곳 <i class="uil uil-angle-right-b"></i></div>
+				<!-- 조건 충족 필요 -->
+				<c:set var="watchable" value="${fn:split(content.watchable, '^')}"/>
+				<c:forEach var="watch" items="${watchable}" varStatus="status">
+					<div class="col-sm-1 m-0 p-2">
+						<c:choose>
+							<c:when test="${watch == '넷플릭스'}">
+								<img src="<c:url value="/images/channel/netflix.png"/>" alt="${watch}" class="round-logo" style="border: 1px solid black;">
+							</c:when>
+							<c:when test="${watch == '티빙'}">
+								<img src="<c:url value="/images/channel/tving.png"/>" alt="${watch}" class="round-logo">
+							</c:when>
+							<c:when test="${watch == '왓챠'}">
+								<img src="<c:url value="/images/channel/watcha.png"/>" alt="${watch}" class="round-logo">
+							</c:when>
+							<c:when test="${watch == '디즈니+'}">
+								<img src="<c:url value="/images/channel/disney.png"/>" alt="${watch}" class="round-logo">
+							</c:when>
+							<c:when test="${watch == '웨이브'}">
+								<img src="<c:url value="/images/channel/wavve.png"/>" alt="${watch}" class="round-logo">
+							</c:when>
+							<c:when test="${watch == '애플 TV+'}">
+								<img src="<c:url value="/images/channel/appletv.png"/>" alt="${watch}" class="round-logo">
+							</c:when>
+							<c:otherwise>
+								<img src="<c:url value="/images/channel/no-channel.png"/>" class="round-logo" style="border: 1px solid black;">
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<div class="col" data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}">
-						<i class="uil uil-pen">코멘트</i>
-					</div>
-					<div class="col">
-						<i class="uil uil-eye">보는중</i>
-					</div>
+				</c:forEach>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <hr class="my-5" />
 <div class="row mb-2">
-	<div class="col-9">
+	<div class="col">
 		<div class="card">
 			<div class="card-body">
 				<h5 class="card-title">기본 정보</h5>
@@ -70,31 +112,33 @@
 						<c:set var="actor" value="${fn:split(content.actor, '^')}"/>
 						<c:forEach var="person" items="${actor}" varStatus="status">
 							<c:if test="${status.index % 12 == 0}">
-								<div class="swiper-slide">
-									<div class="row">
+							<div class="swiper-slide">
+								<div class="row">
 							</c:if>
-							<c:if test="${status.index % 3 == 0}">
-										<div class="col-3">
-											<ul class="list-group">
-							</c:if>
-												<li class="list-group-item text-left">
-													<!-- 얼굴사진 -->
-													<p>${person}</p>
-													<p>출연</p>
-												</li>
-							<c:if test="${status.index % 3 == 2}">
-											</ul>
-										</div>
-							</c:if>
-							<c:if test="${status.index % 12 == 11}">
-									</div>
+								<c:if test="${status.index % 3 == 0}">
+								<div class="col-3 pr-1">
+								</c:if>
+							
+								<ul class="list-group">
+									<li class="list-group-item text-left">
+										<!-- 얼굴사진 -->
+										<p>${person}</p>
+										<p class="font12 text-gray">출연</p>
+									</li>
+								</ul>
+								
+								<c:if test="${status.index % 3 == 2 || status.last}">
 								</div>
+								</c:if>
+							<c:if test="${status.index%12 == 11 || status.last}">
+								</div>
+							</div>
 							</c:if>
 						</c:forEach>
 					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
-					<div class="swiper-pagination"></div>
+<!-- 					<div class="swiper-pagination"></div> -->
 				</div>
 			</div>
 			<hr/>
@@ -123,22 +167,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-3">
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title">감상 가능한곳</h5>
-				<!-- 조건 충족 필요 -->
-				<c:set var="watchable" value="${fn:split(content.watchable, '^')}"/>
-				<c:forEach var="watch" items="${watchable}" varStatus="status">
-					<div class="row">
-						<img src="">
-						<p>${watch}</p>
-						<i class="uil uil-angle-right-b"></i>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
+
 	<script>
 		var swiper = new Swiper(".mySwiper", {
 		    slidesPerView: 1,

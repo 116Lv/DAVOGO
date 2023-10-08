@@ -56,5 +56,7 @@
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 	<!-- Custom JavaScript-->
 	<script src="<c:url value="/js/main.js"/>"></script>
+	<script src="<c:url value="/js/davogo/mypage.js"/>"></script>
+	
 </body>
 </html>

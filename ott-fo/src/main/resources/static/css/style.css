@@ -129,23 +129,23 @@ body {
 
 /*Remove chrome Input Field’s Unwanted Yellow Background Color*/
 
-input: -webkit-autofill,
-input: -webkit-autofill:hover,
-input: -webkit-autofill:focus {
+input -webkit-autofill,
+input -webkit-autofill:hover,
+input -webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 100px white inset !important;
 }
 
 /*Input focus color removed*/
 
-:focus {
+/* :focus {
     outline: -webkit-focus-ring-color auto 0px;
-}
+} */
 
 /*Bootstrap Form Control Focus*/
 
 .form-control:focus {
-    border-color: #fff;
-    border: 0px;
+    /* border-color: #fff; */
+    /* border: 0px; */
     outline: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -1315,5 +1315,15 @@ ul.entry-meta {
 }
 
 .versus {
-	
+
+}	
+
+label.error {
+	color: red;
+	font-style: italic;
+	font-size: 13px;
+}
+
+.text-gray {
+	color: gray;
 }
