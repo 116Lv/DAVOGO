@@ -207,4 +207,19 @@ public class CommServiceImpl implements CommService{
 		return commMapper.getWorldImageCount(params);
 	}
 
+	@Override
+	public List<Integer> getWorldImageId(Map params) {
+		return commMapper.getWorldImageId(params);
+	}
+
+	@Override
+	public Map getWorldImageInfo(Map params) {
+		return commMapper.getWorldImageInfo(params);
+	}
+
+	@Override
+	public Map getWorldInfo(Map params) {
+		return commMapper.getWorldInfo(params);
+	}
+	
 }

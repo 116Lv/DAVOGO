@@ -44,6 +44,8 @@ public interface CommMapper {
 	
 	public void updateCommunityForLike(Map params);
 
+	public Map getWorldInfo(Map params);
+	
 	public void insertWorldInfo(Map params);
 
 	public void insertWorld(Map params);
@@ -53,7 +55,11 @@ public interface CommMapper {
 	public List<Map> getWorldImages(Map map);
 
 	public List<Map> getWorldImageList(Map params);
+	
+	public List<Integer> getWorldImageId(Map params);
 
 	public int getWorldImageCount(Map params);
+
+	public Map getWorldImageInfo(Map params);
 
 }

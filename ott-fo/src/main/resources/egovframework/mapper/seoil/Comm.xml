@@ -296,6 +296,15 @@
 			and email_id = #{loginEmailId}
 	</delete>
 	
+	<select id="getWorldInfo" resultType="egovMap">
+		select
+			*
+		from 
+			community
+		where 
+			comm_id = #{comm_id}
+	</select>
+	
 	<update id="insertWorldInfo">
 		update
 			community
@@ -387,12 +396,30 @@
 			and c.comm_id = w.comm_id
 	</select>
 	
+	<select id="getWorldImageId" resultType="Integer">
+		select
+			world_id
+		from
+			world
+		where
+			comm_id = #{comm_id}
+	</select>
+	
 	<select id="getWorldImageCount" resultType="INT">
 		select
 			count(*)
 		from world
 		where
 			comm_id = #{comm_id}
+	</select>
+	
+	<select id="getWorldImageInfo" resultType="egovMap">
+		select
+			*
+		from
+			world
+		where
+			world_id = #{worldId}
 	</select>
 	
 </mapper>
