@@ -52,13 +52,19 @@
 	
 	<select id="getCategoryInfoList" resultType="EgovMap">
 		select
-			m.*, w.img_src
+			m.*, 
+			w.img_src
 		from
-			media m, watcha w
+			media m
+			left join watcha w
+			on m.media_id = w.media_id
 		where
-			genre like concat('%', #{genre}, '%')
-			and m.media_id = w.media_id
+			1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(genre)">
+			and m.genre like concat('%', #{genre}, '%')
+			</if>
 			and m.media_div = #{mediaDiv}
+		order by m.update_date desc, m.save_date desc, m.rank, m.open_date desc
 	</select>
 	
 	<select id="getCommentList" resultType="EgovMap">

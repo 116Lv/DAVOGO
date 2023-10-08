@@ -21,9 +21,8 @@
 			<div class="media">
 				<div class="mr-3"><i class="uil uil-user-circle" style="font-size: 2em;"></i></div>
 				<div class="media-body">
-<%-- 					<fmt:parseDate var="saveDate" value="${comment.saveDate}" pattern="yyyyMMddHHmmss"/> --%>
-<%-- 					<fmt:formatDate value="${saveDate}" type="date" dateStyle="full"/> --%>
-					<h5 class="mt-0">${comment.writer}</h5>
+					<fmt:parseDate var="saveDate" value="${comment.saveDate}" pattern="yyyyMMddHHmmss"/>
+					<h5 class="mt-0">${comment.writer} <span class="font12 text-gray"><fmt:formatDate value="${saveDate}" pattern="yyyy.MM.dd HH:mm:ss"/></span></h5>
 					${comment.comment}
 				</div>
 				<c:if test="${comment.writer eq loginUser.emailId}">

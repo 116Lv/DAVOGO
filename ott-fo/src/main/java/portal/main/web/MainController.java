@@ -1,5 +1,6 @@
 package portal.main.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import portal.main.service.MainService;
+import portal.media.service.TvService;
 
 /**
  * 메인화면
@@ -26,22 +28,29 @@ public class MainController {
 	
 	@Autowired
 	private MainService mainService;
-
+	
 	@RequestMapping("/main.do")
 	public String mainPage(Model model) {
 		
 		logger.debug("메인화면으로 이동");
 		
+		//표시할 카테고리 조회
 		List<Map> categoryList = mainService.getCategoryList();
 		for (int i=0; i < categoryList.size(); i++) {
 			
+			//카테고리별 컨텐츠 조회
 			List<Map> contentsList = mainService.getContentsList(categoryList.get(i));
 			categoryList.get(i).put("imageList", contentsList);
 		}
 		
 		model.addAttribute("categoryList", categoryList);
 		
-		return "/main/mainPage2";
+		//영화만 조회
+		List<Map> movieList = mainService.getMainMovieList();
+		
+		model.addAttribute("movieList", movieList);
+		
+		return "/main/mainPage";
 	}
 	
 	/**

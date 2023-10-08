@@ -1306,7 +1306,7 @@ label.error {
 }
 
 .text-gray {
-	color: gray;
+	color: #a0a0a0;
 }
 
 .left {
@@ -1370,7 +1370,7 @@ label.error {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center top;
-	background-color: ;
+	/* background-color: ; */
 	position: relative;
 	left: 0%;
 	top: -155%;
@@ -1450,4 +1450,25 @@ label.error {
 
 .social-comment {
 	margin-top: 15px;
+}
+
+/* 이미지와 숫자를 포함하는 컨테이너 */
+.image-container {
+	position: relative; /* 자식 요소의 위치를 상대적으로 설정 */
+	display: inline-block; /* 컨테이너가 내부 내용에 맞게 크기를 가지도록 함 */
+}
+
+/* 숫자의 스타일 */
+.number {
+	position: absolute; /* 절대 위치로 설정 */
+	top: 10px; /* 위쪽 여백 조정 */
+	right: 10px; /* 오른쪽 여백 조정 */
+	background-color: rgba(0, 0, 0, 0.7); /* 배경 색상 및 투명도 설정 */
+	color: white; /* 텍스트 색상 설정 */
+	padding: 0px; /* 내부 여백 설정 */
+	border-radius: 0.5em; /* 원 모양으로 만들기 위한 테두리 반경 설정 */
+	opacity :1;
+	text-align: center;
+	width: 28px;
+	height: 28px;
 }

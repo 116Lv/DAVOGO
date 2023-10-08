@@ -19,12 +19,12 @@
 			media m, watcha w, watcha_rank r 
 		where 
 			r.category_title = #{categoryTitle} 
+			and m.media_div = '2' /* tv프로그램만 조회 */
 			and r.media_id = w.media_id 
 			and m.media_id = w.media_id 
 			and r.save_date = (select MAX(save_date) from watcha_rank)
 		order by 
 			r.media_rank 
-		
 	</select>
 	
 	<select id="getContentSearchList" resultType="egovMap">
@@ -62,6 +62,20 @@
 				m.genre like concat('%', #{searchInput}, '%')
 			) 
 		order by m.rank asc, m.update_date desc
+	</select>
+
+	<select id="getMainMovieList" resultType="egovMap">
+		select
+			m.*, 
+			w.img_src
+		from
+			media m
+			left join watcha w
+			on m.media_id = w.media_id
+		where
+			m.media_div = '1' /* 영화만 조회 */
+		order by m.update_date desc, m.save_date desc, m.rank, m.open_date desc
+		limit 0, 10
 	</select>
 
 </mapper>

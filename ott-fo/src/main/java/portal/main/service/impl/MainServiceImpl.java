@@ -30,4 +30,9 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.getContentSearchList(params);
 	}
 
+	@Override
+	public List<Map> getMainMovieList() {
+		return mainMapper.getMainMovieList();
+	}
+
 }

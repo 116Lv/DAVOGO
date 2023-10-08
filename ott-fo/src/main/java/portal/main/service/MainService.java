@@ -10,5 +10,7 @@ public interface MainService {
 	public List<Map> getContentsList(Map map);
 
 	public List<Map> getContentSearchList(Map params);
+
+	public List<Map> getMainMovieList();
 	
 }
