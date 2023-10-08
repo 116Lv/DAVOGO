@@ -69,4 +69,51 @@ $(document).ready(function() {
 			});
 		}
 	});	
+	
+	//미디어코멘트 모달창 open
+	$('#mediaUpdateModal').on('shown.bs.modal', function (event) {
+		
+		//var button = $(event.relatedTarget);
+		//var prdNo = button.data("prd-no");
+		
+		$.ajax({
+			type : "post",
+			url  : "/mypage/openModal.do",
+			data : {
+				comment_id : $(event.relatedTarget).attr('comment_id')
+			},
+			dataType : "html",
+			success:function(result){
+				//result.title = "상품정보 보기";
+				var modalDiv = $(event.target).find(".modal-body");
+				modalDiv.append(result);
+			}
+		});
+	});
+	
+	$('#mediaUpdateModal').on('hidden.bs.modal', function (event) {
+		var modalDiv = $(event.target).find(".modal-body");
+		modalDiv.empty();
+	});
+	
+	$("#saveBtn").on('click', function() {
+		$.ajax({
+			type : "post",
+			url  : "/mypage/updateMediaComment.do",
+			data : $("#commentForm").serialize(),
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("수정되었습니다.");
+				location.reload();
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
 });

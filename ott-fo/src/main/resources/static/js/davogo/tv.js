@@ -8,7 +8,7 @@ $(document).ready(function() {
 		location.href="/tv/category.do?genre=" + genre;
 	});
 	
-	//투표생성 모달창 open
+	//미디어코멘트 모달창 open
 	$('#mediaWriteModal').on('show.bs.modal', function (event) {
 		if (!isLogin) {
 			alert("로그인이 필요한 서비스입니다.");

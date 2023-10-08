@@ -17,13 +17,23 @@ cursor.execute(sql1)
 href_list = cursor.fetchall()
 
 # chrome_options = webdriver.ChromeOptions()
-chrome_options = Options()
-chrome_options.add_experimental_option("detach", True)
-chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
-chrome_options.add_argument('headless')
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--incognito')
+#chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.add_argument("--start-maximized")
+
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--disable-application-cache")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-setuid-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
 # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 driver_exec_path = ChromeDriverManager().install()
-driver = uc.Chrome(driver_executable_path=driver_exec_path)
+driver = uc.Chrome(driver_executable_path=driver_exec_path, options=chrome_options)
 
 sql2 = "UPDATE media SET actor=%s, director=%s, author=%s, update_date=%s WHERE media_id=%s"
 
@@ -41,27 +51,39 @@ for rows in href_list:
     driver.implicitly_wait(20)
     time.sleep(2)
 
-    nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
-
     li_list = driver.find_elements(By.XPATH, "//*[@id='content_credits']/div/div[1]/div/div/ul/li[*]")
     #li가 바뀌어야 사람이 바뀜
 
-#    print("총 출연/제작 인원: ", len(li_list))
+    print("총 출연/제작 인원: ", len(li_list))
 
-    for idx in range(len(li_list)):
+    total_count = len(li_list)
 
-        if idx > 0 and idx%12 == 0:
-            nextBtn.click()
-#            print("clicked")
-            driver.implicitly_wait(10)
-            time.sleep(1)
+    if total_count == 12:
+        nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
+        nextBtn.click()
+        print("clicked")
+        driver.implicitly_wait(5)
+        time.sleep(1)
+
+    for idx in range(total_count):
+
+        if eeeeeeeeeee > 0:
+            try:
+                nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
+                nextBtn.click()
+                print("clicked")
+                driver.implicitly_wait(10)
+                time.sleep(1)
+            except:
+                print("next버튼 없음")
+                break
 
         li = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[1]/div/div/ul/li[" + str(idx+1) + "]")
         name = li.find_element(By.XPATH, "a/div[2]/div[1]/div[1]").text
         
         role = li.find_element(By.XPATH, "a/div[2]/div[1]/div[2]").text
         compare_role = role.split('|')[0].strip()
-#        print({"name": name, "role": compare_role})
+        print({"name": name, "role": compare_role})
 
         if compare_role == "출연" or compare_role == "특별출연" or compare_role == "성우" or compare_role == "나레이션":
             actors += name + "^"
@@ -86,7 +108,7 @@ for rows in href_list:
         authors = authors[0:authorsLastIndex]
 
     data1 = ( actors, directors, authors, update_date, media_id )
-#    print(data1)
+    print(data1)
     cursor.execute(sql2, data1)
     conn.commit()
 

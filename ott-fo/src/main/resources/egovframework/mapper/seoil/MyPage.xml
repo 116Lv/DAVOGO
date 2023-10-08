@@ -44,6 +44,136 @@
 			writer = #{loginEmailId}
 		order by 
 			save_date desc
-	</select>	
+	</select>
+	
+	<select id="getUserMediaComment" resultType="EgovMap">
+		select
+			m.media_name,
+			c.comment_id,
+			c.media_id,
+			c.content,
+			c.assess_rate,
+			c.save_date,
+			c.update_date
+		from
+			media m, media_comment c
+		where
+			c.writer = #{emailId}
+			and m.media_id = c.media_id
+	</select>
+	
+	<select id="getMediaCommentInfo" resultType="EgovMap">
+		select
+			*
+		from
+			media_comment
+		where
+			comment_id = #{comment_id}
+	</select>
+	
+	<update id="updateMediaComment">
+		update media_comment
+		set
+			content = #{content},
+			assess_rate = #{assess_rate},
+			update_date = date_format(now(), '%Y%m%d%H%i%s')
+		where
+			comment_id = #{comment_id}
+	</update>
+	
+	<delete id="deleteMediaComment">
+		delete from
+			media_comment
+		where
+			comment_id = #{comment_id}
+	</delete>
+	
+	<select id="getUserCommunity" resultType="EgovMap">
+		select
+			*
+		from
+			community
+		where
+			writer = #{emailId}
+	</select>
+	
+	<select id="findVoteIdList" resultType="EgovMap">
+		select
+			vote_id
+		from
+			vote
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	<delete id="deleteVoteUser">
+		delete from
+			vote_user
+		where
+			vote_id = #{voteId}
+	</delete>
+	
+	<delete id="deleteVote">
+		delete from
+			vote
+		where
+			comm_id = #{comm_id}
+	</delete>
+	
+	<select id="findWorldIdList" resultType="EgovMap">
+		select
+			world_id
+		from
+			world
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	<delete id="deleteWorldUser">
+		delete from
+			world_user
+		where
+			world_id = #{worldId}
+	</delete>
+	
+	<delete id="deleteWorld">
+		delete from
+			world
+		where
+			comm_id = #{comm_id}
+	</delete>
+	
+	<delete id="deleteCommComment">
+		delete from
+			comment
+		where
+			comm_id = #{comm_id}
+	</delete>
+	
+	<delete id="deleteComm">
+		delete from
+			community
+		where
+			comm_id = #{comm_id}
+	</delete>
+	
+	<select id="getUserComment" resultType="EgovMap">
+		select
+			comm.comm_div,
+			comm.title,
+			c.*
+		from
+			community comm, comment c
+		where
+			c.writer = #{emailId}
+			and comm.comm_id = c.comm_id
+	</select>
+	
+	<delete id="deleteComment">
+		delete from
+			comment
+		where
+			comment_id = #{comment_id}
+	</delete>
 
 </mapper>

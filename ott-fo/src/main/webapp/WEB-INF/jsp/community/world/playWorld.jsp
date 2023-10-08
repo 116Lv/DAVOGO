@@ -6,8 +6,8 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<div class="row" style="background-color: black;">
-	<div class="col-lg-12 mb-5" style="height: 95vh;">
+<div class="row" style="background-color: #181818;">
+	<div id="compareArea" class="col-lg-12 mb-5 text-center" style="height: 95vh; background-color:#181818; clear:both;">
 		<div class="left">
 			<div class="line">
 				<div style="width: 15%; float: right; font-size: 3vh;"></div>
@@ -25,16 +25,17 @@
 		</div>
 		<div class="versus"></div>
 		<div class="textLine">
-			<div class="leftText">
-				<span id="leftContent">???</span>
-			</div>
-			<div class="rightText">
-				<span id="rightContent">???</span>
+			<div class="row">
+				<div class="col-6 leftText">왼쪽 글자</div>
+				<div class="col-6 rightText">오른쪽 글자</div>
 			</div>
 		</div>
 	</div>
 </div>
-
+<form name="worldForm" id="worldForm" action="/comm/world/play/saveWorld.do" method="post" hidden>
+	<input type="hidden" name="comm_id" value="${community.commId}">
+	<input type="hidden" id="worldId" name="world_id">
+</form>
 <script type="text/javascript">
 var round = 0;	//강
 var match = 0;	//match
@@ -98,7 +99,7 @@ function loadImage(worldId, cssName) {
 	$.ajax({
 		type : "post",
 		url  : "/comm/world/play/worldInfo.do",
-		data : {worldId: worldId},
+		data : {world_id: worldId},
 		dataType : "json",
 		success: function(result) {
 			if (result.resultCode == 'fail') {
@@ -111,30 +112,21 @@ function loadImage(worldId, cssName) {
 			console.log("imagePath=", imagePath);
 			$(cssName).css("background-image", "url('" + imagePath + "')");
 			$(cssName).attr("world_id", worldInfo.worldId);
+			var txtName = cssName + "Text";
+			console.log("txtName=", txtName);
+			console.log(worldInfo.item);
+			$(txtName).html(worldInfo.item);
+			
 		},
 		error: function( xhr, status, error ) {
 			alert(error);
 		}
-	})
+	});
 }
 
 function saveResult(selectedId) {
-	$.ajax({
-		type: "post",
-		url: "/comm/world/play/saveWorld.do",
-		data: {selected_id: selectedId},
-		dataType: "json",
-		success: function(result) {
-			if (result.resultCode == 'fail') {
-        		alert(result.resultMessage);
-                return;
-			}
-			location.href="/comm/world/play/viewResult.do";
-		},
-		error: function( xhr, status, error ) {
-			alert(error);
-		}
-	})
+	$('#worldId').val(selectedId);
 	
+	$('#worldForm').submit();
 }
 </script>

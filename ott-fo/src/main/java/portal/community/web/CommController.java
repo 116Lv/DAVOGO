@@ -210,13 +210,6 @@ public class CommController {
 	@RequestMapping("/comm/world/play/playWorld.do")
 	public String playWorld(@RequestParam Map params, Model model) {
 		
-//		List<Map> imageList = commService.getWorldImageList(params);
-//		
-//		int image_cnt = commService.getWorldImageCount(params);
-//		
-//		model.addAttribute("imageList", imageList);
-//		model.addAttribute("image_cnt", image_cnt);
-		
 		model.addAttribute("community", commService.getWorldInfo(params));
 		
 		List<Integer> imageIdList = commService.getWorldImageId(params);
@@ -248,20 +241,24 @@ public class CommController {
 		
 		commService.saveResultUserInfo(params);
 		
-		return Constants.VIEW_NAME_JSON;
+		model.addAllAttributes(params);
+		
+		return "redirect:/comm/world/play/viewResult.do";
 	}
 	
 	@RequestMapping("/comm/world/play/viewResult.do")
 	public String resultPage(@RequestParam Map params, Model model) {
 		
 		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		model.addAttribute("loginEmailId", loginUser.getEmailId());
+		params.put("loginEmailId", loginUser.getEmailId());
 		
 		Map imageInfo = commService.getWorldImageInfo(params);
 		
-		imageInfo.put("title", commService.getWorldInfo(params)); /* comm_id가지고 있는지 확인 필요 */
+		Map worldInfo = commService.getWorldInfo(params);
 		
 		model.addAttribute("imageInfo", imageInfo);
+		model.addAttribute("worldInfo", worldInfo);
+		model.addAttribute("params", params);
 		
 		return "/community/world/resultPage";
 	}

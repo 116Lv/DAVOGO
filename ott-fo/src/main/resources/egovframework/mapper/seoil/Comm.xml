@@ -419,7 +419,7 @@
 		from
 			world
 		where
-			world_id = #{worldId}
+			world_id = #{world_id}
 	</select>
 	
 	<update id="saveResult">
@@ -428,7 +428,7 @@
 			total_cnt = total_cnt + 1,
 			update_date = date_format(now(), '%Y%m%d%H%i%s')
 		where
-			world_id = #{selected_id}
+			world_id = #{world_id}
 	</update>
 	
 	<insert id="saveResultUserInfo">
@@ -441,7 +441,7 @@
 		values
 		(
 			#{loginEmailId},
-			#{selected_id},
+			#{world_id},
 			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>

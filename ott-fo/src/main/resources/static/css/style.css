@@ -1223,14 +1223,20 @@ ul.entry-meta {
 
 /* custom-row */
 .column-container {
+    /* display: flex;
+    flex-direction: row; 요소를 가로로 배치
+    flex-wrap: wrap; 너비를 벗어나면 다음 줄로 넘어가도록 설정
+    align-items: center; */ /* 요소를 세로 중앙에 정렬 */
+    
     display: flex;
-    flex-direction: row; /* 요소를 가로로 배치 */
-    flex-wrap: wrap; /* 너비를 벗어나면 다음 줄로 넘어가도록 설정 */
-    align-items: center; /* 요소를 세로 중앙에 정렬 */
+    flex-direction: column;
 }
 
 .custom-row {
     margin-bottom: 10px; /* 각 요소 사이의 간격 조절 */
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .font12 {
@@ -1423,15 +1429,11 @@ label.error {
 }
 
 .leftText {
-	width: 50%;
-	display: inline-block;
 	text-align: right;
 	padding-right: 10%;
 }
 
 .rightText {
-	width: 50%;
-	display: inline-block;
 	text-align: left;
 	padding-left: 10%;
 }

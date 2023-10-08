@@ -23,27 +23,33 @@ $(document).ready(function() {
 		var newRow = $("<div class='custom-row'></div>");
 		
 		// 투표 컬럼 입력란을 생성하고 설정
-        var newInput = $("<input>");
-        newInput.attr("type", "text");
-        newInput.attr("placeholder", "투표 컬럼내용");
-        newInput.attr("size", "50");
-        newInput.attr("name", "items");
+        var newTextarea = $("<textarea></textarea>");
+        newTextarea.attr("placeholder", "투표 컬럼내용");
+        newTextarea.attr("rows", "3"); // 원하는 높이로 조절할 수 있습니다.
+        newTextarea.attr("name", "items"); // name 속성 추가
+        newTextarea.attr("class", "col-11");
         
         var newButton = $("<button>");
         newButton.text("행 삭제");
         newButton.attr("type", "button");
-        newButton.attr("id", "removeColumn");
-        newButton.css("float", "right");
-
+        newButton.attr("class", "col-1 removeColumn");
+        newButton.css({
+            "display": "flex",
+            "flex-direction": "column",
+            "justify-content": "center",
+            "align-items": "center",
+            "text-align": "center"
+        });
+        
 		// 생성한 입력란을 새로운 행에 추가
-        newRow.append(newInput);
+        newRow.append(newTextarea);
 		newRow.append(newButton);
 
 		// 새로운 행을 컨테이너에 추가
         $(".column-container").append(newRow);
 	});
 	
-	$(document).on('click', '#removeColumn', function() {
+	$(document).on('click', '.removeColumn', function() {
         // 클릭한 버튼의 부모인 custom-row를 찾고 그 안의 input과 버튼을 삭제합니다.
         $(this).closest('.custom-row').remove();
     });
