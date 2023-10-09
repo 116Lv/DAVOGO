@@ -2,7 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="portal.media.mapper.MovieMapper">
-
+	<select id="getMovieInfoList" resultType="EgovMap">
 	
-
+	</select>
+	
+	<select id="getContent" resultType="EgovMap">
+	
+	</select>
+	
+	<select id="getImage" resultType="EgovMap">
+	
+	</select>
+	
+	<select id="getCommentList" resultType="EgovMap">
+		select
+			*,
+			count(*) as total
+		from
+			media_comment
+		where
+			media_id = #{media_id}
+	</select>
 </mapper>

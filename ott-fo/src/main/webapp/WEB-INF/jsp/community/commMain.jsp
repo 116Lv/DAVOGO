@@ -35,17 +35,17 @@
 					<input class="form-control" type="search" id="searchText" name="searchText" value="${params.searchText}" placeholder="제목명 / 작성자명" size="50">
 				</div>
 				<div class="col-sm-2">
-					<button class="btn btn-outline-success" type="submit">검색</button>
+					<button class="btn btn-outline-primary text-dark" type="submit">검색</button>
 				</div>
 			</div>
 		</form>
 	</nav>
 	<nav class="navbar navbar-expand-lg">
 		<div class="modalVote">
-			<a class="btn btn-outline-primary mx-1" href="javascript:openVoteModal();" style="line-height: 1.0;">    <%-- data-toggle="modal" data-target="#voteWriteModal" --%>
+			<a class="btn btn-outline-secondary mx-1 text-dark" href="javascript:openVoteModal();" style="line-height: 1.0;">    <%-- data-toggle="modal" data-target="#voteWriteModal" --%>
 				투표 게시글 <br> 작성
 			</a>
-			<a class="btn btn-outline-primary mx-1" href="<c:url value="/comm/worldInfo.do"/>" style="line-height: 1.0;">
+			<a class="btn btn-outline-secondary mx-1 text-dark" href="<c:url value="/comm/worldInfo.do"/>" style="line-height: 1.0;">
 				월드컵 게시글 <br> 작성
 			</a>
 		</div>

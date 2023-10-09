@@ -5,7 +5,11 @@ $(document).ready(function() {
 		var target = $(this);
 		var genre = target.attr("genre");
 		
-		location.href="/tv/category.do?genre=" + genre;
+		if (target.hasClass("active")) {	//이미 선택된 상태이면 
+			location.href="/tv.do";
+		} else {
+			location.href="/tv/category.do?genre=" + genre;
+		}
 	});
 	
 	//미디어코멘트 모달창 open

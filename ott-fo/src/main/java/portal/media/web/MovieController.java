@@ -16,18 +16,34 @@ import portal.media.service.TvService;
 public class MovieController {
 
 	@Autowired
-	private TvService tvService;
+	private MovieService movieService;
 	
 	@RequestMapping("/movie.do")
 	public String moviePage(@RequestParam Map params, Model model) {
 		
 		//영화만 조회
 		params.put("mediaDiv", "1");
-		List<Map> categoryInfoList = tvService.getCategoryInfoList(params);
+		List<Map> movieInfoList = movieService.getMovieInfoList(params);
 		
-		model.addAttribute("list", categoryInfoList);
+		model.addAttribute("list", movieInfoList);
 		model.addAttribute("params", params);
 		
 		return "/movie/movieMain";
+	}
+	
+	@RequestMapping("/movie/contents.do")
+	public String contentPage(@RequestParam Map params, Model model) {
+		
+		Map content = movieService.getContent(params);
+		
+		Map image = movieService.getImage(params);
+		
+		List<Map> commentList = movieService.getCommentList(params);
+		
+		model.addAttribute("content", content);
+		model.addAttribute("image", image);
+		model.addAttribute("commentList", commentList);
+		
+		return "/movie/movieContent";
 	}
 }
