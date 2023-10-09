@@ -40,10 +40,10 @@
 												</div>
 												<div class="form-control" id="item${item.voteId}" style="padding: 0; height: 29.78px;">
 													<div class="progress position-relative" style="background-color: white; height: 100%;">
-														<div class="progress-bar" style="width: ${item.totalCnt / item.sumClickedCnt *100}%"></div>
+														<div class="progress-bar" style="width: ${(item.totalCnt * 100) / item.sumClickedCnt}%"></div>
 														<div class="justify-content-between d-flex position-absolute w-100" style="padding: .375rem .75rem;">
-															<span>${item.item}</span>
-															<span><fmt:formatNumber type="percent" value="${item.totalCnt / item.sumClickedCnt}"  pattern="0%"/></span>
+															<span title="${fn:replace(item.item, "\"", "'")}">${item.item}</span>
+															<span><fmt:formatNumber type="number" value="${(item.totalCnt * 100) / item.sumClickedCnt}" pattern="0"/>%</span>
 														</div>
 													</div>
 												</div>

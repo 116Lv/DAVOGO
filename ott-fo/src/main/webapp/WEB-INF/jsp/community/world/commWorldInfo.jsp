@@ -25,7 +25,7 @@
 				<h5 class="card-title">이상형 월드컵 기본정보</h5>
 				<hr>
 				<p class="card-text">
-					<form id="worldForm" action="/comm/saveInfo.do" method="POST">
+					<form id="worldForm" name="worldForm" action="/comm/saveInfo.do" method="POST">
 						<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
 						<input type="hidden" name="comm_id" value="${params.comm_id}">
 						<div class="form-group row">
