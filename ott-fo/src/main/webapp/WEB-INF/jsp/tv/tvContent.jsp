@@ -29,7 +29,7 @@
 		<c:if test="${not empty image.categoryTitle}">
 		<p class="font14">${image.categoryTitle} ${image.mediaRank}위</p>
 		</c:if>
-		<h5 class="font-weight-bold">${content.mediaName}</h5>
+		<h5 class="font-weight-bold" style="font-size: 36px;">${content.mediaName}</h5>
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>
 		<div class="row text-center">

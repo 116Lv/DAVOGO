@@ -42,7 +42,7 @@
 	</nav>
 	<nav class="navbar navbar-expand-lg">
 		<div class="modalVote">
-			<a class="btn btn-outline-secondary mx-1 text-dark" href="javascript:openVoteModal();" style="line-height: 1.0;">    <%-- data-toggle="modal" data-target="#voteWriteModal" --%>
+			<a class="btn btn-outline-secondary mx-1 text-dark" data-toggle="modal" data-target="#voteWriteModal" style="line-height: 1.0;">
 				투표 게시글 <br> 작성
 			</a>
 			<a class="btn btn-outline-secondary mx-1 text-dark" href="<c:url value="/comm/worldInfo.do"/>" style="line-height: 1.0;">
@@ -246,16 +246,3 @@
 
 <!-- js파일 임포트 -->
 <script src="<c:url value="/js/davogo/comm.js"/>"></script>
-<script>
-/* commMain에서 투표게시글 작성 클릭시 작동 */
-function openVoteModal() {
-	<c:choose>
-		<c:when test="${empty loginUser}">
-			alert("로그인이 필요한 서비스입니다.");
-		</c:when>
-		<c:otherwise>
-			$('#voteWriteModal').modal('show');
-		</c:otherwise>
-	</c:choose>
-}
-</script>

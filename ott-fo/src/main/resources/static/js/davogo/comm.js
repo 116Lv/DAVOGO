@@ -4,10 +4,12 @@
 $(document).ready(function() {
 	
 	//투표생성 모달창 open
-	$('#voteWriteModal').on('shown.bs.modal', function (event) {
-		
-		//var button = $(event.relatedTarget);
-		//var prdNo = button.data("prd-no");
+	$('#voteWriteModal').on('show.bs.modal', function (event) {
+		if (!isLogin) {
+			alert("로그인이 필요한 서비스입니다.");
+			return false;
+		}
+	}).on('shown.bs.modal', function (event) {
 		
 		$.ajax({
 			type : "post",
@@ -81,24 +83,7 @@ $(document).ready(function() {
 
 	//투표생성 모달창 저장
 	$("#saveBtn").on('click', function() {
-		$.ajax({
-			type : "post",
-			url  : "/comm/saveVote.do",
-			data : $("#voteForm").serialize(),
-			dataType : "json",
-			success: function(result) {
-				if (result.resultCode == 'fail') {
-	        		alert(result.resultMessage);
-	                return;
-	        	}
-				
-	            alert("저장되었습니다.");
-				location.reload();
-			},
-			error: function( xhr, status, error ) {
-				alert(error);
-			}
-		});
+		$("#voteForm").submit();
 	});
 	
 	//메인창 정렬조건 화면반영

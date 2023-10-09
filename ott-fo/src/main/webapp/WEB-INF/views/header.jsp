@@ -45,9 +45,6 @@
 
     <title>HOME | DAVOGO</title>
 
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-
     <!--Fontawesom-->
     <link rel="stylesheet" href="<c:url value="/css/font-awesome.min.css"/>">
 
