@@ -2,6 +2,7 @@ package portal.community.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -166,7 +167,8 @@ public class CommServiceImpl implements CommService{
 		
 		String fileExt = orgFileName.substring(orgFileName.lastIndexOf(".") + 1).toLowerCase();
 		
-		String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS);
+		//String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS);
+		String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS) + new Random().nextInt(10);
 		
 		String savePath = "community/world/";
 		

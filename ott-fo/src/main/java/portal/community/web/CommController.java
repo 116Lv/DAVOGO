@@ -79,15 +79,13 @@ public class CommController {
 		} catch (IOException e) {
 			model.addAttribute("message", "파일 저장 중 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
 			model.addAttribute("item", params);
-			return "/movie/movieWrite";
 			
 		} catch (Exception e) {
 			model.addAttribute("message", "오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
 			model.addAttribute("item", params);
-			return "/movie/movieWrite";
 		}
 		
-		return "/community/world/commWorldInfo";
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	@RequestMapping("/comm/vote.do")
