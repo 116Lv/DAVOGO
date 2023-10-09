@@ -165,9 +165,7 @@ function searchList(pageNo) {
 
 //초기화
 function searchReset() {
-	$("#boardSearchForm").each(function() {
-		this.reset();
-	});
+	$("#boardSearchForm").clearForm();
 	
 	//초기값 설정
 	searchList(1);

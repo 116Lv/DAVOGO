@@ -53,7 +53,7 @@
 							<div class="form-group row">
 								<div class="col">
 									<h6 class="font-15 ">검색어</h6>
-									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="프로그램명 / 출연진명 / 장르">
+									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="고객이메일">
 								</div>
 							</div>
 						</div>
@@ -61,7 +61,8 @@
 						<div class="row mt-2">
 							<div class="col-sm-6 mb-2">
 					            <select id="orderColumn" name="orderColumn" class="form-select-sm me-1" onchange="searchList(1);">
-					        		<option value="num" <c:if test="${searchParams.orderColumn == 'num'}">selected</c:if>>번호</option>
+					        		<option value="signup_date" <c:if test="${searchParams.orderColumn == 'signup_date'}">selected</c:if>>가입일자</option>
+					        		<option value="email" <c:if test="${searchParams.orderColumn == 'email'}">selected</c:if>>이메일</option>
 					        	</select>
 					            <select id="orderType" name="orderType" class="form-select-sm me-1" onchange="searchList(1);">
 					        		<option value="DESC" <c:if test="${searchParams.orderType == 'DESC'}">selected</c:if>>내림차순</option>
@@ -95,8 +96,6 @@
 						            <th scope="col">고객ID</th>
 						            <th scope="col">이메일</th>
 						            <th scope="col">가입일자</th>
-						            <th scope="col">생년월일</th>
-						            <th scope="col">나이</th>
 						            <th scope="col" class="text-center">기타</th>
 						        </tr>
 						    </thead>
@@ -108,9 +107,8 @@
 							    		<td>${item.num}</td>
 							    		<td>${item.userId}</td>
 							    		<td>${item.email}</td>
-							    		<td>${item.signupDate}</td>
-							    		<td>${item.birthDate}</td>
-							    		<td>${item.age}</td>
+							    		<fmt:parseDate var="dt" value="${item.signupDate}" pattern="yyyyMMdd"/>
+							    		<td><fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/></td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/user/view.do?user_id=${item.userId}" title="상세보기">
 										    	<i class="mdi mdi-eye"></i>
@@ -124,7 +122,7 @@
 						    	</c:when>
 						    	<c:otherwise>
 							    	<tr>
-										<td colspan="7" class="text-center">데이터가 없습니다.</td>
+										<td colspan="5" class="text-center">데이터가 없습니다.</td>
 									</tr>
 						    	</c:otherwise>
 						    </c:choose>
@@ -164,9 +162,7 @@ function searchList(pageNo) {
 
 //초기화
 function searchReset() {
-	$("#bannerSearchForm").each(function() {
-		this.reset();
-	});
+	$("#bannerSearchForm").clearForm();
 	
 	//초기값 설정
 	searchList(1);

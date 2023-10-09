@@ -69,9 +69,10 @@ public class MainController {
 		try {
 			kobisApiService.saveDailyMovieList();
 			
-			model.addAttribute("resultMsg", "success");
+			model.addAttribute("resultCode", "success");
 		} catch (Exception e) {
-			model.addAttribute("resultMsg", "fail");
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
 		}
 		
 		return Constants.VIEW_NAME_JSON;

@@ -25,3 +25,7 @@ hs_err_pid*
 ott-bo/.classpath
 *.idx
 ott-bo/.classpath
+ott-fo/.classpath
+ott-fo/.settings/org.eclipse.jdt.core.prefs
+ott-fo/.settings/org.eclipse.wst.common.component
+ott-bo/.classpath

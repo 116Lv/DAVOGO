@@ -31,6 +31,12 @@ public class TvController {
 	@RequestMapping("/tv.do")
 	public String tvlist(@RequestParam Map<String, Object> params, Model model) throws Exception {
 		
+		//최초 진입시 정렬조건 초기셋팅
+		if (!params.containsKey("orderColumn")) {
+			params.put("orderColumn", "media_id");
+			params.put("orderType", "DESC");
+		}
+		
 		PaginationInfo pagination = PaginationUtil.setPaginationInfo(params);
 		
 		params.put("media_div", "2");

@@ -7,7 +7,7 @@
 		select
 			a.*
 		from (
-			select row_number() over(order by media_id desc) as num
+			select row_number() over() as num
 				, media_id
 				, media_name
 				, media_div
@@ -40,19 +40,14 @@
 			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
 			order by 
 				<choose>
-					<when test='"num".equals(orderColumn)'><!-- 번호 -->
-						num ${orderType}
+					<when test='"media_name".equals(orderColumn)'><!-- 미디어명 -->
+						media_name ${orderType}
 					</when>
 					<when test='"media_id".equals(orderColumn)'><!-- 미디어ID -->
 						media_id ${orderType}
 					</when>
-					<!-- 
-					<when test='"REG_DT".equals(orderColumn)'>
-						reg_dt ${orderType}
-					</when>
-					 -->
 					<otherwise>
-						num desc
+						media_id desc
 					</otherwise>
 				</choose>
 			</if>
@@ -65,7 +60,11 @@
 		from media
 		where 1=1
 		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-		and media_name like concat('%', #{searchText}, '%')
+		and (
+			media_name like concat('%', #{searchText}, '%')
+			or director like concat('%', #{searchText}, '%')
+			or genre like concat('%', #{searchText}, '%')
+			)
 		</if>
 		and media_div = #{media_div}
 	</select>

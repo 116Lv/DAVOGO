@@ -94,7 +94,8 @@
 			<p>${item.introduce}</p>
 			
 			<label for="open_date"><b>개봉일</b></label>
-			<p>${item.openDate}</p>
+			<fmt:parseDate var="dt" value="${item.openDate}" pattern="yyyyMMdd"/>
+    		<p><fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/></p>
 			
     	</div>
     	

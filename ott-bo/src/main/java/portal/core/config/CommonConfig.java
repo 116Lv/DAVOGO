@@ -18,10 +18,14 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import dev.akkinoc.util.YamlResourceBundle;
+import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 
 @Configuration
 public class CommonConfig {
     
+	@Value("${app.kobis.api-key}")
+	private String apiKey;
+
     @Bean
     public AntPathMatcher antPathMatcher() {
         return new AntPathMatcher();
@@ -77,5 +81,10 @@ public class CommonConfig {
 		commonsMultipartResolver.setMaxInMemorySize(100000000);
 		return commonsMultipartResolver;
 	}
-    
+
+	@Bean
+	public KobisOpenAPIRestService getKobisService() {
+		return new KobisOpenAPIRestService(apiKey);
+	}
+
 }

@@ -84,7 +84,7 @@
 	    		<input type="text" placeholder="전화번호" name="phone_number" id="phone_number" value="${item.phoneNumber}" required>
 	    		
 	    		<label for="address"><b>주소</b></label>
-	    		<input type="text" placeholder="주소" name="address" id="address" value="${item.address}" required>
+	    		<input type="text" placeholder="주소" name="address" id="address" value="${item.address}">
 	    		
 	    		<label for="entering_date"><b>입사일자</b></label>
 	    		<input name="entering_date" id="entering_date" type="text" placeholder="날짜 입력..." value="${item.enteringDate}"/>

@@ -25,7 +25,8 @@
 			kobis_media_code,
 			`rank`,
 			audiAcc,
-			save_date
+			save_date,
+			update_date
 		)
 		values
 		(
@@ -62,6 +63,7 @@
 			#{movieCd},
 			#{rank},
 			#{audiAcc},
+			date_format(now(), '%Y%m%d'),
 			date_format(now(), '%Y%m%d')
 		)
 	</insert>

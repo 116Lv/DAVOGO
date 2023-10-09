@@ -55,12 +55,12 @@
 	                </a>
 	            </li>
 	
-	            <li class="side-nav-item">
+	            <!-- <li class="side-nav-item">
 	                <a href="/banner.do" class="side-nav-link">
 	                    <i class="uil-image"></i>
 	                    <span> BANNER </span>
 	                </a>
-	            </li>
+	            </li> -->
 	
 	            <li class="side-nav-item">
 	                <a href="/review.do" class="side-nav-link">

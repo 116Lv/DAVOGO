@@ -5,7 +5,7 @@
 
 	<select id="findBoardList" resultType="egovMap">
 		select
-			row_number() over(order by board_id desc) as num, a.*
+			row_number() over() as num, a.*
 		from (
 			select *			
 			from board

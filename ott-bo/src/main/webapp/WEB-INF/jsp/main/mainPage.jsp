@@ -7,13 +7,15 @@ function pullMovieData() {
 	$.ajax({
 		type : "post",
 		url  : "/main/pullMovieData.do",
-		//data : frm.serialize(),
 		dataType : "json",
 		success:function(result){
 			
-			//여기에 결과 처리하는 부분 넣기.
-			alert(result.resultMsg);
+			if(result.resultCode == "fail") {
+				alert("예외가 발생하였습니다. 잠시후 다시 시도해주시기 바랍니다");
+				return;
+			}
 			
+			alert("최신 영화 정보를 갱신하였습니다.");
 		}
 	});
 }
@@ -44,7 +46,7 @@ function pullTvData() {
 	</div>
 	
 	<div class="row">
-		<div class="col-xl-5">
+		<div class="col-xl-6">
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="card widget-flat">
@@ -92,7 +94,7 @@ function pullTvData() {
 			<div class="row">
 			</div>
 		</div>
-		<div class="col-xl-7">
+		<div class="col-xl-6">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="header-title">사내게시판</h4>

@@ -23,6 +23,12 @@ public class StaffController {
 	@RequestMapping("/staff.do")
 	public String staffList(@RequestParam Map<String, Object> params, Model model) throws Exception {
 		
+		//최초 진입시 정렬조건 초기셋팅
+		if (!params.containsKey("orderColumn")) {
+			params.put("orderColumn", "staff_id");
+			params.put("orderType", "DESC");
+		}
+		
 		PaginationInfo pagination = PaginationUtil.setPaginationInfo(params);
 		
 		List<Map<String, Object>> list = staffService.findStaffList(params);

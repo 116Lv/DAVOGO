@@ -67,8 +67,8 @@
 						<div class="row mt-2">
 							<div class="col-sm-6 mb-2">
 					            <select id="orderColumn" name="orderColumn" class="form-select-sm me-1" onchange="searchList(1);">
-					        		<option value="num" <c:if test="${searchParams.orderColumn == 'num'}">selected</c:if>>번호</option>
 					        		<option value="media_id" <c:if test="${searchParams.orderColumn == 'media_id'}">selected</c:if>>미디어ID</option>
+					        		<option value="media_name" <c:if test="${searchParams.orderColumn == 'media_name'}">selected</c:if>>영화명</option>
 					        	</select>
 					            <select id="orderType" name="orderType" class="form-select-sm me-1" onchange="searchList(1);">
 					        		<option value="DESC" <c:if test="${searchParams.orderType == 'DESC'}">selected</c:if>>내림차순</option>
@@ -99,7 +99,7 @@
 						    <thead class="table-light">
 						        <tr>
 						        	<th scope="col">번호</th>
-						            <th scope="col">컨텐츠코드</th>
+						            <th scope="col">미디어ID</th>
 						            <th scope="col">영화명</th>
 						            <th scope="col">감독명</th>
 						            <th scope="col">출연진</th>
@@ -123,7 +123,8 @@
 							    		<td>${fnc:shorten(fn:replace(item.actor, '^', ', '), 20)}</td>
 							    		<td>${fnc:shorten(fn:replace(item.producer, '^', ', '), 20)}</td>
 							    		<td>${fnc:shorten(fn:replace(item.distributor, '^', ', '), 20)}</td>
-							    		<td>${item.openDate}</td>
+							    		<fmt:parseDate var="dt" value="${item.openDate}" pattern="yyyyMMdd"/>
+							    		<td><fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/></td>
 							    		<td>${item.runningTime}분</td>
 							    		<td>${item.ratingGrade}</td>
 							    		<td class="text-center">

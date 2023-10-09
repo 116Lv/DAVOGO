@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="page-title">tv 상세</h4>
+                <h4 class="page-title">TV프로그램 상세</h4>
             </div>
         </div>
     </div>     
@@ -79,9 +79,6 @@
 			
 			<label for="channel"><b>채널</b></label>
 			<p>${item.channel}</p>
-			
-			<label for="producer"><b>제작사</b></label>
-			<p>${item.producer}</p>
 			
 			<label for="episode"><b>방송횟수</b></label>
 			<p>${item.episode}부작</p>

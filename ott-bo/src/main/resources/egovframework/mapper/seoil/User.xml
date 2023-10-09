@@ -6,27 +6,28 @@
 	<!-- 직원 목록 -->
 	<select id="findUserList" resultType="EgovMap">
 		select
-			row_number() over(order by user_id desc) as num, a.*
+			row_number() over() as num, a.*
 		from (
-			select *			
+			select 
+				user_id,
+				email,
+				signup_date
 			from user
 			where 1=1
 			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-			and user_id like concat('%', #{searchText}, '%')
+			and email like concat('%', #{searchText}, '%')
 			</if>
 			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
 			order by 
 				<choose>
-					<when test='"num".equals(orderColumn)'><!-- 번호 -->
-						user_id ${orderType}
+					<when test='"email".equals(orderColumn)'><!-- 번호 -->
+						email ${orderType}
 					</when>
-					<!-- 
-					<when test='"REG_DT".equals(orderColumn)'>
-						reg_dt ${orderType}
+					<when test='"signup_date".equals(orderColumn)'>
+						signup_date ${orderType}
 					</when>
-					 -->
 					<otherwise>
-						user_id desc
+						signup_date desc
 					</otherwise>
 				</choose>
 			</if>
@@ -39,7 +40,7 @@
 		from user
 		where 1=1
 		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-		and user_id like concat('%', #{searchText}, '%')
+		and email like concat('%', #{searchText}, '%')
 		</if>
 	</select>
 	

@@ -22,6 +22,13 @@ public class CodeController {
 	
 	@RequestMapping("/code.do")
 	public String codelist(@RequestParam Map<String,Object> params, Model model) throws Exception {
+		
+		//최초 진입시 정렬조건 초기셋팅
+		if (!params.containsKey("orderColumn")) {
+			params.put("orderColumn", "code");
+			params.put("orderType", "DESC");
+		}
+		
 		PaginationInfo pagination = PaginationUtil.setPaginationInfo(params);
 	
 		List<Map<String, Object>> list = codeService.findCodeList(params);

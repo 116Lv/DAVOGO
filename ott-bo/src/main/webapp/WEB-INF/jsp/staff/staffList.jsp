@@ -31,7 +31,7 @@
 		    <div class="card">
 			    <div class="card-body">
 
-				    <form id="staffSearchForm" name="staffSearchForm" class="mb-3" action="/staff.do">
+				    <form id="staffSearchForm" name="staffSearchForm" class="mb-3" action="/staff.do" method="POST">
 						<input type="hidden" name="pageIndex" value="${searchParams.pageIndex}"/>
 	    
 					    <div class="row mb-2">
@@ -58,7 +58,7 @@
 							<div class="form-group row">
 								<div class="col">
 									<h6 class="font-15 ">검색어</h6>
-									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="직원ID / 직원명 / 아이디">
+									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="직원명 / 직원ID / 전화번호">
 								</div>
 							</div>
 						</div>
@@ -66,7 +66,8 @@
 						<div class="row mt-2">
 							<div class="col-sm-6 mb-2">
 					            <select id="orderColumn" name="orderColumn" class="form-select-sm me-1" onchange="searchList(1);">
-					        		<option value="STAFFID" <c:if test="${searchParams.orderColumn == 'STAFFID'}">selected</c:if>>직원ID</option>
+					        		<option value="staff_id" <c:if test="${searchParams.orderColumn == 'staff_id'}">selected</c:if>>직원ID</option>
+					        		<option value="staff_name" <c:if test="${searchParams.orderColumn == 'staff_name'}">selected</c:if>>직원명</option>
 					        	</select>
 					            <select id="orderType" name="orderType" class="form-select-sm me-1" onchange="searchList(1);">
 					        		<option value="DESC" <c:if test="${searchParams.orderType == 'DESC'}">selected</c:if>>내림차순</option>
@@ -97,9 +98,8 @@
 						    <thead class="table-light">
 						        <tr>
 						        	<th scope="col">번호</th>
-						            <th scope="col">직원ID</th>
 						            <th scope="col">직원명</th>
-						            <th scope="col">아이디</th>
+						            <th scope="col">직원ID</th>
 						            <th scope="col">이메일</th>
 						            <th scope="col">전화번호</th>
 						            <th scope="col">주소</th>
@@ -113,13 +113,13 @@
 							    	<c:forEach var="item" items="${list}" varStatus="status">
 							    	<tr>
 							    		<td>${item.num}</td>
-							    		<td>${item.staffId}</td>
 							    		<td>${item.staffName}</td>
 							    		<td>${item.id}</td>
 							    		<td>${item.email}</td>
 							    		<td>${item.phoneNumber}</td>
 							    		<td>${item.address}</td>
-							    		<td>${item.enteringDate}</td>
+							    		<fmt:parseDate var="dt" value="${item.enteringDate}" pattern="yyyyMMdd"/>
+							    		<td><fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/></td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/staff/view.do?staff_id=${item.staffId}" title="상세보기">
 										    	<i class="mdi mdi-eye"></i>
@@ -133,7 +133,7 @@
 						    	</c:when>
 						    	<c:otherwise>
 							    	<tr>
-										<td colspan="9" class="text-center">데이터가 없습니다.</td>
+										<td colspan="8" class="text-center">데이터가 없습니다.</td>
 									</tr>
 						    	</c:otherwise>
 						    </c:choose>
@@ -173,9 +173,7 @@ function searchList(pageNo) {
 
 //초기화
 function searchReset() {
-	$("#staffSearchForm").each(function() {
-		this.reset();
-	});
+	$("#staffSearchForm").clearForm();
 	
 	//초기값 설정
 	searchList(1);

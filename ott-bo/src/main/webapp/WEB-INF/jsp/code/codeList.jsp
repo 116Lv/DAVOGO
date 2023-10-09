@@ -31,7 +31,7 @@
 		    <div class="card">
 			    <div class="card-body">
 
-				    <form id="bannerSearchForm" name="bannerSearchForm" class="mb-3" action="/code.do">
+				    <form id="bannerSearchForm" name="bannerSearchForm" class="mb-3" action="/code.do" method="POST">
 						<input type="hidden" name="pageIndex" value="${searchParams.pageIndex}"/>
 	    
 					    <div class="row mb-2">
@@ -58,7 +58,7 @@
 							<div class="form-group row">
 								<div class="col">
 									<h6 class="font-15 ">검색어</h6>
-									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="영화명 / 감독명 / 장르">
+									<input type="text" id="searchText" name="searchText" class="form-control" value="${searchParams.searchText}" placeholder="코드명">
 								</div>
 							</div>
 						</div>
@@ -66,7 +66,8 @@
 						<div class="row mt-2">
 							<div class="col-sm-6 mb-2">
 					            <select id="orderColumn" name="orderColumn" class="form-select-sm me-1" onchange="searchList(1);">
-					        		<option value="num" <c:if test="${searchParams.orderColumn == 'num'}">selected</c:if>>번호</option>
+					        		<option value="code" <c:if test="${searchParams.orderColumn == 'code'}">selected</c:if>>코드</option>
+					        		<option value="code_name" <c:if test="${searchParams.orderColumn == 'code_name'}">selected</c:if>>코드명</option>
 					        	</select>
 					            <select id="orderType" name="orderType" class="form-select-sm me-1" onchange="searchList(1);">
 					        		<option value="DESC" <c:if test="${searchParams.orderType == 'DESC'}">selected</c:if>>내림차순</option>
@@ -165,9 +166,7 @@ function searchList(pageNo) {
 
 //초기화
 function searchReset() {
-	$("#bannerSearchForm").each(function() {
-		this.reset();
-	});
+	$("#bannerSearchForm").clearForm();
 	
 	//초기값 설정
 	searchList(1);

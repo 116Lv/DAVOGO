@@ -61,7 +61,7 @@
 		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>    
 		<script src="<c:url value="/js/ui/jquery.ui.touch-punch.min.js"/>"></script>
 		<script src="<c:url value="/js/ui/jquery.tmpl.min.js"/>"></script>
-        <script src="<c:url value="/js/game/common.js"/>"></script>
+<%--         <script src="<c:url value="/js/game/common.js"/>"></script> --%>
         <script src="<c:url value="/js/vendor/jquery-cookie/js.cookie.js"/>"></script>
         
         <!-- Form js -->

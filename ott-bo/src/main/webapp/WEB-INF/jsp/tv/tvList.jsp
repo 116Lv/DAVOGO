@@ -15,11 +15,11 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="<c:url value="/"/>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<c:url value="/movie.do"/>">TV관리</a></li>
-                        <li class="breadcrumb-item active">TV 목록</li>
+                        <li class="breadcrumb-item"><a href="<c:url value="/movie.do"/>">TV프로그램 관리</a></li>
+                        <li class="breadcrumb-item active">TV프로그램 목록</li>
                     </ol>
                 </div>
-                <h4 class="page-title">TV관리</h4>
+                <h4 class="page-title">TV프로그램 관리</h4>
             </div>
         </div>
     </div>     
@@ -37,7 +37,7 @@
 					    <div class="row mb-2">
 					        <div class="col-sm-4 col-lg-6">
 					            <a href="<c:url value="/tv/edit.do"/>" class="btn btn-info btn-sm btn-rounded mb-2">
-					            	<i class="mdi mdi-plus"></i> TV 등록
+					            	<i class="mdi mdi-plus"></i> TV프로그램 등록
 					            </a>
 					        </div>
 					        <div class="col-sm-8 col-lg-6">
@@ -66,8 +66,8 @@
 						<div class="row mt-2">
 							<div class="col-sm-6 mb-2">
 					            <select id="orderColumn" name="orderColumn" class="form-select-sm me-1" onchange="searchList(1);">
-					        		<option value="num" <c:if test="${searchParams.orderColumn == 'num'}">selected</c:if>>번호</option>
 					        		<option value="media_id" <c:if test="${searchParams.orderColumn == 'media_id'}">selected</c:if>>미디어ID</option>
+					        		<option value="media_name" <c:if test="${searchParams.orderColumn == 'media_name'}">selected</c:if>>프로그램명</option>
 					        	</select>
 					            <select id="orderType" name="orderType" class="form-select-sm me-1" onchange="searchList(1);">
 					        		<option value="DESC" <c:if test="${searchParams.orderType == 'DESC'}">selected</c:if>>내림차순</option>
@@ -98,14 +98,12 @@
 						    <thead class="table-light">
 						        <tr>
 						        	<th scope="col">번호</th>
-						            <th scope="col">컨텐츠코드</th>
+						            <th scope="col">미디어ID</th>
 						            <th scope="col">프로그램명</th>
 						            <th scope="col">감독명</th>
 						            <th scope="col">출연진</th>
 						            <th scope="col">채널</th>
-						            <th scope="col">제작사</th>
 						            <th scope="col">방송시작년도</th>
-						            <th scope="col">방송횟수</th>
 						            <th scope="col">시청등급</th>
 						            <th scope="col" class="text-center">기타</th>
 						        </tr>
@@ -121,9 +119,7 @@
 							    		<td>${item.director}</td>
 							    		<td>${item.actor}</td>
 							    		<td>${item.channel}</td>
-							    		<td>${item.producer}</td>
 							    		<td>${item.period}</td>
-							    		<td>${item.episode}부작</td>
 							    		<td>${item.ratingGrade}</td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/tv/view.do?media_id=${item.mediaId}" title="상세보기">
@@ -138,7 +134,7 @@
 						    	</c:when>
 						    	<c:otherwise>
 							    	<tr>
-										<td colspan="11" class="text-center">데이터가 없습니다.</td>
+										<td colspan="9" class="text-center">데이터가 없습니다.</td>
 									</tr>
 						    	</c:otherwise>
 						    </c:choose>

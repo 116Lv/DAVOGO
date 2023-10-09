@@ -5,25 +5,23 @@
 
 	<select id="findCodeList" resultType="EgovMap">
 		select
-			row_number() over(order by code desc) as num, a.*
+			row_number() over() as num, a.*
 		from (
 			select *			
 			from code
 			where 1=1
-			<!-- <if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-			and media_name like concat('%', #{searchText}, '%')
-			</if> -->
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and code_name like concat('%', #{searchText}, '%')
+			</if>
 			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
 			order by 
 				<choose>
-					<when test='"num".equals(orderColumn)'><!-- 번호 -->
+					<when test='"code".equals(orderColumn)'><!-- 번호 -->
 						code ${orderType}
 					</when>
-					<!-- 
-					<when test='"REG_DT".equals(orderColumn)'>
-						reg_dt ${orderType}
+					<when test='"code_name".equals(orderColumn)'>
+						code_name ${orderType}
 					</when>
-					 -->
 					<otherwise>
 						code desc
 					</otherwise>
@@ -38,7 +36,7 @@
 		from code
 		where 1=1
 		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-		and media_name like concat('%', #{searchText}, '%')
+		and code_name like concat('%', #{searchText}, '%')
 		</if>
 	</select>
 	
