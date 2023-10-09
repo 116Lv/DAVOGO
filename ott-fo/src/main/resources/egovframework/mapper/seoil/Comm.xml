@@ -165,8 +165,10 @@
 			world
 		where
 			comm_id = #{commId}
-		order by
-			total_cnt desc limit 2
+		order by total_cnt desc 
+		<if test="@portal.common.util.StringUtil@notEmpty(limit)">
+		limit ${limit}
+		</if>
 	</select>
 
 	<select id="getUserVoteInfo" resultType="egovMap">

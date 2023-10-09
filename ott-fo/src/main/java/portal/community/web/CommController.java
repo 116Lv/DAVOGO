@@ -57,7 +57,13 @@ public class CommController {
 	}
 	
 	@RequestMapping("/comm/worldImage.do")
-	public String worldImagePage() {
+	public String worldImagePage(@RequestParam Map params, Model model) {
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		params.put("writer", loginUser.getEmailId());
+		
+		List<Map> imageList = commService.getWorldImages(params);
+		
+		model.addAttribute("imageList", imageList);
 		
 		return "/community/world/commWorldImage";
 	}

@@ -45,4 +45,6 @@ public interface CommService {
 
 	public void saveResultUserInfo(Map params);
 
+	public List<Map> getWorldImages(Map params);
+
 }

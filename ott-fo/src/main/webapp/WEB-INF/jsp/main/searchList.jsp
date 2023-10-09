@@ -15,7 +15,14 @@
 				<c:forEach var="item" items="${searchList}">
 					<div class="col-md-15">
 						<div class="card my-3">
-							<a class="text-dark" href="<c:url value="/tv/contents.do?media_id=${item.mediaId}"/>">
+							<c:choose>
+								<c:when test="${item.mediaDiv == '1'}">
+									<a class="text-dark" href="<c:url value="/movie/contents.do?media_id=${item.mediaId}"/>">
+								</c:when>
+								<c:otherwise>
+									<a class="text-dark" href="<c:url value="/tv/contents.do?media_id=${item.mediaId}"/>">
+								</c:otherwise>
+							</c:choose>
 								<img class="card-img-top" src="${item.imgSrc}" alt="${item.mediaName}" onerror="this.src='/images/no-img.jpg';"/>
 								<div class="card-body px-10 py-10">
 									<h5 class="card-title font15 my-0 text-truncate" title="${item.mediaName}">${item.mediaName}</h5>

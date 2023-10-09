@@ -38,6 +38,7 @@ public class CommServiceImpl implements CommService{
 				
 			//월드컵
 			} else if (commDiv == 2) {
+				map.put("limit", 2);
 				map.put("items", commMapper.getWorldImages(map));
 			}
 			
@@ -235,6 +236,11 @@ public class CommServiceImpl implements CommService{
 	@Override
 	public void saveResultUserInfo(Map params) {
 		commMapper.saveResultUserInfo(params);
+	}
+
+	@Override
+	public List<Map> getWorldImages(Map params) {
+		return commMapper.getWorldImages(params);
 	}
 	
 }

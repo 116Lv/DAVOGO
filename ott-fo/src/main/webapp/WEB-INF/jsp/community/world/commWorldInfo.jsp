@@ -11,8 +11,8 @@
 		<div class="btn-group" role="group" aria-label="Basic example">
 			<%-- <button type="button" class="btn btn-secondary <c:if test="${empty params || params.status == 'info'}"> active</c:if>" type="status" status="info" onclick="<c:url value="/comm/worldInfo.do"/>">1. 기본정보 수정 / 이미지 업로드</button>
 	  		<button type="button" class="btn btn-secondary <c:if test="${params.status == 'image'}"> active</c:if>" type="status" status="image" onclick="<c:url value="/comm/worldImage.do"/>">2. 이미지 이름 수정 / 삭제</button> --%>
-			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${empty params || params.status == 'info'}"> active</c:if>" type="status" status="info" href="<c:url value="/comm/worldInfo.do"/>">1. 기본정보 수정 / 이미지 업로드</a>
-			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${params.status == 'image'}"> active</c:if>" type="status" status="image" href="<c:url value="/comm/worldImage.do"/>">2. 이미지 이름 수정 / 삭제</a>
+			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${empty params || params.status == 'info'}"> active</c:if>" type="status" status="info" href="<c:url value="/comm/worldInfo.do"/>?comm_id=${params.comm_id}">1. 기본정보 수정 / 이미지 업로드</a>
+			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${params.status == 'image'}"> active</c:if>" type="status" status="image" href="<c:url value="/comm/worldImage.do"/>?commId=${params.comm_id}">2. 이미지 이름 수정 / 삭제</a>
 		</div>
 </div>
 </div>	
