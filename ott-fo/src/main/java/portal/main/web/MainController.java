@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import portal.common.cmm.EgovUserDetailsHelper;
 import portal.main.service.MainService;
 import portal.media.service.TvService;
+import portal.user.vo.UserVO;
 
 /**
  * 메인화면
@@ -30,9 +32,19 @@ public class MainController {
 	private MainService mainService;
 	
 	@RequestMapping("/main.do")
-	public String mainPage(Model model) {
+	public String mainPage(@RequestParam Map params, Model model) {
 		
 		logger.debug("메인화면으로 이동");
+		
+		if (EgovUserDetailsHelper.isAuthenticated()) {
+			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			params.put("loginEmailId", loginUser.getEmailId());
+		}
+		
+		List<Map> communityList = mainService.getCommunityList(params);
+		
+		model.addAttribute("list", communityList);
+		model.addAttribute("params", params);
 		
 		//표시할 카테고리 조회
 		List<Map> categoryList = mainService.getCategoryList();

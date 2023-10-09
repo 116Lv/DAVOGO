@@ -3,24 +3,47 @@
 
 <mapper namespace="portal.media.mapper.MovieMapper">
 	<select id="getMovieInfoList" resultType="EgovMap">
-	
-	</select>
-	
-	<select id="getContent" resultType="EgovMap">
-	
-	</select>
-	
-	<select id="getImage" resultType="EgovMap">
-	
+		select
+			m.*, 
+			w.img_src
+		from
+			media m
+			left join watcha w
+			on m.media_id = w.media_id
+		where
+			1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(genre)">
+			and m.genre like concat('%', #{genre}, '%')
+			</if>
+			and m.media_div = #{mediaDiv}
+		order by m.update_date desc, m.save_date desc, m.rank, m.open_date desc
 	</select>
 	
 	<select id="getCommentList" resultType="EgovMap">
 		select
-			*,
-			count(*) as total
+			*
 		from
 			media_comment
 		where
 			media_id = #{media_id}
 	</select>
+	
+	<insert id="saveMediaComment">
+		insert into media_comment
+		(
+			media_id,
+			writer,
+			content,
+			assess_rate,
+			save_date
+		)
+		values
+		(
+			#{media_id},
+			#{writer},
+			#{content},
+			#{assess_rate},
+			date_format(now(), '%Y%m%d%H%i%s')
+		)
+	</insert>
 </mapper>

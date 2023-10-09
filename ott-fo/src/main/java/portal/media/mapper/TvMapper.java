@@ -20,7 +20,7 @@ public interface TvMapper {
 
 	public List<Map> getCommentList(Map params);
 
-	public void saveComment(Map params);
+	public void saveMediaComment(Map params);
 
 
 	

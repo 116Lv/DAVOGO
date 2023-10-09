@@ -46,8 +46,8 @@ public class TvServiceImpl implements TvService{
 	}
 
 	@Override
-	public void saveComment(Map params) {
-		tvMapper.saveComment(params);
+	public void saveMediaComment(Map params) {
+		tvMapper.saveMediaComment(params);
 	}
 
 	

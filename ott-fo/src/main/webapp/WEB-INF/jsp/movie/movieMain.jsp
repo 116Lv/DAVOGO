@@ -31,7 +31,7 @@
 			<c:forEach var="item" items="${list}" varStatus="status">
 				<div class="col-md-15">
 					<div class="card my-3">
-						<a class="text-dark" href="${item.mediaHref}">
+						<a class="text-dark" href="<c:url value="/movie/contents.do?media_id=${item.mediaId}"/>">
 							<img class="card-img-top" src="${item.imgSrc}" alt="${item.mediaName}" onerror="this.src='/images/no-img.jpg';"/>
 							<div class="card-body px-10 py-10">
 								<h5 class="card-title font15 mt-0 text-truncate" title="${item.mediaName}">${item.mediaName}</h5>
@@ -44,7 +44,7 @@
 											<fmt:formatNumber type="number" value="${num}" maxFractionDigits="1" />만명
 										</c:when>
 										<c:otherwise>
-											<fmt:formatNumber type="number" value="${item.audiAcc}"/>
+											<fmt:formatNumber type="number" value="${item.audiAcc}"/>명
 										</c:otherwise>
 									</c:choose>
 								</div>

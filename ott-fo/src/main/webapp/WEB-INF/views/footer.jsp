@@ -6,9 +6,9 @@
 
 <!--Start of footer-->
 <section id="footer">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-6">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-md-3">
                 <div class="copyright">
                     <script>document.write(new Date().getFullYear())</script> © Davogo. All RIGHTS RESERVED.
                 </div>

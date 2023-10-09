@@ -13,4 +13,6 @@ public interface MovieService {
 
 	public List<Map> getCommentList(Map params);
 
+	public void saveMediaComment(Map params);
+
 }

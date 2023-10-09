@@ -15,4 +15,7 @@ public interface MainMapper {
 	public List<Map> getContentSearchList(Map params);
 
 	public List<Map> getMainMovieList();
+
+	public List<Map> getCommunityList(Map params);
+
 }

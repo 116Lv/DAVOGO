@@ -77,5 +77,61 @@
 		order by m.update_date desc, m.save_date desc, m.rank, m.open_date desc
 		limit 0, 10
 	</select>
-
+	
+	<select id="getCommunityList" resultType="EgovMap">
+		select
+			comm_id,
+			comm_div,
+			writer,
+			title,
+			content,
+			like_cnt,
+			dislike_cnt,
+			(
+				case comm_div 
+					when '1' 
+					then (
+						select 
+							case count(*) when 0 then 'false' else 'true' end
+						from 
+							vote v, vote_user u
+						where v.comm_id = c.comm_id
+						and v.vote_id = u.vote_id
+						and u.email_id = #{loginEmailId}
+						)
+					when '2' then 'false'
+				end
+			) as user_selected,
+			(
+				select 
+					case count(*) when 0 then 'false' else 'true' end 
+				from community_like_user b
+				where b.comm_id = c.comm_id
+				and b.email_id = #{loginEmailId}
+				and b.like_type = 'like'
+			) as user_liked,
+			(
+				select 
+					case count(*) when 0 then 'false' else 'true' end 
+				from community_like_user b
+				where b.comm_id = c.comm_id
+				and b.email_id = #{loginEmailId}
+				and b.like_type = 'dislike'
+			) as user_disliked,
+			(
+				select
+					count(*)
+				from comment a
+				where a.comm_id = c.comm_id
+			) as comment_cnt
+		from
+			community c
+		where
+			(title != null or title != '')
+			and dislike_cnt &lt;= 20
+		order by 
+			like_cnt desc 
+		limit 4
+	</select>
+	
 </mapper>

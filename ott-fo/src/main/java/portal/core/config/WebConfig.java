@@ -65,7 +65,8 @@ public class WebConfig implements WebMvcConfigurer {
 	        		"/signUp.do",
 	        		"/register.do",
 	        		"/tv/contents.do",
-	        		"/tv/category.do"
+	        		"/tv/category.do",
+	        		"/movie/contents.do"
 	        		);
     }
     

@@ -103,7 +103,7 @@ public class TvController {
 	@RequestMapping("/tv/saveMediaComment.do")
 	public String saveComment(@RequestParam Map params, Model model) {
 		try {
-			tvService.saveComment(params);
+			tvService.saveMediaComment(params);
 			model.addAttribute("resultCode", "success");
 		} catch (Exception e) {
 			model.addAttribute("resultCode", "fail");

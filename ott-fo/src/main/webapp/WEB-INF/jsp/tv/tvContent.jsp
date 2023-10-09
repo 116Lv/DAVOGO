@@ -33,26 +33,48 @@
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>
 		<div class="row text-center">
-			<div class="col-4">
-				<div>평균 별점</div>
-				<h4 class="py-4" style="height: 60px;">4.0</h4>
-			</div>
-			<div class="col-4">
-				<div>평가하기</div>
-				<input class="rating" id="assess_rate" name="assess_rate" value="${item.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
-			</div>
-			<div class="col-4">
-				<!-- <div class="col">
-					<i class="uil uil-plus">보고싶어요</i>
-				</div> -->
-				<div>코멘트</div>
-				<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
-					<i class="uil uil-pen"></i>
-				</div>
-				<!-- <div class="col">
-					<i class="uil uil-eye">보는중</i>
-				</div> -->
-			</div>
+			<c:choose>
+				<c:when test="${not empty content.avgPoint}">
+					<div class="col-4">
+						<div>평균 별점</div>
+						<h4 class="py-4" style="height: 60px;">${content.avgPoint}</h4>
+					</div>
+					<div class="col-4">
+						<div>평가하기</div>
+						<input class="rating" id="assess_rate" name="assess_rate" value="${content.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
+					</div>
+					<div class="col-4">
+						<!-- <div class="col">
+							<i class="uil uil-plus">보고싶어요</i>
+						</div> -->
+						<div>코멘트</div>
+						<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
+							<i class="uil uil-pen"></i>
+						</div>
+						<!-- <div class="col">
+							<i class="uil uil-eye">보는중</i>
+						</div> -->
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="col-6">
+						<div>평가하기</div>
+						<input class="rating" id="assess_rate" name="assess_rate" value="${content.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
+					</div>
+					<div class="col-6">
+						<!-- <div class="col">
+							<i class="uil uil-plus">보고싶어요</i>
+						</div> -->
+						<div>코멘트</div>
+						<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
+							<i class="uil uil-pen">작성</i>
+						</div>
+						<!-- <div class="col">
+							<i class="uil uil-eye">보는중</i>
+						</div> -->
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<hr class="mt-0" />
 		<div class="row">
@@ -183,6 +205,10 @@
 			},
 		});
 	</script>
+	
+	<script>
+		$("#assess_rate").removeClass('rating-loading').addClass('rating-loading').rating();
+	</script>
 </div>
 
 <!-- 미디어 평가 모달창 -->
@@ -208,3 +234,4 @@
 
 <!-- js파일 임포트 -->
 <script src="<c:url value="/js/davogo/tv.js"/>"></script>
+
