@@ -182,8 +182,11 @@ public class CommServiceImpl implements CommService{
 		
 		String thumbFullFileName = fullPath + FileUtil.separator + thumbFileName;
 		
-		FileUtil.createThumbnail(fullFileName, thumbFullFileName, 400);
-		
+		try {
+			FileUtil.createThumbnail(fullFileName, thumbFullFileName, 400);
+		} catch (Exception e) {
+			thumbFileName = fileName;
+		}
 		params.put("fullPath", fullPath);
 		params.put("fname", fileName);
 		params.put("tname", thumbFileName);
