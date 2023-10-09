@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -157,6 +158,12 @@ public class CommController {
 	@RequestMapping("/comm/saveComment.do")
 	public String saveComment(@RequestParam Map params, Model model) {
 		try {
+			String writer = (String) params.get("writer");
+			if (StringUtils.isBlank(writer)) {
+				UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+				params.put("writer", loginUser.getEmailId());
+			}
+			
 			commService.saveComment(params);
 			
 			model.addAttribute("resultCode", "success");

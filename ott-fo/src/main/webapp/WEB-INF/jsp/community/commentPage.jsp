@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 
-<form id="commentForm" name="commentForm" action="/comm/comment.do" method="POST">
+<form id="commentForm" name="commentForm" method="POST">
 	<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
 	<input type="hidden" id="comm_id" name="comm_id" value="${params.commId}">
 

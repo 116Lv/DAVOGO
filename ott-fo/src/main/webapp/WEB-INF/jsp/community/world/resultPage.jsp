@@ -22,39 +22,57 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-6 pr-0 py-1">
+	<div class="col-lg-6 pr-0 py-3">
 		<p>
-			<button type="button" id="restart" class="btn btn-lg"><i class="uil uil-refresh"></i> 다시하기</button>
-			<button type="button" id="home" class="btn btn-lg"><i class="uil uil-trophy"></i> 다른 월드컵보기</button>
+			<a href="/comm/world/play/playWorld.do?comm_id=${imageInfo.commId}" class="btn btn-outline-secondary text-dark"><i class="uil uil-refresh"></i> 다시하기</a>
+			<a href="/comm.do?comm_div=2" class="btn btn-outline-secondary text-dark"><i class="uil uil-trophy"></i> 다른 월드컵보기</a>
 		</p>
 		<div class="row mx-0 mt-2">
 <%-- 			<h5>사용자 의견 (${})</h5> --%>
 			<div class="col pl-0">
 				<div class="social-box">
 					<div class="social-inner-box">
-						<form id="commentForm" action="/comm/world/play/comment.do" method="POST" class="form-horizontal">
+						<form id="commentForm" name="commentForm" method="POST" class="form-horizontal">
 							<input type="hidden" name="comm_id" value="${imageInfo.commId}">
 							<input type="hidden" name="world_id" value="${imageInfo.worldId}">
 							<div class="mb-3">
 								<label class="form-label">닉네임</label>
-								<input type="text" class="form-control" placeholder="${params.loginEmailId}">
+								<input type="text" class="form-control" name="writer" placeholder="${params.loginEmailId}">
 							</div>
 							<div class="mb-3">
 								<label class="form-label">한마디 남기기</label>
-								<textarea class="form-control" rows="4"></textarea>
+								<textarea name="comment" class="form-control" rows="4" required></textarea>
 							</div>
 							<button type="submit" class="btn btn-secondary"><i class="uil uil-pen"></i>저장하기</button>
 						</form>
-	<%-- 					<c:if test=""> --%>
-	<%-- 						<c:forEach var="" items="${}"> --%>
-	<!-- 							<div class="social-comment"> -->
-									
-	<!-- 							</div> -->
-	<%-- 						</c:forEach> --%>
-	<%-- 					</c:if> --%>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#commentForm").on('submit', function(event) {
+		$.ajax({
+			type : "post",
+			url  : "/comm/saveComment.do",
+			data : $("#commentForm").serialize(),
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            alert("작성되었습니다.");
+				location.href = "/comm.do?comm_div=2";
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
+});
+</script>
