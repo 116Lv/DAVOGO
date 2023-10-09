@@ -168,7 +168,7 @@ public class CommServiceImpl implements CommService{
 		String fileExt = orgFileName.substring(orgFileName.lastIndexOf(".") + 1).toLowerCase();
 		
 		//String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS);
-		String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMSS) + new Random().nextInt(100);
+		String prefixFileName = DateUtil.getCurrentDate(DateUtil.YMDHMS) + new Random().nextInt(1000);
 		
 		String savePath = "community/world/";
 		

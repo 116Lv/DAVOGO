@@ -21,6 +21,7 @@ public class DateUtil {
 
 	public static final String YMD = "yyyyMMdd";
 	public static final String YMDHM = "yyyyMMddHHmm";
+	public static final String YMDHMS = "yyyyMMddHHmmss";
 	public static final String YMDHMSS = "yyyyMMddHHmmssSSS";
 	
 	
