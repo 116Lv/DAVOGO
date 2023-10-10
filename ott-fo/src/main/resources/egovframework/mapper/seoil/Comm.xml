@@ -304,10 +304,16 @@
 		from 
 			community
 		where 
-			comm_id = #{comm_id}
+			1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(comm_id)">
+			and comm_id = #{comm_id}
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(commId)">
+			and comm_id = #{commId}
+			</if>
 	</select>
 	
-	<update id="insertWorldInfo">
+	<update id="updateWorldInfo">
 		update
 			community
 		set
@@ -342,6 +348,9 @@
 	</insert>
 	
 	<insert id="insertWorldImage">
+		<selectKey keyProperty="worldId" resultType="int" order="AFTER">
+			select last_insert_id()
+		</selectKey>
 		insert into world
 		(
 			comm_id,
@@ -360,9 +369,23 @@
 			#{fname},
 			#{tname},
 			#{orgFile},
-			date_format(now(), '%Y%m%d')
+			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>
+	
+	<update id="updateWorldImage">
+		update 
+			world
+		set
+			item = #{item}
+			, update_date = date_format(now(), '%Y%m%d%H%i%s')
+		where world_id = #{worldId}
+	</update>
+	
+	<delete id="deleteWorldImage">
+		delete from world
+		where world_id = #{delWorldId}
+	</delete>
 
 	<update id="updateCommunityForLike">
 		update community a

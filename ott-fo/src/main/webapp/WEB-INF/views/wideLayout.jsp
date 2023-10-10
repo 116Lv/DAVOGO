@@ -12,12 +12,9 @@
 
 	<script>
 		var contextPath = "${pageContext.request.contextPath}";
-		var replaceSrc = '<spring:eval expression="@environment.getProperty('
-		file.replaceSrc
-		')"></spring:eval>';
-		var replaceTrg = '<spring:eval expression="@environment.getProperty('
-		file.replaceTrg
-		')"></spring:eval>';
+		var replaceSrc = '<spring:eval expression="@environment.getProperty('file.replaceSrc')"></spring:eval>';
+		var replaceTrg = '<spring:eval expression="@environment.getProperty('file.replaceTrg')"></spring:eval>';
+		var isLogin = ${not empty loginUser};
 	</script>
 
 	<!-- Begin page -->

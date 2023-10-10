@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -157,8 +158,21 @@ public class CommServiceImpl implements CommService{
 	}
 
 	@Override
-	public void insertWorldInfo(Map params) {
-		commMapper.insertWorldInfo(params);
+	public void saveWorldInfo(Map params) {
+		commMapper.updateWorldInfo(params);
+		
+		String delFileNos = (String) params.get("delFileNos");
+		if (StringUtils.isNotBlank(delFileNos)) {
+			String [] fileNos = delFileNos.split(",");
+			
+			for (String fileNo : fileNos) {
+				params.put("delWorldId", fileNo);
+
+				//TODO 물리 파일 삭제도 해야함.
+				
+				commMapper.deleteWorldImage(params);
+			}
+		}
 	}
 
 	@Override
@@ -241,6 +255,38 @@ public class CommServiceImpl implements CommService{
 	@Override
 	public List<Map> getWorldImages(Map params) {
 		return commMapper.getWorldImages(params);
+	}
+
+	@Override
+	public void saveImageName(Map params) {
+		
+		String[] worldIds = (String[]) params.get("worldIds");
+		String[] items = (String[]) params.get("items");
+		
+		if (worldIds != null && worldIds.length > 0) {
+			for (int i=0; i < worldIds.length; i++) {
+				
+				params.put("worldId", worldIds[i]);
+				params.put("item", items[i]);
+				
+				commMapper.updateWorldImage(params);
+			}
+		}
+		
+		String delFileNos = (String) params.get("delFileNos");
+		if (StringUtils.isNotBlank(delFileNos)) {
+			String [] fileNos = delFileNos.split(",");
+			
+			for (String fileNo : fileNos) {
+				params.put("delWorldId", fileNo);
+
+				//TODO 물리 파일 삭제도 해야함.
+				
+				commMapper.deleteWorldImage(params);
+			}
+		}
+		
+		
 	}
 	
 }

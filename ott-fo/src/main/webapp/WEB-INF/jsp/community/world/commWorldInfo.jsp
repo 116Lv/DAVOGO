@@ -10,10 +10,10 @@
 	<div class="col-lg-12">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a class="nav-link active" id="basic-tab" href="#basic" data-toggle="tab" data-target="#basic" data-url="/comm/worldBasic.do">1. 기본정보 수정 / 이미지 업로드</a>
+				<a class="nav-link active" id="basic-tab" href="#basic" data-toggle="tab" data-target="#basic" data-url="/comm/worldBasicWrite.do">1. 기본정보 수정 / 이미지 업로드</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="image-tab" href="#image" data-toggle="tab" data-target="#image" data-url="/comm/worldImage.do">2. 이미지 이름 수정 / 삭제</a>
+				<a class="nav-link" id="image-tab" href="#image" data-toggle="tab" data-target="#image" data-url="/comm/worldImageWrite.do">2. 이미지 이름 수정 / 삭제</a>
 			</li>
 		</ul>
 		
@@ -51,7 +51,7 @@ function loadPage(targetObj) {
 	$.ajax({
 		type : "post",
 		url  : url,
-		data : { comm_id : '${params.comm_id}'},
+		data : { commId : '${params.comm_id}'},
 		dataType : "html",
 		success: function(result){
 			var targetDiv = targetObj.data("target");

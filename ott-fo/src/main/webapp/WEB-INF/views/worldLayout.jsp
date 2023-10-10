@@ -47,6 +47,7 @@
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+	
 	<!-- Custom JavaScript-->
 	<script src="<c:url value="/js/main.js"/>"></script>
 </body>

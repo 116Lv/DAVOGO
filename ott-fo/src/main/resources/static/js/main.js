@@ -23,3 +23,8 @@ $(document).ready(function() {
 	});
 	
 });
+
+function fileUrl(name) {
+	if (!name) return contextPath + "/images/attach-noimg.png";
+	return name.replace(replaceSrc, replaceTrg);
+}

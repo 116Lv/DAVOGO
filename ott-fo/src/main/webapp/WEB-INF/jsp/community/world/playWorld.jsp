@@ -63,12 +63,6 @@ $(document).ready(function() {
 			chooseMatch();
 		}
 		
-		if ($(this).hasClass("right")) {
-			$(".left").animate({
-				width: 0
-			}, 1500);
-		}
-		
 	});
 });
 

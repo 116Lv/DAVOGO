@@ -61,6 +61,7 @@ public class CommController {
 		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		params.put("writer", loginUser.getEmailId());
 		
+		//월드컵 게시글 comm_id를 따기 위해 insert를 수행하여 리턴
 		commService.insertWorld(params);
 		
 		model.addAttribute("params", params);
@@ -70,39 +71,63 @@ public class CommController {
 
 	/**
 	 * 월드컵 작성화면에서 '기본정보 수정' tab 화면
-	 * @param params
+	 * @param params- commId: 커뮤니티id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/comm/worldBasic.do")
+	@RequestMapping("/comm/worldBasicWrite.do")
 	public String worldBasicPage(@RequestParam Map params, Model model) {
 		
 		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		params.put("writer", loginUser.getEmailId());
 		
+		//월드컵 게시글 기본 정보 조회
 		Map worldInfo = commService.getWorldInfo(params);
-		
 		model.addAttribute("item", worldInfo);
-		
+
 		return "/simple/community/world/worldBasicWrite";
 	}
 	
 	/**
 	 * 월드컵 작성화면에서 '이미지 이름 수정/삭제' tab 화면
+	 * @param params- commId: 커뮤니티id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/comm/worldImageWrite.do")
+	public String worldImagePage(@RequestParam Map params, Model model) {
+		
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		params.put("writer", loginUser.getEmailId());
+		
+		//업로드된 이미지 조회
+		List<Map> imageList = commService.getWorldImages(params);
+		model.addAttribute("fileList", imageList);
+		model.addAttribute("params", params);
+		
+		return "/simple/community/world/worldImageWrite";
+	}
+	
+	/**
+	 * 월드컵 이미지 조회
 	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/comm/worldImage.do")
-	public String worldImagePage(@RequestParam Map params, Model model) {
-		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		params.put("writer", loginUser.getEmailId());
+	@RequestMapping("/comm/worldImageFiles.do")
+	public String getWorldImageFiles(@RequestParam Map params, Model model) {
 		
-		List<Map> imageList = commService.getWorldImages(params);
-		
-		model.addAttribute("imageList", imageList);
-		
-		return "/simple/community/world/worldImageWrite";
+		try {
+			List<Map> imageList = commService.getWorldImages(params);
+			model.addAttribute("fileList", imageList);
+			
+			model.addAttribute("resultCode", "success");
+			
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	/**
@@ -114,9 +139,16 @@ public class CommController {
 	@RequestMapping("/comm/saveInfo.do")
 	public String insertInfo(@RequestParam Map params, Model model) {
 		
-		commService.insertWorldInfo(params);
+		try {
+			commService.saveWorldInfo(params);
 		
-		return "redirect:/comm.do";
+			model.addAttribute("resultCode", "success");
+			
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	/**
@@ -133,15 +165,43 @@ public class CommController {
 		
 		try {
 			commService.insertWorldImage(params, file);
+			
+			model.addAttribute("resultCode", "success");
+			
 		} catch (IOException e) {
-			model.addAttribute("message", "파일 저장 중 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
-			model.addAttribute("item", params);
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", "파일 저장 중 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
 			
 		} catch (Exception e) {
-			model.addAttribute("message", "오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
-			model.addAttribute("item", params);
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", "오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
 		}
+		model.addAttribute("item", params);
 		
+		return Constants.VIEW_NAME_JSON;
+	}
+	
+	/**
+	 * 월드컵 이미지 이름 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/comm/saveImageName.do")
+	public String saveImageName(@RequestParam Map params, @RequestParam("item") String[] items, 
+			@RequestParam("worldId") String[] worldIds, Model model) {
+		
+		try {
+			params.put("items", items);
+			params.put("worldIds", worldIds);
+			commService.saveImageName(params);
+			
+			model.addAttribute("resultCode", "success");
+			
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
 		return Constants.VIEW_NAME_JSON;
 	}
 	

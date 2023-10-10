@@ -46,7 +46,7 @@ public interface CommMapper {
 
 	public Map getWorldInfo(Map params);
 	
-	public void insertWorldInfo(Map params);
+	public void updateWorldInfo(Map params);
 
 	public void insertWorld(Map params);
 
@@ -65,5 +65,9 @@ public interface CommMapper {
 	public void saveResult(Map params);
 
 	public void saveResultUserInfo(Map params);
+	
+	public void updateWorldImage(Map params);
+	
+	public void deleteWorldImage(Map params);
 
 }

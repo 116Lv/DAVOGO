@@ -25,7 +25,7 @@ public interface CommService {
 
 	public void saveLike(Map params);
 
-	public void insertWorldInfo(Map params);
+	public void saveWorldInfo(Map params);
 
 	public void insertWorldImage(Map params, MultipartFile file) throws Exception;
 
@@ -46,5 +46,7 @@ public interface CommService {
 	public void saveResultUserInfo(Map params);
 
 	public List<Map> getWorldImages(Map params);
+
+	public void saveImageName(Map params);
 
 }
