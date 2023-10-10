@@ -8,73 +8,55 @@
 <!-- 기본정보탭 & 이미지이름수정/삭제탭 -->
 <div class="row mt-2">
 	<div class="col-lg-12">
-		<div class="btn-group" role="group" aria-label="Basic example">
-			<%-- <button type="button" class="btn btn-secondary <c:if test="${empty params || params.status == 'info'}"> active</c:if>" type="status" status="info" onclick="<c:url value="/comm/worldInfo.do"/>">1. 기본정보 수정 / 이미지 업로드</button>
-	  		<button type="button" class="btn btn-secondary <c:if test="${params.status == 'image'}"> active</c:if>" type="status" status="image" onclick="<c:url value="/comm/worldImage.do"/>">2. 이미지 이름 수정 / 삭제</button> --%>
-			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${empty params || params.status == 'info'}"> active</c:if>" type="status" status="info" href="<c:url value="/comm/worldInfo.do"/>?comm_id=${params.comm_id}">1. 기본정보 수정 / 이미지 업로드</a>
-			<a class="nav-item nav-link btn btn-outline-secondary mx-1 <c:if test="${params.status == 'image'}"> active</c:if>" type="status" status="image" href="<c:url value="/comm/worldImage.do"/>?commId=${params.comm_id}">2. 이미지 이름 수정 / 삭제</a>
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" id="basic-tab" href="#basic" data-toggle="tab" data-target="#basic" data-url="/comm/worldBasic.do">1. 기본정보 수정 / 이미지 업로드</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="image-tab" href="#image" data-toggle="tab" data-target="#image" data-url="/comm/worldImage.do">2. 이미지 이름 수정 / 삭제</a>
+			</li>
+		</ul>
+		
+		<div class="tab-content">
+			<%-- 1. 기본정보 수정 / 이미지 업로드 --%>
+			<div class="tab-pane active" id="basic">
+			
+			</div>
+			
+			<%-- 2. 이미지 이름 수정 / 삭제 --%>
+			<div class="tab-pane" id="image">
+			
+			</div>
 		</div>
-</div>
+	</div>
 </div>	
 	
-<!-- 기본정보 -->
-<div class="row mt-1">
-	<div class="col-lg-12">
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title">이상형 월드컵 기본정보</h5>
-				<hr>
-				<p class="card-text">
-					<form id="worldForm" name="worldForm" action="/comm/saveInfo.do" method="POST">
-						<input type="hidden" id="writer" name="writer" value="${loginUser.emailId}">
-						<input type="hidden" name="comm_id" value="${params.comm_id}">
-						<div class="form-group row">
-							<div class="col-sm-1 text-center">
-								<label class="control-label">제목</label>
-							</div>
-							<div class="col-sm-11">
-								<input class="form-control" type="text" name="title" id="title" value="${item.title}" placeholder="이상형 월드컵의 제목을 입력하세요." />
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-sm-1 text-center">
-								<label class="control-label">설명</label>
-							</div>
-							<div class="col-sm-11">
-								<input class="form-control" type="text" name="content" id="content" value="${item.content}" placeholder="설명, 하고싶은 말 등을 자유롭게 적으세요." />
-							</div>
-						</div>
-						<div class="form-group row">
-							<button type="submit" id="worldForm_submit">저장하기</button> 
-						</div>
-					</form>
-				</p>
-			</div>
-		</div>
-	</div>
-</div>
-	<div class="row my-2">
-		<div class="col-lg-12">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">이상형 월드컵 이미지 업로드 (※ 음란물 등록시 임의로 삭제되며, 관련 법률에 의하여 처벌받을 수 있습니다.)</h5>
-					<hr>
-					<p class="card-text">
-						<form class="dropzone dz-clickable" id="worldFormImage" action="/comm/saveImage.do">
-							<input type="hidden" name="comm_id" value="${params.comm_id}">
-							<div class="dz-default dz-message">
-								<span>
-									<strong>
-										Drop files here or click to upload.
-										<br>
-										여기 파일을 놓거나 클릭하여 업로드하세요.
-									</strong>
-								</span>
-							</div>
-						</form>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//선택된 tab의 화면 load
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		loadPage($(e.target));
+	});
+
+	//기본탭 화면 load
+	loadPage($("#basic-tab"));
+	
+});
+
+//화면을 조회해서 target안에 넣어줌
+function loadPage(targetObj) {
+	var url = targetObj.data("url");
+	console.log(url);
+	$.ajax({
+		type : "post",
+		url  : url,
+		data : { comm_id : '${params.comm_id}'},
+		dataType : "html",
+		success: function(result){
+			var targetDiv = targetObj.data("target");
+			$(targetDiv).html(result);
+		}
+	});
+}
+</script>

@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import undetected_chromedriver as uc
@@ -37,19 +38,17 @@ driver = uc.Chrome(driver_executable_path=driver_exec_path, options=chrome_optio
 
 sql2 = "UPDATE media SET actor=%s, director=%s, author=%s, update_date=%s WHERE media_id=%s"
 
-for rows in href_list:
-    media_id = rows[0]
-    media_href = rows[1]
+actors= ''
+directors= ''
+authors= ''
+total_idx = 0
 
-    actors= ''
-    directors= ''
-    authors= ''
-
-    # 주소에 /overview붙이면 기본정보화면으로 감
-    driver.get(media_href)
-    print(media_href)
-    driver.implicitly_wait(20)
-    time.sleep(2)
+def collect_actor():
+    print("collect_actor()")
+    global actors
+    global directors
+    global authors
+    global total_idx
 
     li_list = driver.find_elements(By.XPATH, "//*[@id='content_credits']/div/div[1]/div/div/ul/li[*]")
     #li가 바뀌어야 사람이 바뀜
@@ -58,27 +57,9 @@ for rows in href_list:
 
     total_count = len(li_list)
 
-    if total_count == 12:
-        nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
-        nextBtn.click()
-        print("clicked")
-        driver.implicitly_wait(5)
-        time.sleep(1)
+    for idx in range(total_idx, total_count):
 
-    for idx in range(total_count):
-
-        if eeeeeeeeeee > 0:
-            try:
-                nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
-                nextBtn.click()
-                print("clicked")
-                driver.implicitly_wait(10)
-                time.sleep(1)
-            except:
-                print("next버튼 없음")
-                break
-
-        li = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[1]/div/div/ul/li[" + str(idx+1) + "]")
+        li = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[1]/div/div/ul/li[" + str(total_idx+1) + "]")
         name = li.find_element(By.XPATH, "a/div[2]/div[1]/div[1]").text
         
         role = li.find_element(By.XPATH, "a/div[2]/div[1]/div[2]").text
@@ -91,6 +72,56 @@ for rows in href_list:
             directors += name + "^"
         elif compare_role == "극본" or compare_role == "원작" or compare_role == "시리즈 구성":
             authors += name + "^"
+
+        total_idx += 1
+
+    driver.implicitly_wait(5)
+    time.sleep(2)
+
+    return
+
+def next_btn_click(no):
+    print("next_btn_click()")
+
+    try:
+        nextBtn = driver.find_element(By.XPATH, "//*[@id='content_credits']/div/div[5]/div")
+        for n in range(no):
+            nextBtn.click()
+            print("clicked")
+            driver.implicitly_wait(5)
+            time.sleep(2)
+
+        return True
+    except:
+        print("next버튼 없음")
+        return False
+
+for rows in href_list:
+    media_id = rows[0]
+    media_href = rows[1] + "#content_credits"
+
+    actors= ''
+    directors= ''
+    authors= ''
+    total_idx = 0
+
+    # 주소에 /overview붙이면 기본정보화면으로 감
+    driver.get(media_href)
+    print(media_href)
+    driver.implicitly_wait(20)
+    time.sleep(2)
+
+    collect_actor()
+    next_btn_click(2)
+    
+    collect_actor()
+
+    while True:
+        next = next_btn_click(1)
+        if next:
+            collect_actor()
+        else:
+            break
 
     now = datetime.now()
     update_date = now.strftime("%Y%m%d")

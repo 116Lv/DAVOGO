@@ -27,6 +27,12 @@ public class CommController {
 	@Autowired
 	private CommService commService;
 	
+	/**
+	 * 커뮤니티 메인 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm.do")
 	public String mainPage(@RequestParam Map params, Model model) {
 		
@@ -43,6 +49,12 @@ public class CommController {
 		return "/community/commMain";
 	}
 	
+	/**
+	 * 월드컵 작성 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/worldInfo.do")
 	public String worldPage(@RequestParam Map params, Model model) {
 		
@@ -55,7 +67,32 @@ public class CommController {
 		
 		return "/community/world/commWorldInfo";
 	}
+
+	/**
+	 * 월드컵 작성화면에서 '기본정보 수정' tab 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/comm/worldBasic.do")
+	public String worldBasicPage(@RequestParam Map params, Model model) {
+		
+		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		params.put("writer", loginUser.getEmailId());
+		
+		Map worldInfo = commService.getWorldInfo(params);
+		
+		model.addAttribute("item", worldInfo);
+		
+		return "/simple/community/world/worldBasicWrite";
+	}
 	
+	/**
+	 * 월드컵 작성화면에서 '이미지 이름 수정/삭제' tab 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/worldImage.do")
 	public String worldImagePage(@RequestParam Map params, Model model) {
 		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -65,9 +102,15 @@ public class CommController {
 		
 		model.addAttribute("imageList", imageList);
 		
-		return "/community/world/commWorldImage";
+		return "/simple/community/world/worldImageWrite";
 	}
 	
+	/**
+	 * 월드컵 기본 작성화면에서 기본정보 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/saveInfo.do")
 	public String insertInfo(@RequestParam Map params, Model model) {
 		
@@ -76,6 +119,13 @@ public class CommController {
 		return "redirect:/comm.do";
 	}
 	
+	/**
+	 * 월드컵 기본 작성화면에서 파일 업로드시 파일 저장
+	 * @param params
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/saveImage.do")
 	public String insertImage(@RequestParam Map<String, String> params, MultipartHttpServletRequest request, Model model) {
 		
@@ -95,6 +145,10 @@ public class CommController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	/**
+	 * 투표 작성 모달 화면
+	 * @return
+	 */
 	@RequestMapping("/comm/vote.do")
 	public String votePage() {
 		log.info("모달창 진입");
@@ -149,6 +203,12 @@ public class CommController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	/**
+	 * 커뮤니티 댓글 작성 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/comment.do")
 	public String commentPage(@RequestParam Map params, Model model) {
 		log.info("모달창 진입");
@@ -160,7 +220,12 @@ public class CommController {
 		return "/modal/community/commentPage";
 	}
 	
-//	댓글창에서 댓글달고 저장누른 경우
+	/**
+	 * 커뮤니티 댓글 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/saveComment.do")
 	public String saveComment(@RequestParam Map params, Model model) {
 		try {
@@ -182,6 +247,12 @@ public class CommController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	/**
+	 * 커뮤니티 댓글 삭제
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/deleteComment.do")
 	public String deleteComment(@RequestParam Map params, Model model) {
 		try {
@@ -218,6 +289,12 @@ public class CommController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	/**
+	 * 월드컵 참여 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/world/play/playWorld.do")
 	public String playWorld(@RequestParam Map params, Model model) {
 		
@@ -257,6 +334,12 @@ public class CommController {
 		return "redirect:/comm/world/play/viewResult.do";
 	}
 	
+	/**
+	 * 월드컵 참여 결과 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/comm/world/play/viewResult.do")
 	public String resultPage(@RequestParam Map params, Model model) {
 		

@@ -143,8 +143,8 @@
 						</div>
 					</c:when>
 					
-					
-					<c:when test="${comm.commDiv eq 2}">	<!-- 월드컵 -->
+					<%-- 월드컵 --%>
+					<c:when test="${comm.commDiv eq 2}">
 						<div class="card my-3" comm_id="${comm.commId}">
 							<a class="text-dark" href="/comm/world/play/playWorld.do?comm_id=${comm.commId}">
 								<div class="row">
