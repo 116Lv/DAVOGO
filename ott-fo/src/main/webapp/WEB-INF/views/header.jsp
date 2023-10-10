@@ -66,7 +66,7 @@
     <link href="<c:url value="/css/responsive.css"/>" rel="stylesheet">
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="<c:url value="/js/jquery-1.12.3.min.js"/>"></script>
+<%-- 	<script src="<c:url value="/js/jquery-1.12.3.min.js"/>"></script> --%>
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	

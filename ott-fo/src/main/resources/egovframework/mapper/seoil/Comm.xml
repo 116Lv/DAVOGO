@@ -19,7 +19,7 @@
 			#{comm_div},
 			#{writer},
 			#{title},
-			date_format(now(), '%Y%m%d')
+			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>
 	
@@ -343,7 +343,7 @@
 			#{writer},
 			"",
 			"",
-			date_format(now(), '%Y%m%d')
+			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>
 	

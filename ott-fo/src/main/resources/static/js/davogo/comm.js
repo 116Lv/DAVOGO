@@ -106,19 +106,21 @@ $(document).ready(function() {
 	//투표참여-클릭기능
 	$("[name=vote_id]").on("click", function(event) {
 		
-		if($(event.target).is(':checked')) {
+		var chkObj = $(event.target);
+		
+		if(chkObj.is(':checked')) {
 			//이미 선택된게 있는데 다른걸 체크한 경우 이전 선택한 것을 빼주는 로직
-			$(event.target).closest(".card").find("[name=vote_id]:checked").not(event.target).attr("checked", false);
+			chkObj.closest(".card").find("[name=vote_id]:checked").not(event.target).prop("checked", false);
 			
 			$.ajax({
 				type : "post",
 				url  : "/comm/clickVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).closest('.card').attr('comm_id') },
+				data : { voteId: chkObj.val(), commId: chkObj.closest('.card').attr('comm_id') },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
 		        		alert(result.resultMessage);
-						$(event.target).attr("checked", false);
+						chkObj.prop("checked", false);
 		                return;
 		        	}
 					
@@ -149,7 +151,7 @@ $(document).ready(function() {
 			$.ajax({
 				type : "post",
 				url  : "/comm/clickVote.do",
-				data : { voteId: $(event.target).val(), commId: $(event.target).closest('.card').attr('comm_id') },
+				data : { voteId: chkObj.val(), commId: chkObj.closest('.card').attr('comm_id') },
 				dataType : "json",
 				success: function(result) {
 					if (result.resultCode == 'fail') {
