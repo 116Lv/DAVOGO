@@ -240,7 +240,8 @@ $(document).ready(function() {
 					likeBtnObj.removeClass("btn-primary");
 					likeBtnObj.addClass("btn-light");
 					var cntObj = likeBtnObj.next();
-					cntObj.html(parseInt(cntObj.html()) - 1);
+					var likeCnt = parseInt(cntObj.html()) - 1;
+					cntObj.html(likeCnt < 0 ? 0 : likeCnt);
 				
 				//사용자가 싫어요를 취소한 경우
 				} else {

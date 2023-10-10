@@ -71,9 +71,17 @@
 			integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg=="
 			data-cf-beacon='{"rayId":"80bbf8bbefa3830a","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2023.8.0","si":100}'
 			crossorigin="anonymous"></script>
-	</body>
 
-	<footer class="footer footer-alt text-center">
-	    <script>document.write(new Date().getFullYear())</script> © DAVOGO. All RIGHTS RESERVED.
-	</footer>
+		<footer class="footer footer-alt text-center">
+		    <script>document.write(new Date().getFullYear())</script> © DAVOGO. All RIGHTS RESERVED.
+		</footer>
+	</body>
+	
+	<script>
+	$(document).ready(function() {
+		if ("${error}" == "true") {
+			alert("로그인 정보가 잘못되었습니다. 다시 시도해주세요.");
+		}
+	});
+	</script>
 </html>

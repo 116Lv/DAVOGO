@@ -47,7 +47,7 @@
 											<fmt:formatDate value="${saveDate}" pattern="yyyy.MM.dd HH:mm:ss"/>
 										</td>
 										<td>
-											<a class="text-dark" href="/mypage/deleteComment.do?comment_id=${item.commentId}">
+											<a class="text-dark" href="#" onclick="deleteMyComment('${item.commentId}');">
 												<i class="uil uil-trash">삭제</i>
 											</a>
 										</td>

@@ -19,4 +19,6 @@ public interface TvService {
 
 	public void saveMediaComment(Map params);
 
+	public Map getMyMediaCommentInfo(Map params);
+
 }

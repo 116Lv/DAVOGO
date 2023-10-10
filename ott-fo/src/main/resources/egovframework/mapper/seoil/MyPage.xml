@@ -74,7 +74,7 @@
 	<update id="updateMediaComment">
 		update media_comment
 		set
-			content = #{content},
+			content = ifnull(#{content}, content),
 			assess_rate = #{assess_rate},
 			update_date = date_format(now(), '%Y%m%d%H%i%s')
 		where

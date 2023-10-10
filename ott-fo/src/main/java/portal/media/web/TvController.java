@@ -53,6 +53,11 @@ public class TvController {
 	@RequestMapping("/tv/contents.do")
 	public String contentPage(@RequestParam Map params, Model model) {
 		
+		if (EgovUserDetailsHelper.isAuthenticated()) {
+			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			params.put("emailId", loginUser.getEmailId());
+		}
+		
 		Map content = tvService.getContent(params);
 		
 		Map image = tvService.getImage(params);
@@ -85,7 +90,7 @@ public class TvController {
 		return "/tv/tvCategory";
 	}
 	
-	@RequestMapping("/tv/comment.do")
+	@RequestMapping("/media/comment.do")
 	public String commentPage(@RequestParam Map params, Model model) {
 		log.info("모달창 진입");
 		
@@ -94,15 +99,30 @@ public class TvController {
 			params.put("writer", loginUser.getEmailId());
 		}
 		
-		model.addAttribute("params", params);
+		params.put("media_id", params.get("mediaId"));
+		Map commentInfo = tvService.getMyMediaCommentInfo(params);
+		
+		if (commentInfo != null) {
+			model.addAttribute("params", commentInfo);
+		} else {
+			model.addAttribute("params", params);
+		}
 		
 		return "/modal/tv/tvComment";
 	}
 	
-	
-	@RequestMapping("/tv/saveMediaComment.do")
+	/**
+	 * 미디어 댓글 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/media/saveMediaComment.do")
 	public String saveComment(@RequestParam Map params, Model model) {
 		try {
+			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			params.put("writer", loginUser.getEmailId());
+			
 			tvService.saveMediaComment(params);
 			model.addAttribute("resultCode", "success");
 		} catch (Exception e) {

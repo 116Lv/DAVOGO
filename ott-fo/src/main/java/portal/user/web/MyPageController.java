@@ -20,6 +20,12 @@ public class MyPageController {
 	@Autowired
 	private MyPageService myPageService;
 	
+	/**
+	 * 마이페이지 메인 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage.do")
 	public String myPageMain(@RequestParam Map params, Model model) {
 		
@@ -38,6 +44,12 @@ public class MyPageController {
 		return "/mypage/userInfo";
 	}
 	
+	/**
+	 * 비밀번호 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/saveUserInfo.do")
 	public String saveUserInfo(@RequestParam Map params, Model model) {
 		
@@ -56,7 +68,7 @@ public class MyPageController {
 	}
 	
 	/**
-	 * 내 미디어 Comment
+	 * 내 미디어 Comment 화면
 	 * @param params
 	 * @param model
 	 * @return
@@ -67,26 +79,34 @@ public class MyPageController {
 		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		params.put("emailId", loginUser.getEmailId());
 		
+		//내가 쓴 미디어 댓글 목록 조회
 		List<Map> list = myPageService.getUserMediaComment(params);
-		
 		model.addAttribute("list", list);
 		
 		return "/mypage/myComment";
 	}
 	
+	/**
+	 * 내 미디어 댓글 수정 화면
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/openModal.do")
 	public String openModal(@RequestParam Map params, Model model) {
 
 		Map info = myPageService.getMediaCommentInfo(params);
-		
-		UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		info.put("emailId", loginUser.getEmailId());
-		
 		model.addAttribute("info", info);
 		
 		return "/modal/mypage/myCommentEdit";
 	}
 	
+	/**
+	 * 내 미디어 댓글 수정 저장
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/updateMediaComment.do")
 	public String updateMediaComment(@RequestParam Map params, Model model) {
 		
@@ -102,16 +122,29 @@ public class MyPageController {
 		return Constants.VIEW_NAME_JSON;
 	}
 	
+	/**
+	 * 내 미디어 댓글 삭제
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/deleteMediaComment.do")
 	public String deleteMediaComment(@RequestParam Map params, Model model) {
 		
-		myPageService.deleteMediaComment(params);
+		try {
+			myPageService.deleteMediaComment(params);
+
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
 		
-		return "redirect:/mypage/myComment.do";
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	/**
-	 * 내가 만든 투표&월드컵
+	 * 내가 만든 투표&월드컵 목록 조회 화면
 	 * @param params
 	 * @param model
 	 * @return
@@ -129,16 +162,29 @@ public class MyPageController {
 		return "/mypage/madeComm";
 	}
 	
+	/**
+	 * 내가 만든 커뮤니티 게시글 삭제
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/deleteComm.do")
 	public String deleteComm(@RequestParam Map params, Model model) {
 		
-		myPageService.deleteComm(params);
+		try {
+			myPageService.deleteComm(params);
+			
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
 		
-		return "redirect:/mypage/madeComm.do";
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	/**
-	 * 참여한 투표&월드컵
+	 * 내가 작성한 커뮤니티 댓글 목록 조회 화면
 	 * @param params
 	 * @param model
 	 * @return
@@ -156,11 +202,24 @@ public class MyPageController {
 		return "/mypage/joinComm";
 	}
 	
+	/**
+	 * 내가 작성한 커뮤니티 댓글 삭제
+	 * @param params
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/mypage/deleteComment.do")
 	public String deleteComment(@RequestParam Map params, Model model) {
 		
-		myPageService.deleteComment(params);
+		try {
+			myPageService.deleteComment(params);
+			
+			model.addAttribute("resultCode", "success");
+		} catch (Exception e) {
+			model.addAttribute("resultCode", "fail");
+			model.addAttribute("resultMessage", e.getMessage());
+		}
 		
-		return "redirect:/mypage/joinComm.do";
+		return Constants.VIEW_NAME_JSON;
 	}
 }

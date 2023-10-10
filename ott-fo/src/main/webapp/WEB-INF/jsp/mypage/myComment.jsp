@@ -16,7 +16,7 @@
 				<div class="card-text">
 					<table class="table table-bordered">
 						<thead>
-							<tr>
+							<tr class="text-center">
 								<th scope="col">순서</th>
 								<th scope="col">미디어제목</th>
 								<th scope="col">평점</th>
@@ -30,7 +30,17 @@
 								<c:forEach var="item" items="${list}" varStatus="status">
 									<tr>
 										<td scope="row">${status.index+1}</td>
-										<td>${item.mediaName}</td>
+										<td>
+											<c:choose>
+												<c:when test="${item.mediaDiv == '1'}">
+													<a href="<c:url value="/movie/contents.do?media_id=${item.mediaId}"/>">
+												</c:when>
+												<c:otherwise>
+													<a href="<c:url value="/tv/contents.do?media_id=${item.mediaId}"/>">
+												</c:otherwise>
+											</c:choose>
+											${item.mediaName}</a>
+										</td>
 										<td>${item.assessRate}</td>
 										<td>${item.content}</td>
 										<td>
@@ -47,10 +57,10 @@
 										</td>
 										<td>
 											<div class="row mx-0">
-												<div data-toggle="modal" data-target="#mediaUpdateModal" comment_id="${item.commentId}" style="cursor: pointer; width: 30%">
+												<div class="pr-3" data-toggle="modal" data-target="#mediaUpdateModal" comment_id="${item.commentId}" style="cursor: pointer;">
 													<i class="uil uil-edit">수정</i>
 												</div>
-												<a class="text-dark" href="/mypage/deleteMediaComment.do?comment_id=${item.commentId}">
+												<a href="#" class="text-dark" onclick="deleteMyMediaComment('${item.commentId}');">
 													<i class="uil uil-trash">삭제</i>
 												</a>
 											</div>

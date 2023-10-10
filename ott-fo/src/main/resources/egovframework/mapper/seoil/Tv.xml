@@ -101,14 +101,25 @@
 			media_id = #{media_id}
 	</select>
 	
-	<insert id="saveMediaComment">
+	<select id="getMyMediaCommentInfo" resultType="egovMap">
+		select
+			*
+		from
+			media_comment
+		where
+			media_id = #{media_id}
+			and writer = #{writer}
+	</select>
+	
+	<insert id="insertMediaComment">
 		insert into media_comment
 		(
 			media_id,
 			writer,
 			content,
 			assess_rate,
-			save_date
+			save_date,
+			update_date
 		)
 		values
 		(
@@ -116,7 +127,9 @@
 			#{writer},
 			#{content},
 			#{assess_rate},
+			date_format(now(), '%Y%m%d%H%i%s'),
 			date_format(now(), '%Y%m%d%H%i%s')
 		)
 	</insert>
+	
 </mapper>

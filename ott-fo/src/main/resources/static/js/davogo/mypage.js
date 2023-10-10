@@ -117,3 +117,81 @@ $(document).ready(function() {
 		});
 	});
 });
+
+//내 미디어 댓글 삭제
+function deleteMyMediaComment(comment_id) {
+	if (!confirm("삭제하시겠습니까?")) {
+		return false;
+	}
+	
+	$.ajax({
+		type : "post",
+		url  : "/mypage/deleteMediaComment.do",
+		data : { comment_id: comment_id},
+		dataType : "json",
+		success: function(result) {
+			if (result.resultCode == 'fail') {
+        		alert(result.resultMessage);
+                return;
+        	}
+			
+            alert("삭제되었습니다.");
+			location.reload();
+		},
+		error: function( xhr, status, error ) {
+			alert(error);
+		}
+	});	
+}
+
+//내 커뮤니티 게시글 삭제
+function deleteMyComm(comm_id, comm_div) {
+	if (!confirm("삭제하시겠습니까?")) {
+		return false;
+	}
+	
+	$.ajax({
+		type : "post",
+		url  : "/mypage/deleteComm.do",
+		data : { comm_id: comm_id, comm_div: comm_div},
+		dataType : "json",
+		success: function(result) {
+			if (result.resultCode == 'fail') {
+        		alert(result.resultMessage);
+                return;
+        	}
+			
+            alert("삭제되었습니다.");
+			location.reload();
+		},
+		error: function( xhr, status, error ) {
+			alert(error);
+		}
+	});	
+}
+
+//내 커뮤니티 댓글 삭제
+function deleteMyComment(comment_id) {
+	if (!confirm("삭제하시겠습니까?")) {
+		return false;
+	}
+	
+	$.ajax({
+		type : "post",
+		url  : "/mypage/deleteComment.do",
+		data : { comment_id: comment_id },
+		dataType : "json",
+		success: function(result) {
+			if (result.resultCode == 'fail') {
+        		alert(result.resultMessage);
+                return;
+        	}
+			
+            alert("삭제되었습니다.");
+			location.reload();
+		},
+		error: function( xhr, status, error ) {
+			alert(error);
+		}
+	});	
+}

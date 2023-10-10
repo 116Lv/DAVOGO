@@ -19,9 +19,9 @@ public interface TvMapper {
 	public List<Map> getCategoryInfoList(Map params);
 
 	public List<Map> getCommentList(Map params);
+	
+	public Map getMyMediaCommentInfo(Map params);
 
-	public void saveMediaComment(Map params);
-
-
+	public void insertMediaComment(Map params);
 	
 }

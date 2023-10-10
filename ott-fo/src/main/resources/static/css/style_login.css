@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
 /*
-font-family: 'Roboto', sans-serif;
+font-family: 'Noto Sans KR', sans-serif;
 */
-@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:400,100,200,300,500,700,800,900);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)

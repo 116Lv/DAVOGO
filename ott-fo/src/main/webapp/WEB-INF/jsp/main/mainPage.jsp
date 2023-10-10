@@ -183,7 +183,7 @@
 							<div class="swiper-slide">
 								<a class="text-dark" href="<c:url value="/movie/contents.do?media_id=${movie.mediaId}"/>">
 									<div class="image-container">
-										<img src="${movie.imgSrc}" alt="${movie.mediaName}">
+										<img src="${movie.imgSrc}" alt="${movie.mediaName}" onerror="this.src='<c:url value="/images/no-img.jpg"/>';">
 										<div class="number">${status.count}</div>
 									</div>
 									<div class="font-weight-bold font16 text-truncate" title="${movie.mediaName}">${movie.mediaName}</div>

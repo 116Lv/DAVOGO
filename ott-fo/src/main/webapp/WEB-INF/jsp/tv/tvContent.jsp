@@ -23,7 +23,7 @@
 
 <div class="row mb-4">
 	<div class="col-3">
-		<img class="rounded float-left img-thumbnail " src="${image.imgSrc}">
+		<img class="rounded float-left img-thumbnail" src="${image.imgSrc}" onerror="this.src='<c:url value="/images/no-img.jpg"/>';">
 	</div>
 	<div class="col-9 pt-2">
 		<c:if test="${not empty image.categoryTitle}">
@@ -32,49 +32,39 @@
 		<h5 class="font-weight-bold" style="font-size: 36px;">${content.mediaName}</h5>
 		<p class="font14">${content.period} - ${content.channel} - ${content.genre}</p>
 		<hr/>
+		
 		<div class="row text-center">
 			<c:choose>
 				<c:when test="${not empty content.avgPoint}">
-					<div class="col-4">
+					<c:set var="colNo" value="4" /><%-- col을 3개 표시해야 하므로 col-4로 설정 --%>
+					<div class="col-${colNo}">
 						<div>평균 별점</div>
 						<h4 class="py-4" style="height: 60px;">${content.avgPoint}</h4>
 					</div>
-					<div class="col-4">
-						<div>평가하기</div>
-						<input class="rating" id="assess_rate" name="assess_rate" value="${content.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
-					</div>
-					<div class="col-4">
-						<!-- <div class="col">
-							<i class="uil uil-plus">보고싶어요</i>
-						</div> -->
-						<div>코멘트</div>
-						<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
-							<i class="uil uil-pen"></i>
-						</div>
-						<!-- <div class="col">
-							<i class="uil uil-eye">보는중</i>
-						</div> -->
-					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="col-6">
-						<div>평가하기</div>
-						<input class="rating" id="assess_rate" name="assess_rate" value="${content.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
-					</div>
-					<div class="col-6">
-						<!-- <div class="col">
-							<i class="uil uil-plus">보고싶어요</i>
-						</div> -->
-						<div>코멘트</div>
-						<div data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}" class="py-4" style="height: 60px; font-size: 20px;">
-							<i class="uil uil-pen">작성</i>
-						</div>
-						<!-- <div class="col">
-							<i class="uil uil-eye">보는중</i>
-						</div> -->
-					</div>
+					<c:set var="colNo" value="6" /><%-- 평점을 표시하지 않으므로 col-6로 설정 --%>
 				</c:otherwise>
 			</c:choose>
+			
+			<div class="col-${colNo}">
+				<div>평가하기</div>
+				<input class="rating" id="assess_rate" name="assess_rate" value="${content.assessRate}" data-theme="krajee-svg" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="0.5" data-size="lg">
+			</div>
+			<div class="col-${colNo}">
+				<!-- <div class="col">
+					<i class="uil uil-plus">보고싶어요</i>
+				</div> -->
+				<div>코멘트</div>
+				<div class="py-4" style="height: 60px; font-size: 20px;">
+					<a href="#" data-toggle="modal" data-target="#mediaWriteModal" media_id="${content.mediaId}">
+						<i class="uil uil-pen text-dark"></i>
+					</a>
+				</div>
+				<!-- <div class="col">
+					<i class="uil uil-eye">보는중</i>
+				</div> -->
+			</div>
 		</div>
 		<hr class="mt-0" />
 		<div class="row">
@@ -163,7 +153,6 @@
 					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
-<!-- 					<div class="swiper-pagination"></div> -->
 				</div>
 			</div>
 			<hr/>
@@ -184,7 +173,7 @@
 						</div>
 						<hr>
 						<div class="card-text">
-							<p>${comment.content}</p>
+							<p style="white-space:pre;">${comment.content}</p>
 						</div>
 					</div>
 				</div>
@@ -204,10 +193,29 @@
 		      prevEl: ".swiper-button-prev",
 			},
 		});
-	</script>
-	
-	<script>
-		$("#assess_rate").removeClass('rating-loading').addClass('rating-loading').rating();
+		
+		//$("#assess_rate").removeClass('rating-loading').addClass('rating-loading').rating();
+		$('#assess_rate').on('rating:change', function(event, value, caption) {
+			$.ajax({
+				type : "post",
+				url  : "/media/saveMediaComment.do",
+				data : { media_id: '${content.mediaId}', assess_rate: value},
+				dataType : "json",
+				success: function(result) {
+					if (result.resultCode == 'fail') {
+		        		alert(result.resultMessage);
+		        		$(event.target).rating("clear");
+		                return;
+		        	}
+					
+		            alert("소중한 의견 주셔서 감사합니다.");
+					location.reload();
+				},
+				error: function( xhr, status, error ) {
+					alert(error);
+				}
+			});
+		});
 	</script>
 </div>
 

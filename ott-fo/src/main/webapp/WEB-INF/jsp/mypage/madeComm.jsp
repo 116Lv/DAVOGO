@@ -11,7 +11,7 @@
 		<div class="card mt-5">
 			<div class="card-body">
 				<div class="card-title font-weight-bold">
-					내가 작성한 커뮤니티 게시글 확인
+					내가 만든 투표&월드컵 목록
 				</div>
 				<div class="card-text">
 					<table class="table table-bordered">
@@ -21,6 +21,7 @@
 								<th scope="col">커뮤니티 분류</th>
 								<th scope="col">제목</th>
 								<th scope="col">좋아요수</th>
+								<th scope="col">싫어요수</th>
 								<th scope="col">비고</th>
 							</tr>
 						</thead>
@@ -41,8 +42,9 @@
 										</td>
 										<td>${item.title}</td>
 										<td>${item.likeCnt}</td>
+										<td>${item.dislikeCnt}</td>
 										<td>
-											<a class="text-dark" href="/mypage/deleteComm.do?comm_id=${item.commId}&comm_div=${item.commDiv}">
+											<a class="text-dark" href="#" onclick="deleteMyComm('${item.commId}', '${item.commDiv}');">
 												<i class="uil uil-trash">삭제</i>
 											</a>
 										</td>

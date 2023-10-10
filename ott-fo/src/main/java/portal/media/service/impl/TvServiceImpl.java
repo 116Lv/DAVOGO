@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import portal.media.mapper.TvMapper;
 import portal.media.service.TvService;
+import portal.user.mapper.MyPageMapper;
 
 @Service
 public class TvServiceImpl implements TvService{
 
 	@Autowired
 	private TvMapper tvMapper;
+	
+	@Autowired
+	private MyPageMapper myPageMapper;
 
 	@Override
 	public List<Map> getCategoryList() {
@@ -47,9 +51,22 @@ public class TvServiceImpl implements TvService{
 
 	@Override
 	public void saveMediaComment(Map params) {
-		tvMapper.saveMediaComment(params);
+		
+		//이미 자신이 등록된 comment가 있는지 조회
+		Map commentInfo = tvMapper.getMyMediaCommentInfo(params);
+		
+		if (commentInfo == null) {
+			tvMapper.insertMediaComment(params);
+		} else {
+			params.put("comment_id", commentInfo.get("commentId"));
+			myPageMapper.updateMediaComment(params);
+		}
+		
 	}
 
-	
+	@Override
+	public Map getMyMediaCommentInfo(Map params) {
+		return tvMapper.getMyMediaCommentInfo(params);
+	}
 	
 }
