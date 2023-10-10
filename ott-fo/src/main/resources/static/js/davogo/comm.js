@@ -240,11 +240,13 @@ $(document).ready(function() {
 					
 					//좋아요 한게 있으면 없앰
 					var likeBtnObj = $(event.target).closest('.row').find(".like");
-					likeBtnObj.removeClass("btn-primary");
-					likeBtnObj.addClass("btn-light");
-					var cntObj = likeBtnObj.next();
-					var likeCnt = parseInt(cntObj.html()) - 1;
-					cntObj.html(likeCnt < 0 ? 0 : likeCnt);
+					if (likeBtnObj.hasClass("btn-primary")) {	//좋아요에 파란 불 들어온 경우
+						likeBtnObj.removeClass("btn-primary");
+						likeBtnObj.addClass("btn-light");
+						var cntObj = likeBtnObj.next();
+						var likeCnt = parseInt(cntObj.html()) - 1;
+						cntObj.html(likeCnt < 0 ? 0 : likeCnt);
+					}
 				
 				//사용자가 싫어요를 취소한 경우
 				} else {
