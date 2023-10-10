@@ -55,6 +55,7 @@ $(document).ready(function() {
 	$('#commentWriteModal').on('hidden.bs.modal', function (event) {
 		var modalDiv = $(event.target).find(".modal-body");
 		modalDiv.empty();
+		location.reload();
 	});
 	
 	/* commWorldImage에서 라인삭제 클릭시 행삭제 */
