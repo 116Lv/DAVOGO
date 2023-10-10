@@ -36,6 +36,11 @@ public class CommController {
 	@RequestMapping("/comm.do")
 	public String mainPage(@RequestParam Map params, Model model) {
 		
+		//최초 진입시 정렬조건 초기셋팅
+		if (!params.containsKey("sort_name")) {
+			params.put("sort_name", "popular");
+		}
+		
 		if (EgovUserDetailsHelper.isAuthenticated()) {
 			UserVO loginUser = (UserVO) EgovUserDetailsHelper.getAuthenticatedUser();
 			params.put("loginEmailId", loginUser.getEmailId());
