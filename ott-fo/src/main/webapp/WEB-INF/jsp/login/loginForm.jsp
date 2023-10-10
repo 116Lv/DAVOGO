@@ -20,7 +20,7 @@
 	</head>
 	<body>
 		<!-- 위로 공간 확보해야함 -->
-		<div class="row justify-content-center">
+		<div class="row justify-content-center mt-10">
 			<div class="col-md-7 col-lg-5">
 				<div class="login-wrap p-4 p-md-5">
 					<div class="icon d-flex align-items-center justify-content-center">
@@ -75,13 +75,40 @@
 		<footer class="footer footer-alt text-center">
 		    <script>document.write(new Date().getFullYear())</script> © DAVOGO. All RIGHTS RESERVED.
 		</footer>
+		
+		<!-- Validation js -->
+		<script src="<c:url value="/js/vendor/jquery-validation/jquery.validate.js"/>"></script>
+		<script src="<c:url value="/js/vendor/jquery-validation/localization/messages_ko.js"/>"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+	
+				if ("${error}" == "true") {
+					alert("로그인에 실패하였습니다");
+				}
+	
+				$("#loginForm").validate({
+					rules : {
+						email : {
+							required : true,
+							email : true
+						},
+						password : {
+							required : true
+						}
+					},
+					messages : {
+						email : {
+							required : "이메일 주소는 필수 입력입니다.",
+							email : "이메일 형식을 확인해주세요."
+						},
+						password : {
+							required : "비밀번호는 필수 입력입니다."
+						}
+					}
+				});
+			});
+		</script>
 	</body>
 	
-	<script>
-	$(document).ready(function() {
-		if ("${error}" == "true") {
-			alert("로그인 정보가 잘못되었습니다. 다시 시도해주세요.");
-		}
-	});
-	</script>
+	
 </html>

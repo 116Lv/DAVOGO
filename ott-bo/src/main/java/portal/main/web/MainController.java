@@ -49,12 +49,14 @@ public class MainController {
 		 */
 		
 		List<Map<String, Object>> list = mainService.getBoardInfo(params);
+		List<Map<String, Object>> commentList = mainService.getCommentList(params);
 		List<Map<String, Object>> lists = mainService.getRecentMediaInfo(params);
 		int userCnt = mainService.getUserCount(params);
 		int movieCnt = mainService.getMovieCount(params);
 		int tvCnt = mainService.getTvCount(params);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("lists", lists);
 		model.addAttribute("Unum", userCnt);
 		model.addAttribute("Mnum", movieCnt);

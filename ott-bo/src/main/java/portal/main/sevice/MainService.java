@@ -14,6 +14,8 @@ public interface MainService {
 	public List<Map<String, Object>> getBoardInfo(Map<String, Object> params);
 
 	public List<Map<String, Object>> getRecentMediaInfo(Map<String, Object> params);
+
+	public List<Map<String, Object>> getCommentList(Map<String, Object> params);
 	
 	
 }

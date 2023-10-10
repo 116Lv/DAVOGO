@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 패키지.클래스명을 namespace로 지정 -->
+<mapper namespace="portal.comment.mapper.CommentMapper">
+
+	<!-- id는 method명과 일치해야 함. -->
+	<select id="findCommentList" resultType="EgovMap">
+		/* Comment.findCommentList */
+		select
+			row_number() over() as num,
+			a.*
+		from (
+			select
+				*
+			from 
+				comment
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and (
+				writer like concat('%', #{searchText}, '%')
+				or comment like concat('%', #{searchText}, '%')
+			)
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"comment_id".equals(orderColumn)'><!-- 코멘트ID -->
+						comment_id ${orderType}
+					</when>
+					<when test='"comm_id".equals(orderColumn)'><!-- 커뮤니티ID -->
+						comm_id ${orderType}
+					</when>
+					<otherwise>
+						comment_id desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+
+	<select id="getCountOfCommentList" resultType="int">
+		select count(*) as tot_cnt
+		from comment
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and (
+			writer like concat('%', #{searchText}, '%')
+			or comment like concat('%', #{searchText}, '%')
+		)
+		</if>
+	</select>
+	
+</mapper>

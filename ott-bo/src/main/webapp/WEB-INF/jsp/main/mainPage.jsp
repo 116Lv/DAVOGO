@@ -24,7 +24,6 @@ function pullTvData() {
 	$.ajax({
 		type : "post",
 		url  : "/main/pullTvData.do",
-		//data : frm.serialize(),
 		dataType : "json",
 		success:function(result){
 			
@@ -91,9 +90,12 @@ function pullTvData() {
 					</div>
 				</div>
 			</div>
-			<div class="row">
-			</div>
 		</div>
+		<div class="col-xl-6">
+		</div>
+	</div>
+	
+	<div class="row">
 		<div class="col-xl-6">
 			<div class="card">
 				<div class="card-header">
@@ -136,37 +138,43 @@ function pullTvData() {
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="row">
 		<div class="col-xl-6">
 			<div class="card">
 				<div class="card-header">
-					<!-- 최근 5~10개정도의 리뷰 노출 -->
-					<h4 class="header-title">고객들의 최근 리뷰</h4>
+					<h4 class="header-title">최근 미디어 업데이트 현황</h4>
 				</div>
 				<div class="card-body">
+					<!-- 영화,tv프로그램별 업데이트된 날짜 표시 -->
 					<div class="table-responsive">
 						<table class="table table-centered table-no-wrap table-hover mb-0">
 							<thead>
 								<tr class="text-center">
-									<th scope="col">리뷰ID</th>
-									<th scope="col">작성자</th>
 									<th scope="col">미디어명</th>
-									<th scope="col">작성일자</th>
-									<th scope="col">평점</th>
+									<th scope="col">미디어구분</th>
+									<th scope="col">장르</th>
+									<th scope="col">공개일자</th>
+									<th scope="col">등록일자</th>
 								</tr>
 							</thead>
 							<tbody>
 							<c:choose>
-								<c:when test="${not empty list}">
-									<c:forEach var="item" items="${list}" varStatus="status">
-									<tr>
-										<td>${item.reviewId}</td>
-										<td>${item.userId}</td>
-										<td>${item.mediaId}</td>
-										<td>${item.writingDate}</td>
-										<td>${item.rate}</td>
+								<c:when test="${not empty lists}">
+									<c:forEach var="item" items="${lists}" varStatus="status">
+									<tr class="text-center">
+										<td>${item.mediaName}</td>
+										<td>
+											<c:choose>
+												<c:when test="${item.mediaDiv eq 1}">
+													영화
+												</c:when>
+												<c:otherwise>
+													TV
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${item.genre}</td>
+										<td>${item.openDate}</td>
+										<td>${item.saveDate}</td>
 									</tr>
 									</c:forEach>
 								</c:when>
@@ -182,40 +190,65 @@ function pullTvData() {
 				</div>
 			</div>
 		</div>
-		<div class="col-xl-6">
+	</div>
+	
+	<div class="row">
+		<div class="col-xl-12">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="header-title">최근 미디어 업데이트 현황</h4>
+					<!-- 최근 5~10개정도의 리뷰 노출 -->
+					<h4 class="header-title">고객들의 최근 리뷰</h4>
 				</div>
 				<div class="card-body">
-					<!-- 영화,tv프로그램별 업데이트된 날짜 표시 -->
 					<div class="table-responsive">
 						<table class="table table-centered table-no-wrap table-hover mb-0">
 							<thead>
 								<tr class="text-center">
+									<th scope="col">코멘트ID</th>
+									<th scope="col">컨텐츠구분</th>
 									<th scope="col">미디어명</th>
-									<th scope="col">미디어구분</th>
-									<th scope="col">장르</th>
-									<th scope="col">개봉일자</th>
-									<th scope="col">등록일자</th>
+									<th scope="col">작성자</th>
+									<th scope="col">코멘트</th>
+									<th scope="col">평점</th>
+									<th scope="col">작성일자</th>
 								</tr>
 							</thead>
 							<tbody>
 							<c:choose>
-								<c:when test="${not empty lists}">
-									<c:forEach var="item" items="${lists}" varStatus="status">
-									<tr class="text-center">
-										<td>${item.mediaName}</td>
-										<td>${item.mediaDiv}</td>
-										<td>${item.genre}</td>
-										<td>${item.openDate}</td>
-										<td>${item.saveDate}</td>
+								<c:when test="${not empty commentList}">
+									<c:forEach var="comment" items="${commentList}" varStatus="status">
+									<tr>
+										<td>${comment.commentId}</td>
+										<td>
+											<c:choose>
+												<c:when test="${comment.type eq 'media'}">
+													미디어
+												</c:when>
+												<c:otherwise>
+													커뮤니티
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${comment.name}</td>
+										<td>${comment.writer}</td>
+										<td>${comment.comment}</td>
+										<td>
+											<c:choose>
+												<c:when test="${comment.type eq 'media'}">
+													${comment.assessRate}
+												</c:when>
+												<c:otherwise>
+													
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${comment.saveDate}</td>
 									</tr>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<tr>
-										<td colspan="5" class="text-center">데이터가 없습니다.</td>
+										<td colspan="7" class="text-center">데이터가 없습니다.</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>

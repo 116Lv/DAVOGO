@@ -5,14 +5,18 @@
 
 	<select id="findCodeList" resultType="EgovMap">
 		select
-			row_number() over() as num, a.*
+			row_number() over() as num,
+			a.*
 		from (
-			select *			
-			from code
-			where 1=1
-			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-			and code_name like concat('%', #{searchText}, '%')
-			</if>
+			select 
+				*			
+			from 
+				code
+			where 
+				1=1
+				<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+				and code_name like concat('%', #{searchText}, '%')
+				</if>
 			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
 			order by 
 				<choose>
@@ -32,12 +36,15 @@
 	</select>
 	
 	<select id="getCountOfCodeList" resultType="int">
-		select count(*) as tot_cnt
-		from code
-		where 1=1
-		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
-		and code_name like concat('%', #{searchText}, '%')
-		</if>
+		select 
+			count(*) as tot_cnt
+		from 
+			code
+		where 
+			1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and code_name like concat('%', #{searchText}, '%')
+			</if>
 	</select>
 	
 	<select id="getCodeInfo" resultType="EgovMap">

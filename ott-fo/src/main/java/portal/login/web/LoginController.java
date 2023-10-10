@@ -38,7 +38,7 @@ public class LoginController {
 		
 		int count = loginService.checkUserData(userVO);
 		
-		if (count == 1) { 
+		if (count == 1) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", userVO);
 			model.addAttribute("user", userVO);

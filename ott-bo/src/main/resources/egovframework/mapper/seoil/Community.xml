@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portal.community.mapper.CommMapper">
+
+	<select id="getCommunityList" resultType="EgovMap">
+		select
+			row_number() over() as num,
+			a.*
+		from (
+			select 
+				comm_id,
+				comm_div,
+				title,
+				writer,
+				content,
+				like_cnt,
+				dislike_cnt
+			from community c
+			where 1=1
+			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+			and (
+				title like concat('%', #{searchText}, '%')
+				or writer like concat('%', #{searchText}, '%')
+			)
+			</if>
+			<if test="@portal.common.util.StringUtil@notEmpty(orderColumn)">
+			order by 
+				<choose>
+					<when test='"comm_id".equals(orderColumn)'><!-- 커뮤니티ID -->
+						comm_id ${orderType}
+					</when>
+					<when test='"like_cnt".equals(orderColumn)'><!-- 좋아요 수 -->
+						like_cnt ${orderType}
+					</when>
+					<otherwise>
+						comm_id desc
+					</otherwise>
+				</choose>
+			</if>
+			limit #{firstIndex}, #{recordCountPerPage}
+		) a
+	</select>
+	
+	<select id="getCountOfCommList" resultType="int">
+		select count(*) as tot_cnt
+		from community
+		where 1=1
+		<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
+		and (
+			title like concat('%', #{searchText}, '%')
+			or writer like concat('%', #{searchText}, '%')
+		) 
+		</if>
+	</select>
+
+</mapper>

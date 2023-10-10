@@ -40,4 +40,9 @@ public class MainServiceImpl implements MainService {
 		return mainMapper.getRecentMediaInfo(params);
 	}
 
+	@Override
+	public List<Map<String, Object>> getCommentList(Map<String, Object> params) {
+		return mainMapper.getCommentList(params);
+	}
+
 }

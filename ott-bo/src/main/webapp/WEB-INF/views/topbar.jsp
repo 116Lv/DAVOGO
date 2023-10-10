@@ -12,7 +12,7 @@
                 <!-- Topbar Brand Logo -->
                 <div class="logo-topbar">
                     <!-- Logo light -->
-                    <a href="index.html" class="logo-light">
+                    <a href="/main.do" class="logo-light">
                         <span class="logo-lg">
                             <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="logo">
                         </span>
@@ -22,7 +22,7 @@
                     </a>
 
                     <!-- Logo Dark -->
-                    <a href="index.html" class="logo-dark">
+                    <a href="/main.do" class="logo-dark">
                         <span class="logo-lg">
                             <img src="<c:url value="/images/Davogo_Logo.png"/>" alt="dark logo">
                         </span>

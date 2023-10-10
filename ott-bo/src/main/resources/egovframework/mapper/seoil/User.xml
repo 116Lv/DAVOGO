@@ -6,7 +6,8 @@
 	<!-- 직원 목록 -->
 	<select id="findUserList" resultType="EgovMap">
 		select
-			row_number() over() as num, a.*
+			row_number() over() as num, 
+			a.*
 		from (
 			select 
 				user_id,

@@ -54,6 +54,13 @@
 	                    <span> TV </span>
 	                </a>
 	            </li>
+	            
+	            <li class="side-nav-item">
+	                <a href="/mediaComment.do" class="side-nav-link">
+	                    <i class="uil-comment-image"></i>
+	                    <span> MEDIA_COMMENT </span>
+	                </a>
+	            </li>
 	
 	            <!-- <li class="side-nav-item">
 	                <a href="/banner.do" class="side-nav-link">
@@ -61,11 +68,18 @@
 	                    <span> BANNER </span>
 	                </a>
 	            </li> -->
+	            
+	            <li class="side-nav-item">
+	                <a href="/comm.do" class="side-nav-link">
+	                    <i class="uil-users-alt"></i>
+	                    <span> COMMUNITY </span>
+	                </a>
+	            </li>
 	
 	            <li class="side-nav-item">
-	                <a href="/review.do" class="side-nav-link">
-	                    <i class="uil-thumbs-up"></i>
-	                    <span> Review </span>
+	                <a href="/comment.do" class="side-nav-link">
+	                    <i class="uil-comment"></i>
+	                    <span> COMMENT </span>
 	                </a>
 	            </li>
 	

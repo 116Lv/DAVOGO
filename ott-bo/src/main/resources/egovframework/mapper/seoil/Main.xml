@@ -37,7 +37,7 @@
 			a.*
 		from (
 			select
-				row_number() over(order by media_id desc) as num
+				row_number() over() as num
 				, media_name
 				, media_div
 				, genre
@@ -48,8 +48,48 @@
 			and save_date &lt; date_format(now(), '%Y%m%d')
 			order by
 				save_date desc
-			) a
-		where num between 1 and 10
+		) a limit 5
+	</select>
+
+	<select id="getCommentList" resultType="EgovMap">
+	select 
+		comment_id,
+		type,
+		name,
+		writer,
+		comment,
+		assess_rate,
+		save_date
+	from
+	(
+		(
+			select
+				comment_id
+				, 'media' as type
+				, b.media_name as name
+				, writer
+				, content as comment
+				, assess_rate
+				, ifnull(a.update_date, a.save_date) as save_date
+			from
+				media_comment a, media b
+			where a.media_id = b.media_id
+		)
+		union
+		(
+			select
+				comment_id
+				, 'community' as type
+				, '' as name
+				, writer
+				, comment
+				, 0 as assess_rate
+				, save_date
+			from
+				comment
+		)
+	) a
+	order by save_date desc limit 10
 	</select>
 
 </mapper>
