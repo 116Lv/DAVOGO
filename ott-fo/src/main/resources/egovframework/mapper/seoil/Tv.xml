@@ -92,12 +92,11 @@
 	</select>
 	
 	<select id="getCommentList" resultType="EgovMap">
-		select
-			*,
-			count(*) as total
-		from
-			media_comment
-		where
+		select 
+			a.*
+		from 
+			media_comment a 
+		where 
 			media_id = #{media_id}
 	</select>
 	

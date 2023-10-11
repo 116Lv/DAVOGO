@@ -157,26 +157,26 @@
 			</div>
 			<hr/>
 			<div class="card-body">
+				<h5 class="card-title">코멘트 ${content.totalCommentCount}</h5>
 				<c:forEach var="comment" items="${commentList}">
-				<h5 class="card-title">코멘트 ${comment.total}</h5>
-				<div class="card">
-					<div class="card-body">
-						<div class="card-title">
-							<div class="row">
-								<div class="col-3 text-left">
-									<i class="uil uil-user-circle"></i>${comment.writer}
-								</div>
-								<div class="col-9 text-right">
-									<i class="uil uil-star">${comment.assessRate}</i>
+					<div class="card mb-2">
+						<div class="card-body">
+							<div class="card-title">
+								<div class="row">
+									<div class="col-3 text-left">
+										<i class="uil uil-user-circle"></i>${comment.writer}
+									</div>
+									<div class="col-9 text-right">
+										<i class="uil uil-star">${comment.assessRate}</i>
+									</div>
 								</div>
 							</div>
-						</div>
-						<hr>
-						<div class="card-text">
-							<p style="white-space:pre;">${comment.content}</p>
+							<hr>
+							<div class="card-text">
+								<p style="white-space:pre;">${comment.content}</p>
+							</div>
 						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 		</div>
