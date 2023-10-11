@@ -287,7 +287,7 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<directory>${basedir}/target</directory>
-		<finalName>davogo</finalName>
+		<finalName>davogo-bo</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
