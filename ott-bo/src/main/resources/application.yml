@@ -2,6 +2,7 @@ server:
     port: 8080
     tomcat:
         uri-encoding: utf-8
+    shutdown: graceful
     servlet:
         context-path: /
         encoding:
@@ -19,7 +20,7 @@ logging:
 
 spring: 
     application:
-        name: game-bo
+        name: ott-bo
 #    profiles:
 #        active: local
     message:
@@ -28,6 +29,8 @@ spring:
       view:
         prefix: /WEB-INF/jsp/
         suffix: .jsp
+    lifecycle:
+      timeout-per-shutdown-phase: "30s"
 
 
 mybatis:

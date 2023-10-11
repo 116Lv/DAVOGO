@@ -27,8 +27,3 @@ file:
   storePath: /home/ec2-user/files/img/
   replaceSrc: /home/ec2-user/files/
   replaceTrg: /
-  
-#app:
-#  kobis:
-#    api-key: 623e218d4f42aed8cf65862c1e803746
-#    item-per-page: 10
