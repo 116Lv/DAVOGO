@@ -26,7 +26,7 @@ public class LoginController {
 	public String loginForm(HttpServletRequest request, Model model) {
 		
 		String uri = request.getHeader("Referer");
-	    if (uri != null && !uri.contains("/signIn") && !uri.contains("/login")) {
+	    if (uri != null && !(uri.contains("/signIn") || uri.contains("/login") || uri.contains("/register"))) {
 	        request.getSession().setAttribute("prevPage", uri);
 	    }
 	    

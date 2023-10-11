@@ -112,7 +112,7 @@
 							    		<td>${item.commentId}</td>
 							    		<td>${item.mediaId}</td>
 							    		<td>${item.writer}</td>
-							    		<td>${item.comment}</td>
+							    		<td>${item.content}</td>
 							    		<td>${item.assessRate}</td>
 							    		<td>${item.saveDate}</td>
 							    		<td class="text-center">

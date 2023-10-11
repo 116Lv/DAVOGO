@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="fnc" uri="/WEB-INF/tlds/fnc.tld"%>
 
 <!-- Start Content-->
 <div class="container-fluid">
@@ -116,8 +117,8 @@
 							    		<td>${item.num}</td>
 							    		<td>${item.mediaId}</td>
 							    		<td>${item.mediaName}</td>
-							    		<td>${item.director}</td>
-							    		<td>${item.actor}</td>
+							    		<td>${fnc:shorten(fn:replace(item.director, '^', ', '), 20)}</td>
+							    		<td>${fnc:shorten(fn:replace(item.actor, '^', ', '), 20)}</td>
 							    		<td>${item.channel}</td>
 							    		<td>${item.period}</td>
 							    		<td>${item.ratingGrade}</td>
