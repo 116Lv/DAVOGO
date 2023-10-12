@@ -28,7 +28,7 @@ spring:
         prefix: /WEB-INF/jsp/
         suffix: .jsp
     lifecycle:
-      timeout-per-shutdown-phase: "30s"
+      timeout-per-shutdown-phase: "20s"
 
 
 mybatis:
