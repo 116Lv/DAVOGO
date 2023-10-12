@@ -37,7 +37,7 @@
 							<input type="hidden" name="world_id" value="${imageInfo.worldId}">
 							<div class="mb-3">
 								<label class="form-label">닉네임</label>
-								<input type="text" class="form-control" name="writer" placeholder="${params.loginEmailId}">
+								<input type="text" class="form-control" name="writer" value="${params.loginEmailId}" disabled>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">한마디 남기기</label>

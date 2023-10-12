@@ -64,16 +64,7 @@
 	<update id="updateHide">
 		update comment
 		set
-			<if test="@portal.common.util.StringUtil@notEmpty(hide)">
-				<choose>
-					<when test='"hide".equals("show")'>
-						hide = "hide"
-					</when>
-					<otherwise>
-						hide = "show"
-					</otherwise>
-				</choose>
-			</if>
+			hide = (case hide when 'hide' then 'show' else 'hide' end)
 		where
 			comment_id = #{comment_id}
 	</update>

@@ -10,9 +10,7 @@
 			a.*
 		from (
 			select 
-				user_id,
-				email,
-				signup_date
+				*
 			from user
 			where 1=1
 			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
@@ -45,6 +43,12 @@
 		</if>
 	</select>
 	
-	
+	<update id="updateHide">
+		update user
+		set
+			hide = (case hide when 'hide' then 'show' else 'hide' end)
+		where
+			user_id = #{user_id}
+	</update>
 		
 </mapper>

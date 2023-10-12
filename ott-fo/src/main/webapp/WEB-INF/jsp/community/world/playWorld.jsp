@@ -26,8 +26,8 @@
 		<div class="versus"></div>
 		<div class="textLine">
 			<div class="row">
-				<div class="col-6 leftText">왼쪽 글자</div>
-				<div class="col-6 rightText">오른쪽 글자</div>
+				<div class="col-6 leftText">${community.item}</div>
+				<div class="col-6 rightText">${community.item}</div>
 			</div>
 		</div>
 	</div>
@@ -55,11 +55,11 @@ $(document).ready(function() {
 	// 선택
 	$(".left, .right").on("click", function(event) {
 		
-		if ($(this).hasClass("right")) {
+		/* if ($(this).hasClass("right")) {
 			$(".left").animate({left: '-1000px'}, 2000);
 		} else {
 			$(".right").animate({right: '1000px'}, 2000);
-		}
+		} */
 		
 		var selectedId = $(event.target).attr("world_id");
 		allImageIds.push(selectedId);

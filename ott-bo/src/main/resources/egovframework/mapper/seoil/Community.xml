@@ -9,13 +9,7 @@
 			a.*
 		from (
 			select 
-				comm_id,
-				comm_div,
-				title,
-				writer,
-				content,
-				like_cnt,
-				dislike_cnt
+				*
 			from community c
 			where 1=1
 			<if test="@portal.common.util.StringUtil@notEmpty(searchText)">
@@ -57,16 +51,7 @@
 	<update id="updateHide">
 		update community
 		set
-			<if test="@portal.common.util.StringUtil@notEmpty(hide)">
-				<choose>
-					<when test='"hide".equals("show")'>
-						hide = "hide"
-					</when>
-					<otherwise>
-						hide = "show"
-					</otherwise>
-				</choose>
-			</if>
+			hide = (case hide when 'hide' then 'show' else 'hide' end)
 		where
 			comm_id = #{comm_id}
 	</update>

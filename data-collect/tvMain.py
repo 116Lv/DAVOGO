@@ -69,7 +69,7 @@ except:
 #타이틀 = /html/body/div/div/div[1]/section/div/section/div[1] 에서 div가 늘어나면 되지만 중간에 광고땜에 div class="w_exposed_cell css-lufi3b" data-rowindex="?" ?가 늘어나는데로 가져오는게 광고없이 깔끔함
 section = driver.find_element(By.XPATH, "//*[@id='root']/div/div[1]/section/div/section")
 
-for no in range(2, 7):
+for no in range(1, 6):
     try:
         print("section순번=div[" + str(no) + "]/div[1]/p")
         title = section.find_element(By.XPATH, "div[" + str(no) + "]/div[1]/p")

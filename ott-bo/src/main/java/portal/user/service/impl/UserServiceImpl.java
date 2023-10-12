@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getCountOfUserList(params);
 	}
 
+	@Override
+	public void updateHide(Map params) {
+		userMapper.updateHide(params);
+	}
+
 }

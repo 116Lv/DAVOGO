@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import portal.common.Constants;
 import portal.common.util.PaginationUtil;
 import portal.user.service.UserService;
 
@@ -44,6 +45,14 @@ public class UserController {
 		model.addAttribute("searchParams", params);
 		
 		return "/user/userList";
+	}
+	
+	@RequestMapping("/user/hide.do")
+	public String updateHide(@RequestParam Map params, Model model) {
+		
+		userService.updateHide(params);
+		
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 	

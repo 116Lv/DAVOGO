@@ -47,7 +47,12 @@
 			#{producer},
 			#{distributor},
 			replace(#{openDt},"-",""),
-			#{showTm},
+			<choose>
+				<when test="showTm != null and showTm != ''">
+					#{showTm},
+				</when>
+				<otherwise>0,</otherwise>
+			</choose>
 			<choose>
 				<when test="audits != null and audits.size != 0">
 					<foreach collection="audits" item="audit" separator=",'^'," open="concat(" close=")">#{audit.watchGradeNm}</foreach>,

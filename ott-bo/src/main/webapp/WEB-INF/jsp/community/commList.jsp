@@ -130,12 +130,12 @@
 							    		</td>
 							    		<td>${item.title}</td>
 							    		<td>${item.writer}</td>
-							    		<td>${item.content}</td>
+							    		<td>${fnc:shorten(item.content, 20)}</td>
 							    		<td>${item.likeCnt}</td>
 							    		<td>${item.dislikeCnt}</td>
 							    		<td>
-							    			<fmt:parseDate var="dt" value="${item.saveDate}" pattern="yyyyMMddHHmmss"/>
-							    			<fmt:formatDate value="${dt}" pattern="yyyy.MM.dd HH.mm.ss"/>
+							    			<fmt:parseDate var="dt" value="${item.saveDate}" pattern="yyyyMMdd"/>
+							    			<fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/>
 						    			</td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/comm/view.do?comm_id=${item.commId}" title="상세보기">
@@ -144,16 +144,8 @@
 										</td>
 										<td>
 											<div class="form-check form-switch">
-												<c:choose>
-													<c:when test="${item.hide eq 'show'}">
-														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comm_id="${item.commId}" checked>
-												  		<label class="form-check-label" for="flexSwitchCheckChecked">활성화</label>
-													</c:when>
-													<c:otherwise>
-														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comm_id="${item.commId}">
-												  		<label class="form-check-label" for="flexSwitchCheckChecked">비활설화</label>
-													</c:otherwise>
-												</c:choose>
+												<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comm_id="${item.commId}" <c:if test="${item.hide eq 'show'}"> checked="checked"</c:if>>
+										  		<label class="form-check-label" for="flexSwitchCheckChecked"></label>
 											</div>
 										</td>
 							    	</tr>
@@ -186,13 +178,12 @@
 
 <script>
 $(document).ready(function() {
-	${"hideSwitch"}.on("click", function(event) {
+	$("#hideSwitch").on("click", function(event) {
 		$.ajax({
-			type = "post",
-			url = "/comm/hide.do",
-			data = {
-				comm_id = ${event.relatedTarget}.attr('comm_id'),
-				hide = ${event}.val()
+			type: "post",
+			url: "/comm/hide.do",
+			data: {
+				comm_id: $(event.target).attr("comm_id"),
 			},
 			dataType : "json",
 			success: function(result) {
@@ -208,8 +199,8 @@ $(document).ready(function() {
 			error: function( xhr, status, error ) {
 				alert(error);
 			}
-		}
-	)};
+		});
+	});
 });
 
 //목록 조회

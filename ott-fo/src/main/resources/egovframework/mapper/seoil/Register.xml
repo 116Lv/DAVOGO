@@ -15,14 +15,16 @@
 	<insert id="insertUserInfo">
 		insert into user
 		(
-			email, 
+			email,
+			email_id,
 			signup_date, 
 			password
 		)
 		values 
 		(
-		  	#{email}, 
-		  	date_format(now(), '%Y%m%d'),
+		  	#{email},
+		  	substring_index(#{email}, '@', 1),
+		  	date_format(now(), '%Y%m%d%H%i%s'),
 		  	#{password}
 		 )
 	</insert>

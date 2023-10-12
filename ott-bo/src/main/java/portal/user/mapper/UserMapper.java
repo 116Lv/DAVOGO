@@ -30,5 +30,7 @@ public interface UserMapper {
 	 */
 	public int getCountOfUserList(Map<String, Object> params);
 
+	public void updateHide(Map params);
+
 	
 }

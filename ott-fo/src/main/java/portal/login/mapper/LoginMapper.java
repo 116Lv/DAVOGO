@@ -1,5 +1,7 @@
 package portal.login.mapper;
 
+import java.util.Map;
+
 import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 
 import portal.user.vo.UserVO;

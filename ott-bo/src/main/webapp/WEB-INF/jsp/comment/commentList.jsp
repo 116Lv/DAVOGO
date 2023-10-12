@@ -124,16 +124,8 @@
 										</td>
 										<td>
 											<div class="form-check form-switch">
-												<c:choose>
-													<c:when test="${item.hide eq 'show'}">
-														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}" checked>
-												  		<label class="form-check-label" for="flexSwitchCheckChecked">활성화</label>
-													</c:when>
-													<c:otherwise>
-														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}">
-												  		<label class="form-check-label" for="flexSwitchCheckChecked">비활성화</label>
-													</c:otherwise>
-												</c:choose>
+												<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}" <c:if test="${item.hide eq 'show'}"> checked="checked"</c:if>>
+										  		<label class="form-check-label" for="flexSwitchCheckChecked"></label>
 											</div>
 										</td>
 							    	</tr>
@@ -166,13 +158,12 @@
 
 <script>
 $(document).ready(function() {
-	${"hideSwitch"}.on("click", function(event) {
+	$("#hideSwitch").on("click", function(event) {
 		$.ajax({
-			type = "post",
-			url = "/comment/hide.do",
-			data = {
-				comment_id = ${event.relatedTarget}.attr('comment_id'),
-				hide = ${event}.val()
+			type: "post",
+			url: "/comment/hide.do",
+			data: {
+				comment_id: $(event.target).attr("comment_id"),
 			},
 			dataType : "json",
 			success: function(result) {
@@ -188,8 +179,8 @@ $(document).ready(function() {
 			error: function( xhr, status, error ) {
 				alert(error);
 			}
-		}
-	)};
+		});
+	});
 });
 
 //목록 조회

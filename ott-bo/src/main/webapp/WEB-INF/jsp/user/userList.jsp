@@ -95,8 +95,10 @@
 						        	<th scope="col">번호</th>
 						            <th scope="col">고객ID</th>
 						            <th scope="col">이메일</th>
+						            <th scope="col">이메일ID</th>
 						            <th scope="col">가입일자</th>
 						            <th scope="col" class="text-center">기타</th>
+						            <th scope="col">활성화</th>
 						        </tr>
 						    </thead>
 						    <tbody>
@@ -107,22 +109,26 @@
 							    		<td>${item.num}</td>
 							    		<td>${item.userId}</td>
 							    		<td>${item.email}</td>
+							    		<td>${item.emailId}</td>
 							    		<fmt:parseDate var="dt" value="${item.signupDate}" pattern="yyyyMMdd"/>
 							    		<td><fmt:formatDate value="${dt}" pattern="yyyy.MM.dd"/></td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/user/view.do?user_id=${item.userId}" title="상세보기">
 										    	<i class="mdi mdi-eye"></i>
 											</a>
-											<a class="action-icon text-info" href="/user/edit.do?user_id=${item.userId}" title="수정하기">
-										    	<i class="mdi mdi-square-edit-outline"></i>
-											</a>
+										</td>
+										<td>
+											<div class="form-check form-switch">
+												<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" user_id="${item.userId}" <c:if test="${item.hide eq 'show'}"> checked="checked"</c:if>>
+										  		<label class="form-check-label" for="flexSwitchCheckChecked"></label>
+											</div>
 										</td>
 							    	</tr>
 							    	</c:forEach>
 						    	</c:when>
 						    	<c:otherwise>
 							    	<tr>
-										<td colspan="5" class="text-center">데이터가 없습니다.</td>
+										<td colspan="7" class="text-center">데이터가 없습니다.</td>
 									</tr>
 						    	</c:otherwise>
 						    </c:choose>
@@ -147,7 +153,29 @@
 
 <script>
 $(document).ready(function() {
-	
+	$("#hideSwitch").on("click", function(event) {
+		$.ajax({
+			type: "post",
+			url: "/user/hide.do",
+			data: {
+				user_id: $(event.target).attr("user_id"),
+			},
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            console.log("처리되었습니다.");
+	            location.href("/user.do");
+				
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		});
+	});
 });
 
 //목록 조회
