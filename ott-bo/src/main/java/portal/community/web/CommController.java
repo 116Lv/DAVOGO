@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import portal.common.Constants;
 import portal.common.util.PaginationUtil;
 import portal.community.service.CommService;
 
@@ -38,6 +39,26 @@ public class CommController {
 		model.addAttribute("searchParams", params);
 		
 		return "/community/commList";
+	}
+	
+	@RequestMapping("/comm/view.do")
+	public String viewCommunity(@RequestParam Map params, Model model) {
+		
+		Map item = commService.getCommInfo(params);
+		
+		List<Map> itemlist = commService.getItemInfo(params);
+		
+		model.addAttribute("item", item);
+		
+		return "/community/commRead";
+	}
+	
+	@RequestMapping("/comm/hide.do")
+	public String updateHide(@RequestParam Map params, Model model) {
+		
+		commService.updateHide(params);
+		
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 }

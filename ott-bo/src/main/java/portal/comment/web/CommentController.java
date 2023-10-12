@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 import portal.comment.service.CommentService;
+import portal.common.Constants;
 import portal.common.util.PaginationUtil;
 
 @Controller
@@ -41,7 +42,23 @@ public class CommentController {
 		return "/comment/commentList";
 	}
 	
+	@RequestMapping("/comment/view.do")
+	public String viewComment(@RequestParam Map params, Model model) {
+		
+		Map item = commentService.getCommentInfo(params);
+		
+		model.addAttribute("item", item);
+		
+		return "/comment/commentRead";
+	}
 	
+	@RequestMapping("/comment/hide.do")
+	public String updateHide(@RequestParam Map params, Model model) {
+		
+		commentService.updateHide(params);
+		
+		return Constants.VIEW_NAME_JSON;
+	}
 	
 	
 }

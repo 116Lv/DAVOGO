@@ -24,5 +24,15 @@ public class MediaCommentServiceImpl implements MediaCommentService{
 	public int getCountOfMediaCommentList(Map params) {
 		return mediaCommentMapper.getCountOfMediaCommentList(params);
 	}
+
+	@Override
+	public Map getMediaComment(Map params) {
+		return mediaCommentMapper.getMediaComment(params);
+	}
+
+	@Override
+	public void updateHide(Map params) {
+		mediaCommentMapper.updateHide(params);
+	}
 	
 }

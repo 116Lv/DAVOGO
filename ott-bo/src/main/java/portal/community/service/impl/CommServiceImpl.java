@@ -24,6 +24,28 @@ public class CommServiceImpl implements CommService{
 	public int getCountOfCommList(Map params) {
 		return commMapper.getCountOfCommList(params);
 	}
+
+	@Override
+	public void updateHide(Map params) {
+		commMapper.updateHide(params);
+	}
+
+	@Override
+	public Map getCommInfo(Map params) {
+		return commMapper.getCommInfo(params);
+	}
+
+	@Override
+	public List<Map> getItemInfo(Map params) {
+		
+		int div = commMapper.getCommDiv(params);
+		
+		if(div == 1) {
+			return commMapper.getVoteItem(params);
+		} else {
+			return commMapper.getWorldItem(params);
+		}
+	}
 	
 	
 	

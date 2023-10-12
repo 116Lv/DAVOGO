@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import portal.common.Constants;
 import portal.common.util.PaginationUtil;
 import portal.mediaComment.service.MediaCommentService;
 
@@ -37,6 +38,24 @@ public class MediaCommentController {
 		model.addAttribute("searchParams", params);
 		
 		return "/mediaComment/mediaCommentList";
+	}
+	
+	@RequestMapping("/mediaComment/view.do")
+	public String viewMediaComment(@RequestParam Map params, Model model) {
+			
+		Map item = mediaCommentService.getMediaComment(params);
+		
+		model.addAttribute("item", item);
+		
+		return "/mediaComment/mediaCommentRead";
+	}
+	
+	@RequestMapping("/mediaComment/hide.do")
+	public String hideMediaComment(@RequestParam Map params, Model model) {
+		
+		mediaCommentService.updateHide(params);
+		
+		return Constants.VIEW_NAME_JSON;
 	}
 	
 }

@@ -55,6 +55,12 @@ $(document).ready(function() {
 	// 선택
 	$(".left, .right").on("click", function(event) {
 		
+		if ($(this).hasClass("right")) {
+			$(".left").animate({left: '-1000px'}, 2000);
+		} else {
+			$(".right").animate({right: '1000px'}, 2000);
+		}
+		
 		var selectedId = $(event.target).attr("world_id");
 		allImageIds.push(selectedId);
 		if(round == 2) {

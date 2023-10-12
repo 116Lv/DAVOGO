@@ -41,8 +41,8 @@ save_date = now.strftime("%Y%m%d")
 
 driver = init_driver()
 
-conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
-#conn = MySQLdb.connect(host='3.35.38.53', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
+#conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
+conn = MySQLdb.connect(host='15.164.32.95', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
 cursor = conn.cursor(MySQLdb.cursors.DictCursor)
 #cursor = conn.cursor()
 
@@ -57,10 +57,13 @@ sql5 = "INSERT INTO watcha_rank (save_date, media_id, category_title, media_rank
 cursor.execute("DELETE FROM watcha_rank WHERE save_date = %(save_date)s", {'save_date': save_date})
 
 #popup 광고 삭제
-closeBtn = driver.find_element(By.XPATH, "//*[contains(@id, 'modal-container-')]/div/div/div[2]/span[1]")
-closeBtn.click()
-driver.implicitly_wait(10)
-time.sleep(1)
+try:
+    closeBtn = driver.find_element(By.XPATH, "//*[contains(@id, 'modal-container-')]/div/div/div[2]/span[1]")
+    closeBtn.click()
+    driver.implicitly_wait(10)
+    time.sleep(1)
+except:
+    print("광고 모달이 없습니다")
 
 #한줄씩 타이틀별로 가져오면 좋을듯
 #타이틀 = /html/body/div/div/div[1]/section/div/section/div[1] 에서 div가 늘어나면 되지만 중간에 광고땜에 div class="w_exposed_cell css-lufi3b" data-rowindex="?" ?가 늘어나는데로 가져오는게 광고없이 깔끔함

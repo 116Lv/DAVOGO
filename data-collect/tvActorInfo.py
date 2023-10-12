@@ -10,8 +10,8 @@ import undetected_chromedriver as uc
 import MySQLdb
 from datetime import datetime
 
-conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
-# conn = MySQLdb.connect(host='3.35.38.53', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
+#conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
+conn = MySQLdb.connect(host='15.164.32.95', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
 cursor = conn.cursor()
 sql1 = "SELECT a.media_id, a.media_href FROM watcha a, media b where a.media_id = b.media_id and b.actor is null"
 cursor.execute(sql1)

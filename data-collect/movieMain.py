@@ -40,8 +40,8 @@ save_date = now.strftime("%Y%m%d")
 
 driver = init_driver()
 
-conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
-#conn = MySQLdb.connect(host='3.35.38.53', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
+#conn = MySQLdb.connect(host='127.0.0.1', port=3306, user='root', password='1234', database='ott')
+conn = MySQLdb.connect(host='15.164.32.95', port=3306, user='lbw0109', password='Lgt010109@@', database='ott')
 cursor = conn.cursor(MySQLdb.cursors.DictCursor)
 
 sql1 = "SELECT media_id FROM media WHERE replace(media_name, ' ', '') = %(media_name)s"
@@ -50,10 +50,13 @@ sql3 = "INSERT INTO watcha (media_id, media_code, media_name, media_href, img_sr
 sql4 = "UPDATE watcha SET media_code = %s, media_name = %s, media_href = %s, img_src = %s WHERE media_id = %s"
 
 #popup 광고 삭제
-closeBtn = driver.find_element(By.XPATH, "//*[contains(@id, 'modal-container-')]/div/div/div[2]/span[1]")
-closeBtn.click()
-driver.implicitly_wait(10)
-time.sleep(1)
+try:
+    closeBtn = driver.find_element(By.XPATH, "//*[contains(@id, 'modal-container-')]/div/div/div[2]/span[1]")
+    closeBtn.click()
+    driver.implicitly_wait(10)
+    time.sleep(1)
+except:
+    print("광고 모달이 없습니다")
 
 
 section = driver.find_element(By.XPATH, "//*[@id='root']/div/div[1]/section/div/section")

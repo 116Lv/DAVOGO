@@ -100,6 +100,7 @@
 						            <th scope="col">코멘트</th>
 						            <th scope="col">작성일자</th>
 						            <th scope="col" class="text-center">기타</th>
+						            <th scope="col">활성화</th>
 						        </tr>
 						    </thead>
 						    <tbody>
@@ -112,11 +113,28 @@
 							    		<td>${item.commId}</td>
 							    		<td>${item.writer}</td>
 							    		<td>${item.comment}</td>
-							    		<td>${item.saveDate}</td>
+							    		<td>
+							    			<fmt:parseDate var="dt" value="${item.saveDate}" pattern="yyyyMMddHHmmss"/>
+							    			<fmt:formatDate value="${dt}" pattern="yyyy.MM.dd HH.mm.ss"/>
+						    			</td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/comment/view.do?comment_id=${item.commentId}" title="상세보기">
 										    	<i class="mdi mdi-eye"></i>
 											</a>
+										</td>
+										<td>
+											<div class="form-check form-switch">
+												<c:choose>
+													<c:when test="${item.hide eq 'show'}">
+														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}" checked>
+												  		<label class="form-check-label" for="flexSwitchCheckChecked">활성화</label>
+													</c:when>
+													<c:otherwise>
+														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}">
+												  		<label class="form-check-label" for="flexSwitchCheckChecked">비활성화</label>
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</td>
 							    	</tr>
 							    	</c:forEach>
@@ -148,7 +166,30 @@
 
 <script>
 $(document).ready(function() {
-	
+	${"hideSwitch"}.on("click", function(event) {
+		$.ajax({
+			type = "post",
+			url = "/comment/hide.do",
+			data = {
+				comment_id = ${event.relatedTarget}.attr('comment_id'),
+				hide = ${event}.val()
+			},
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            console.log("처리되었습니다.");
+	            location.href("/comment.do");
+				
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		}
+	)};
 });
 
 //목록 조회

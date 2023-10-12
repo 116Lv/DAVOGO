@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="fnc" uri="/WEB-INF/tlds/fnc.tld"%>
 
 <!-- Start Content-->
 <div class="container-fluid">
@@ -95,12 +96,13 @@
 						        <tr>
 						            <th scope="col">번호</th>
 						            <th scope="col">코멘트ID</th>
-						            <th scope="col">미디어ID</th>
+						            <th scope="col">미디어ID</th>	<!-- 미디어제목으로 바꿀까나... -->
 						            <th scope="col">작성자</th>
 						            <th scope="col">코멘트</th>
 						            <th scope="col">별점</th>
 						            <th scope="col">작성일자</th>
 						            <th scope="col" class="text-center">기타</th>
+						            <th scope="col">활성화</th>
 						        </tr>
 						    </thead>
 						    <tbody>
@@ -112,13 +114,30 @@
 							    		<td>${item.commentId}</td>
 							    		<td>${item.mediaId}</td>
 							    		<td>${item.writer}</td>
-							    		<td>${item.content}</td>
-							    		<td>${item.assessRate}</td>
-							    		<td>${item.saveDate}</td>
+							    		<td>${fnc:shorten(item.content, 20)}</td>
+							    		<td>${item.assessRate}점</td>
+							    		<td>
+							    			<fmt:parseDate var="dt" value="${item.saveDate}" pattern="yyyyMMddHHmmss"/>
+							    			<fmt:formatDate value="${dt}" pattern="yyyy.MM.dd HH.mm.ss"/>
+						    			</td>
 							    		<td class="text-center">
 											<a class="action-icon text-secondary" href="/mediaComment/view.do?comment_id=${item.commentId}" title="상세보기">
 										    	<i class="mdi mdi-eye"></i>
 											</a>
+										</td>
+										<td>
+											<div class="form-check form-switch">
+												<c:choose>
+													<c:when test="${item.hide eq 'show'}">
+														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}" checked>
+												  		<label class="form-check-label" for="flexSwitchCheckChecked">활성화</label>
+													</c:when>
+													<c:otherwise>
+														<input class="form-check-input" type="checkbox" role="switch" id="hideSwitch" value="${item.hide}" comment_id="${item.commentId}">
+												  		<label class="form-check-label" for="flexSwitchCheckChecked">비활설화</label>
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</td>
 							    	</tr>
 							    	</c:forEach>
@@ -150,7 +169,30 @@
 
 <script>
 $(document).ready(function() {
-	
+	${"hideSwitch"}.on("click", function(event) {
+		$.ajax({
+			type = "post",
+			url = "/mediaComment/hide.do",
+			data = {
+				comment_id = ${event.relatedTarget}.attr('comment_id'),
+				hide = ${event}.val()
+			},
+			dataType : "json",
+			success: function(result) {
+				if (result.resultCode == 'fail') {
+	        		alert(result.resultMessage);
+	                return;
+	        	}
+				
+	            console.log("처리되었습니다.");
+	            location.href("/mediaComment.do");
+				
+			},
+			error: function( xhr, status, error ) {
+				alert(error);
+			}
+		}
+	)};
 });
 
 //목록 조회

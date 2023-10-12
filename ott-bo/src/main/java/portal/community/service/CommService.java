@@ -9,4 +9,10 @@ public interface CommService {
 
 	public int getCountOfCommList(Map params);
 
+	public void updateHide(Map params);
+
+	public Map getCommInfo(Map params);
+
+	public List<Map> getItemInfo(Map params);
+
 }

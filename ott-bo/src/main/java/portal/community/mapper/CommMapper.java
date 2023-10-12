@@ -12,4 +12,14 @@ public interface CommMapper {
 
 	public int getCountOfCommList(Map params);
 
+	public void updateHide(Map params);
+
+	public Map getCommInfo(Map params);
+
+	public int getCommDiv(Map params);
+
+	public List<Map> getVoteItem(Map params);
+
+	public List<Map> getWorldItem(Map params);
+
 }

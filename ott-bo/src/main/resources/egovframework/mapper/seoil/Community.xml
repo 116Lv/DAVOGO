@@ -53,5 +53,49 @@
 		) 
 		</if>
 	</select>
+	
+	<update id="updateHide">
+		update community
+		set
+			<if test="@portal.common.util.StringUtil@notEmpty(hide)">
+				<choose>
+					<when test='"hide".equals("show")'>
+						hide = "hide"
+					</when>
+					<otherwise>
+						hide = "show"
+					</otherwise>
+				</choose>
+			</if>
+		where
+			comm_id = #{comm_id}
+	</update>
+	
+	<select id="getCommInfo" resultType="EgovMap">
+		select
+			*
+		from
+			community
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	<select id="getVoteItem" resultType="EgovMap">
+		select
+			*
+		from
+			vote
+		where
+			comm_id = #{comm_id}
+	</select>
+	
+	<select id="getWorldItem" resultType="EgovMap">
+		select
+			*
+		from
+			world
+		where
+			comm_id = #{comm_id}
+	</select>
 
 </mapper>

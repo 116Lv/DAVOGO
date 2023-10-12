@@ -14,16 +14,26 @@ import portal.comment.service.CommentService;
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
-	private CommentMapper commentmapper;
+	private CommentMapper commentMapper;
 
 	@Override
 	public List<Map<String, Object>> findCommentList(Map<String, Object> params) {
-		return commentmapper.findCommentList(params);
+		return commentMapper.findCommentList(params);
 	}
 
 	@Override
 	public int getCountOfCommentList(Map<String, Object> params) {
-		return commentmapper.getCountOfCommentList(params);
+		return commentMapper.getCountOfCommentList(params);
+	}
+
+	@Override
+	public Map getCommentInfo(Map params) {
+		return commentMapper.getCommentInfo(params);
+	}
+
+	@Override
+	public void updateHide(Map params) {
+		commentMapper.updateHide(params);
 	}
 
 }

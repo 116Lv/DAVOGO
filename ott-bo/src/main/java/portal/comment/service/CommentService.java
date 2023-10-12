@@ -9,4 +9,8 @@ public interface CommentService {
 
 	public int getCountOfCommentList(Map<String, Object> params);
 
+	public Map getCommentInfo(Map params);
+
+	public void updateHide(Map params);
+
 }

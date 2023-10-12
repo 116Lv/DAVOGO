@@ -12,4 +12,8 @@ public interface MediaCommentMapper {
 
 	public int getCountOfMediaCommentList(Map params);
 
+	public Map getMediaComment(Map params);
+
+	public void updateHide(Map params);
+
 }
