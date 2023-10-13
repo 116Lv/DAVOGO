@@ -9,7 +9,6 @@
 		where
 			email = #{email} 
 			and password = #{password}
-			and hide = "show"
 	</select>
 	
 </mapper>
