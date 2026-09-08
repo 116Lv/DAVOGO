@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="330" viewBox="0 0 1280 330" role="img" aria-label="DAVOGO — CONTENT CONNECTED.">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0B1220"/><stop offset="1" stop-color="#17263B"/></linearGradient><linearGradient id="accent"><stop stop-color="#2DD4BF"/><stop offset="1" stop-color="#2DD4BF" stop-opacity=".15"/></linearGradient></defs>
+<rect width="1280" height="330" rx="24" fill="url(#bg)"/>
+<path d="M915 -80L1305 310M1035 -90L1390 265M815 -80L1235 340" stroke="#2DD4BF" stroke-opacity=".10" stroke-width="54"/>
+<circle cx="1110" cy="143" r="91" fill="none" stroke="#2DD4BF" stroke-opacity=".18"/>
+<circle cx="1110" cy="143" r="65" fill="none" stroke="#2DD4BF" stroke-opacity=".35"/>
+<rect x="1065" y="112" width="90" height="62" rx="9" fill="none" stroke="#2DD4BF" stroke-width="5"/>
+<path d="M1100 126l27 17-27 17z" fill="#2DD4BF"/>
+<g font-family="Segoe UI,Arial,sans-serif"><text x="62" y="55" font-size="13" font-weight="600" letter-spacing="3" fill="#2DD4BF">116Lv / PROJECT COLLECTION</text>
+<text x="58" y="166" font-size="100" font-weight="700" letter-spacing="-3" fill="#F8FAFC">DAVOGO</text>
+<text x="63" y="214" font-size="23" fill="#BAC7D7" letter-spacing="1">CONTENT CONNECTED.</text>
+<rect x="63" y="268" width="330" height="4" rx="2" fill="#25384C"/><rect x="63" y="268" width="230" height="4" rx="2" fill="url(#accent)"/>
+<text x="1218" y="283" text-anchor="end" font-size="12" letter-spacing="2" fill="#8DA2B9">MOVIE DATA / USER &amp; ADMIN SERVICES</text></g></svg>
